@@ -43,14 +43,19 @@ public class Battle {
 
     }
 
-    public void attackCombat(Pokemon player,Moves move ,Pokemon npc){
+    public void playerAttackCombat(Pokemon player,Moves move ,Pokemon npc){
         int playerHP = player.getAttack();
         int npcHP = npc.getHitPoints();
         double modifier = moveTypeDeterminer(move.type,npc);
-        double damage = calculateDamage(player.getLevel(),move.power,player.getAttack(),player.getDefense(),modifier);
-
-
+        //need to code modifier to 'super effective' message
+        System.out.println(player.getName() + "used " + move.name + "!");
+        int damage = (int) Math.round(calculateDamage(player.getLevel(),move.power,player.getAttack(),player.getDefense(),modifier));
+        System.out.println(player.getName() + "hit " + npc.getName() + " for " + damage + " points of damage!");
+        npcHP-=damage;
+        npc.setHitPoints(npcHP);
+        System.out.println(npc.getName() + "has " + npc.getHitPoints() + " remaining!");
     }
+
     public double moveTypeDeterminer(String moveType, Pokemon npc){
         switch(moveType.toLowerCase()){
             case "grass":

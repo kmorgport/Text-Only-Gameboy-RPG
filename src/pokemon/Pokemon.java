@@ -5,7 +5,7 @@ import moves.Moves;
 import java.util.ArrayList;
 
 public abstract class Pokemon {
-    protected static String name;
+    protected String name;
     protected int level;
     protected int hitPoints;
     protected int baseHP;
@@ -58,6 +58,8 @@ public abstract class Pokemon {
     public int findStat(int base, int iv, int ev, int level){
         return (int) Math.round(((((base+iv)*2+(Math.sqrt(ev)/4))*level)/100)+5);
     }
+
+    public String getName(){return this.name;}
 
     public int getLevel(){
         return this.level;

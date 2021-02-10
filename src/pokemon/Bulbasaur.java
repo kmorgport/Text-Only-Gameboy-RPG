@@ -3,13 +3,13 @@ package pokemon;
 import moves.Moves;
 
 public class Bulbasaur extends Pokemon{
-    protected final static String name = "Bulbasaur";
     protected int currentExpTotal;
     protected int expToNextLevel;
 
     public Bulbasaur(int level, int hpIV, int attackIV, int defenseIV, int specAttIV, int specDefIV, int speedIV) {
         super(level, hpIV, attackIV, defenseIV, specAttIV, specDefIV, speedIV);
         this.currentExpTotal = 0;
+        name = "Bulbasaur";
         baseHP = 45;
         baseAttack = 49;
         baseDefense = 49;
