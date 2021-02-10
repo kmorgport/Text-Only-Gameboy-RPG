@@ -1,10 +1,45 @@
 package Gameplay;
 
+import moves.Moves;
+import pokemon.Pokemon;
+import trainers.Trainer;
+import util.Input;
+
 public class Battle {
+    protected Input consoleEntry = new Input();
     Battle(){
 
     }
 
+    public void startBattle(Trainer player, Trainer npc){
+        Pokemon playerPokemon = player.retrieveTeamStarter();
+        Pokemon rivalPokemon = npc.retrieveTeamStarter();
+
+    }
+
+    public void playerTurn(Pokemon player, Pokemon npc){
+        int playerHP = player.getHitPoints();
+        int npcHP = npc.getHitPoints();
+        Moves[] moveList = player.pullMoveList();
+        System.out.println("What would you like to do?");
+        System.out.println("");
+        System.out.println("---FIGHT---ITEM---PKMN---RUN---");
+        String answ = consoleEntry.getString();
+        switch(answ.toLowerCase()){
+            case "fight":
+                System.out.println("---" + moveList[0].name + "---" + moveList[1].name + "---" + moveList[2].name + "---");
+                answ = consoleEntry.getString();
+
+                break;
+            case "item":
+                break;
+            case "pkmn":
+                break;
+            case "run":
+                break;
+        }
+
+    }
     public double grassTypeMultiplier(String type, String type2 ){
         double multiplier = 0;
         switch (type){

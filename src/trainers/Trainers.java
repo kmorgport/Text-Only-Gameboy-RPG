@@ -1,6 +1,6 @@
 package trainers;
 
-public interface Trainers {
+public class Trainers {
 
 
 
