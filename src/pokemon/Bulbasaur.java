@@ -2,6 +2,8 @@ package pokemon;
 
 import moves.Moves;
 
+import java.util.ArrayList;
+
 public class Bulbasaur extends Pokemon{
     protected int currentExpTotal;
     protected int expToNextLevel;
@@ -16,6 +18,7 @@ public class Bulbasaur extends Pokemon{
         baseSpecialAttack = 65;
         baseSpecialDefense = 65;
         baseSpeed = 45;
+        types = new ArrayList<>();
         types.add("Grass");
         types.add("Poison");
         this.hitPoints = findHP(baseHP,hpIV,0,level);

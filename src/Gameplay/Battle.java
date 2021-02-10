@@ -29,7 +29,10 @@ public class Battle {
                 answ = consoleEntry.getString();
                 for(Moves move: moveList){
                     if(move.name.toLowerCase().contains(answ.toLowerCase())){
-
+                        playerAttackCombat(player,move,npc);
+                    }else{
+                        System.out.println(player.getName() + " does not know a move named " + answ + "!");
+//                        return playerTurn();  -- once finished out, fill in with arguments to create recursion
                     }
                 }
                 break;
