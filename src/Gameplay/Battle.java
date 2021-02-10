@@ -18,8 +18,6 @@ public class Battle {
     }
 
     public void playerTurn(Pokemon player, Pokemon npc){
-        int playerHP = player.getHitPoints();
-        int npcHP = npc.getHitPoints();
         Moves[] moveList = player.pullMoveList();
         System.out.println("What would you like to do?");
         System.out.println("");
@@ -29,7 +27,11 @@ public class Battle {
             case "fight":
                 System.out.println("---" + moveList[0].name + "---" + moveList[1].name + "---" + moveList[2].name + "---");
                 answ = consoleEntry.getString();
+                for(Moves move: moveList){
+                    if(move.name.toLowerCase().contains(answ.toLowerCase())){
 
+                    }
+                }
                 break;
             case "item":
                 break;
@@ -39,6 +41,32 @@ public class Battle {
                 break;
         }
 
+    }
+
+    public void attackCombat(Pokemon player,Moves move ,Pokemon npc){
+        int playerHP = player.getAttack();
+        int npcHP = npc.getHitPoints();
+        double modifier = moveTypeDeterminer(move.type,npc);
+        double damage = calculateDamage(player.getLevel(),move.power,player.getAttack(),player.getDefense(),modifier);
+
+
+    }
+    public double moveTypeDeterminer(String moveType, Pokemon npc){
+        switch(moveType.toLowerCase()){
+            case "grass":
+                return grassTypeMultiplier(npc.types.get(0),npc.types.get(1));
+            case "fire":
+                return fireTypeMultiplier(npc.types.get(0));
+            case "water":
+                return waterTypeMultiplier(npc.types.get(0));
+            case "normal":
+                return normalTypeMultiplier(npc.types.get(0));
+            case "flying":
+                return flyingTypeMultiplier(npc.types.get(0));
+            default:
+                return 1;
+
+        }
     }
     public double grassTypeMultiplier(String type, String type2 ){
         double multiplier = 0;

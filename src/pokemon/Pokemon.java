@@ -36,7 +36,7 @@ public abstract class Pokemon {
     protected int currentExpTotal;
     protected int expToNextLevel;
     protected int baseExp;
-    protected ArrayList<String> types;
+    public ArrayList<String> types;
 
 
     Pokemon(int level, int hpIV, int attackIV, int defenseIV, int specAttIV, int specDefIV, int speedIV){

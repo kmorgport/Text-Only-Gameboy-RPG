@@ -6,6 +6,7 @@ abstract public class Moves {
     public String category;
     public int powerPoints;
     public int accuracy;
+    public int power;
 
     public Moves(String name, String type, String category, int powerPoints, int accuracy){
         this.name = name;
