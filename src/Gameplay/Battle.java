@@ -56,12 +56,12 @@ public class Battle {
     public void npcTurn(Pokemon player, Pokemon npc){
         Moves[] moveList = npc.pullMoveList();
         int random = (int) Math.floor(Math.random()*2);
-        Moves move = moveList[random];
-        int playerHP = player.getAttack();
-        double modifier = moveTypeDeterminer(move.type,npc);
+        Moves npcMove = moveList[random];
+        int playerHP = player.getHitPoints();
+        double modifier = moveTypeDeterminer(npcMove.type,player);
         //need to code modifier to 'super effective' message
-        System.out.println(npc.getName() + "used " + move.name + "!");
-        int damage = (int) Math.round(calculateDamage(player.getLevel(),move.power,player.getAttack(),player.getDefense(),modifier));
+        System.out.println(npc.getName() + "used " + npcMove.name + "!");
+        int damage = (int) Math.round(calculateDamage(npc.getLevel(),npcMove.power,npc.getAttack(),player.getDefense(),modifier));
         System.out.println(npc.getName() + "hit " + player.getName() + " for " + damage + " points of damage!");
         playerHP-=damage;
         npc.setHitPoints(playerHP);
@@ -70,12 +70,11 @@ public class Battle {
     }
 
     public void playerAttack(Pokemon player, Moves move , Pokemon npc){
-        int playerHP = player.getAttack();
         int npcHP = npc.getHitPoints();
         double modifier = moveTypeDeterminer(move.type,npc);
         //need to code modifier to 'super effective' message
         System.out.println(player.getName() + "used " + move.name + "!");
-        int damage = (int) Math.round(calculateDamage(player.getLevel(),move.power,player.getAttack(),player.getDefense(),modifier));
+        int damage = (int) Math.round(calculateDamage(player.getLevel(),move.power,player.getAttack(),npc.getDefense(),modifier));
         System.out.println(player.getName() + "hit " + npc.getName() + " for " + damage + " points of damage!");
         npcHP-=damage;
         npc.setHitPoints(npcHP);
