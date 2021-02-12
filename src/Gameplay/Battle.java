@@ -5,16 +5,47 @@ import pokemon.Pokemon;
 import trainers.Trainer;
 import util.Input;
 
+import java.util.Objects;
+
 public class Battle {
     protected Input consoleEntry = new Input();
-    Battle(){
+    public Battle(){
 
     }
 
     public void startBattle(Trainer player, Trainer npc){
         Pokemon playerPokemon = player.retrieveTeamStarter();
         Pokemon rivalPokemon = npc.retrieveTeamStarter();
+        int playerHp = playerPokemon.getHitPoints();
+        int rivalHp = rivalPokemon.getHitPoints();
+        battleCycle(playerPokemon,rivalPokemon);
+    }
 
+    public void battleCycle(Pokemon player, Pokemon npc){
+        boolean fighting = true;
+        while(fighting) {
+            if (player.getSpeed() > npc.getSpeed()) {
+                playerTurn(player, npc);
+                if (player.getHitPoints() <= 0) {
+                    System.out.println(player.getName() + " fainted!");
+                    fighting = false;
+                } else if (npc.getHitPoints() <= 0) {
+                    System.out.println(npc.getName() + " fainted!");
+                    fighting = false;
+                }
+                npcTurn(player, npc);
+            } else {
+                npcTurn(player, npc);
+                if (player.getHitPoints() <= 0) {
+                    System.out.println(player.getName() + " fainted!");
+                    fighting = false;
+                } else if (npc.getHitPoints() <= 0) {
+                    System.out.println(npc.getName() + " fainted!");
+                    fighting = false;
+                }
+                playerTurn(player, npc);
+            }
+        }
     }
 
     public void playerTurn(Pokemon player, Pokemon npc){
@@ -45,39 +76,29 @@ public class Battle {
         }
     }
 
-    public void checkStatus(Pokemon player, Pokemon npc){
-        if(player.getHitPoints()<=0){
-            System.out.println(player.getName() + " fainted!");
-        }else if(npc.getHitPoints()<=0){
-            System.out.println(npc.getName() + " fainted!");
-        }
-    }
-
     public void npcTurn(Pokemon player, Pokemon npc){
         Moves[] moveList = npc.pullMoveList();
         int random = (int) Math.floor(Math.random()*2);
         Moves npcMove = moveList[random];
-        int playerHP = player.getHitPoints();
         double modifier = moveTypeDeterminer(npcMove.type,player);
         //need to code modifier to 'super effective' message
         System.out.println(npc.getName() + "used " + npcMove.name + "!");
         int damage = (int) Math.round(calculateDamage(npc.getLevel(),npcMove.power,npc.getAttack(),player.getDefense(),modifier));
         System.out.println(npc.getName() + "hit " + player.getName() + " for " + damage + " points of damage!");
-        playerHP-=damage;
-        npc.setHitPoints(playerHP);
+        player.setHitPoints(player.getHitPoints()-damage);
+        System.out.println(player.getName() + " has " + player.getHitPoints() + " remaining!");
 
 
     }
 
     public void playerAttack(Pokemon player, Moves move , Pokemon npc){
-        int npcHP = npc.getHitPoints();
         double modifier = moveTypeDeterminer(move.type,npc);
         //need to code modifier to 'super effective' message
         System.out.println(player.getName() + "used " + move.name + "!");
         int damage = (int) Math.round(calculateDamage(player.getLevel(),move.power,player.getAttack(),npc.getDefense(),modifier));
         System.out.println(player.getName() + "hit " + npc.getName() + " for " + damage + " points of damage!");
-        npcHP-=damage;
-        npc.setHitPoints(npcHP);
+        npc.setHitPoints(npc.getHitPoints()-damage);
+//        npc.setHitPoints(npc.getHitPoints()-damage);
         System.out.println(npc.getName() + "has " + npc.getHitPoints() + " remaining!");
     }
 
@@ -120,7 +141,10 @@ public class Battle {
                 multiplier+= 1;
                 break;
         }
-        if(type2.equals("Poison")){
+
+        if(type2==null){
+            multiplier += 0;
+        }else if(type2.equals("Poison")){
             multiplier -=.25;
         }
         return multiplier;

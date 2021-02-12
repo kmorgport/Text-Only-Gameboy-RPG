@@ -1,3 +1,4 @@
+import Gameplay.Battle;
 import moves.Moves;
 import pokemon.Bulbasaur;
 import pokemon.Charmander;
@@ -11,10 +12,11 @@ public class main {
         Bulbasaur bulbasaur = new Bulbasaur(5,random,random,random,random,random,random);
         Charmander charmander = new Charmander(5,random,random,random,random,random,random);
         Squirtle squirtle = new Squirtle(5,random,random,random,random,random,random);
-
-        Moves[] moveList = squirtle.pullMoveList();
-        System.out.println(moveList[0].type);
-        System.out.println(charmander.getAttackEV());
+        Battle battle = new Battle();
+        battle.battleCycle(bulbasaur,charmander);
+//        Moves[] moveList = squirtle.pullMoveList();
+//        System.out.println(moveList[0].type);
+//        System.out.println(charmander.getAttackEV());
 
     }
 }

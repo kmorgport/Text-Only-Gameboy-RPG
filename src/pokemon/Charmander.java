@@ -2,22 +2,25 @@ package pokemon;
 
 import moves.Moves;
 
+import java.util.ArrayList;
+
 public class Charmander extends Pokemon{
-    protected final static String name = "Charmander";
     protected int currentExpTotal;
     protected int expToNextLevel;
-    protected final static String type1 = "Fire";
-    protected final static String type2 = null;
 
     public Charmander(int level, int hpIV, int attackIV, int defenseIV, int specAttIV, int specDefIV, int speedIV) {
         super(level, hpIV, attackIV, defenseIV, specAttIV, specDefIV, speedIV);
         this.currentExpTotal = 0;
+        name = "Charmander";
         baseHP = 39;
         baseAttack = 52;
         baseDefense = 43;
         baseSpecialAttack = 60;
         baseSpecialDefense = 50;
         baseSpeed = 65;
+        types = new ArrayList<>();
+        types.add("Fire");
+        types.add(null);
         this.hitPoints = findHP(baseHP,hpIV,0,level);
         this.attack = findStat(baseAttack,attackIV,0,level);
         this.defense = findStat(baseDefense,defenseIV,0,level);
