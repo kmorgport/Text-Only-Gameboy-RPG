@@ -5,6 +5,7 @@ import pokemon.Pokemon;
 import trainers.Trainer;
 import util.Input;
 
+import java.util.ArrayList;
 import java.util.Objects;
 
 public class Battle {
@@ -98,15 +99,20 @@ public class Battle {
         int moveRandom = (int) Math.floor(Math.random()*3);
         Moves npcMove = moveList[moveRandom];
         int type = (int) moveTypeDeterminer(npcMove.type,player);
-        double stab = determineStab(npc.types.get(0),npc.types.get(1),npcMove.type);
+        double stab = determineStab(npc.types,npcMove.type);
         double critRando = Math.floor(Math.random()*100);
         int crit = determineCriticalHit(critRando);
-        int random = (int) Math.floor(Math.random()*100);
+        double random =  (Math.random()*.15)+.85;
         double burn = 1.0;
         double modifier = getModifier(crit,random,stab,type,burn);
         //need to code modifier to 'super effective' message
         System.out.println(npc.getName() + " used " + npcMove.name + "!");
-        int damage = (int) Math.round(calculateDamage(npc.getLevel(),npcMove.power,npc.getAttack(),player.getDefense(),modifier));
+        if(type>1){
+            System.out.println("It was super effective!");
+        }else if(type<1){
+            System.out.println("It wasn't very effective...");
+        }
+        int damage = (int) Math.ceil(calculateDamage(npc.getLevel(),npcMove.power,npc.getAttack(),player.getDefense(),modifier)+1);
         System.out.println(npc.getName() + " hit " + player.getName() + " for " + damage + " points of damage!");
         player.setHitPoints(player.getHitPoints()-damage);
         if(player.getHitPoints()<=0){
@@ -121,15 +127,20 @@ public class Battle {
 
     public void playerAttack(Pokemon player, Moves move , Pokemon npc){
         int type = (int) moveTypeDeterminer(move.type,npc);
-        double stab = determineStab(player.types.get(0),player.types.get(1),move.type);
+        double stab = determineStab(player.types,move.type);
         double critRando = Math.floor(Math.random()*100);
         int crit = determineCriticalHit(critRando);
-        int random = (int) Math.floor(Math.random()*100);
+        double random =  (Math.random()*.15)+.85;
         double burn = 1.0;
         double modifier = getModifier(crit,random,stab,type,burn);
         //need to code modifier to 'super effective' message
         System.out.println(player.getName() + " used " + move.name + "!");
-        int damage = (int) Math.round(calculateDamage(player.getLevel(),move.power,player.getAttack(),npc.getDefense(),modifier));
+        if(type>1){
+            System.out.println("It was super effective!");
+        }else if(type<1){
+            System.out.println("It wasn't very effective...");
+        }
+        int damage = (int) Math.round(calculateDamage(player.getLevel(),move.power,player.getAttack(),npc.getDefense(),modifier)+1);
         System.out.println(player.getName() + " hit " + npc.getName() + " for " + damage + " points of damage!");
         npc.setHitPoints(npc.getHitPoints()-damage);
 //        npc.setHitPoints(npc.getHitPoints()-damage);
@@ -142,15 +153,20 @@ public class Battle {
 
     public void playerSpecialAttack(Pokemon player, Moves move , Pokemon npc){
         int type = (int) moveTypeDeterminer(move.type,npc);
-        double stab = determineStab(player.types.get(0),player.types.get(1),move.type);
+        double stab = determineStab(player.types,move.type);
         double critRando = Math.floor(Math.random()*100);
         int crit = determineCriticalHit(critRando);
-        int random = (int) Math.floor(Math.random()*100);
+        double random =  (Math.random()*.15)+.85;
         double burn = 1.0;
         double modifier = getModifier(crit,random,stab,type,burn);
         //need to code modifier to 'super effective' message
         System.out.println(player.getName() + " used " + move.name + "!");
-        int damage = (int) Math.round(calculateDamage(player.getLevel(),move.power,player.getSpecialAttack(),npc.getSpecialDefense(),modifier));
+        if(type>1){
+            System.out.println("It was super effective!");
+        }else if(type<1){
+            System.out.println("It wasn't very effective...");
+        }
+        int damage = (int) Math.round(calculateDamage(player.getLevel(),move.power,player.getSpecialAttack(),npc.getSpecialDefense(),modifier)+1);
         System.out.println(player.getName() + " hit " + npc.getName() + " for " + damage + " points of damage!");
         npc.setHitPoints(npc.getHitPoints()-damage);
 //        npc.setHitPoints(npc.getHitPoints()-damage);
@@ -273,17 +289,15 @@ public class Battle {
         return (((((2*level)/5)+2)*power*(attack/defense)/50)+2)*modifier;
     }
 
-    public double getModifier(int critical, int random, double stab, int type, double burn){
+    public double getModifier(int critical, double random, double stab, int type, double burn){
         return critical*random*stab*type*burn;
     }
 
-    public double determineStab(String monType,String monType2, String attackType){
-        if(monType.equals(attackType)){
-            return 1.5;
-        }else if(monType2.equals(attackType)){
-            return 1.5;
-        } else{
-            return 1;
+    public double determineStab(ArrayList<String> types, String attackType){
+        if(types.contains(attackType)){
+            return 1.5; }
+        else {
+            return 1.0;
         }
     }
 
