@@ -21,36 +21,41 @@ public class Battle {
         battleCycle(playerPokemon,rivalPokemon);
     }
 
-    public boolean battleCycle(Pokemon player, Pokemon npc){
+    public void battleCycle(Pokemon player, Pokemon npc){
         boolean fighting = true;
         boolean winner = true;
         while(true) {
+            if(npc.getHitPoints()<=0){
+                System.out.println(npc.getName() + " fainted!");
+                break;
+            }
+            if(player.getHitPoints()<=0){
+                System.out.println(player.getName() + " fainted!");
+                break;
+            }
             if (player.getSpeed() > npc.getSpeed()) {
                 playerTurn(player, npc);
                 if (player.getHitPoints() <= 0) {
                     System.out.println(player.getName() + " fainted!");
-                    fighting = false;
-                    return winner = false;
+                    break;
                 } else if (npc.getHitPoints() <= 0) {
                     System.out.println(npc.getName() + " fainted!");
-                    fighting = false;
-                    return winner = true;
+                    break;
                 }
                 npcTurn(player, npc);
-            } else {
+            } else if(player.getSpeed() < npc.getSpeed()){
                 npcTurn(player, npc);
                 if (player.getHitPoints() <= 0) {
                     System.out.println(player.getName() + " fainted!");
-                    fighting = false;
-                    return winner = false;
+                    break;
                 } else if (npc.getHitPoints() <= 0) {
                     System.out.println(npc.getName() + " fainted!");
-                    fighting = false;
-                    return winner = true;
+                    break;
                 }
                 playerTurn(player, npc);
             }
         }
+//        return winner;
     }
 
     public void playerTurn(Pokemon player, Pokemon npc){
@@ -65,8 +70,13 @@ public class Battle {
                 answ = consoleEntry.getString();
                 for(Moves move: moveList){
                     if(move.name.toLowerCase().contains(answ.toLowerCase())){
-                        playerAttack(player,move,npc);
-                        break;
+                        if(move.category.equals("Physical")) {
+                            playerAttack(player, move, npc);
+                            break;
+                        }else if(move.category.equals("Special")){
+                            playerSpecialAttack(player,move,npc);
+                            break;
+                        }
                     }
 //                    else{
 //                        System.out.println(player.getName() + " does not know a move named " + answ + "!");
@@ -85,7 +95,7 @@ public class Battle {
 
     public void npcTurn(Pokemon player, Pokemon npc){
         Moves[] moveList = npc.pullMoveList();
-        int random = (int) Math.floor(Math.random()*2);
+        int random = (int) Math.floor(Math.random()*3);
         Moves npcMove = moveList[random];
         double modifier = moveTypeDeterminer(npcMove.type,player);
         //need to code modifier to 'super effective' message
@@ -108,6 +118,21 @@ public class Battle {
         //need to code modifier to 'super effective' message
         System.out.println(player.getName() + " used " + move.name + "!");
         int damage = (int) Math.round(calculateDamage(player.getLevel(),move.power,player.getAttack(),npc.getDefense(),modifier));
+        System.out.println(player.getName() + " hit " + npc.getName() + " for " + damage + " points of damage!");
+        npc.setHitPoints(npc.getHitPoints()-damage);
+//        npc.setHitPoints(npc.getHitPoints()-damage);
+        if(npc.getHitPoints()<=0){
+
+        }else {
+            System.out.println(npc.getName() + " has " + npc.getHitPoints() + " remaining!");
+        }
+    }
+
+    public void playerSpecialAttack(Pokemon player, Moves move , Pokemon npc){
+        double modifier = moveTypeDeterminer(move.type,npc);
+        //need to code modifier to 'super effective' message
+        System.out.println(player.getName() + " used " + move.name + "!");
+        int damage = (int) Math.round(calculateDamage(player.getLevel(),move.power,player.getSpecialAttack(),npc.getSpecialDefense(),modifier));
         System.out.println(player.getName() + " hit " + npc.getName() + " for " + damage + " points of damage!");
         npc.setHitPoints(npc.getHitPoints()-damage);
 //        npc.setHitPoints(npc.getHitPoints()-damage);

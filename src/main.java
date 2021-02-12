@@ -13,10 +13,7 @@ public class main {
         Charmander charmander = new Charmander(5,random,random,random,random,random,random);
         Squirtle squirtle = new Squirtle(5,random,random,random,random,random,random);
         Battle battle = new Battle();
-        battle.battleCycle(charmander,bulbasaur);
-//        Moves[] moveList = squirtle.pullMoveList();
-//        System.out.println(moveList[0].type);
-//        System.out.println(charmander.getAttackEV());
+        battle.battleCycle(squirtle, charmander);
 
     }
 }
