@@ -2,21 +2,24 @@ package pokemon;
 
 import moves.Moves;
 
+import java.util.ArrayList;
+
 public class Squirtle extends Pokemon{
-    protected final static String name = "Squirtle";
-    protected final static int baseHP = 44;
-    protected final static int baseAttack = 48;
-    protected final static int baseDefense = 65;
-    protected final static int baseSpecialAttack = 50;
-    protected final static int baseSpecialDefense = 64;
-    protected final static int baseSpeed = 43;
     protected int currentExpTotal;
     protected int expToNextLevel;
-    protected final static String type1 = "Water";
-    protected final static String type2 = null;
     public Squirtle(int level, int hpIV, int attackIV, int defenseIV, int specAttIV, int specDefIV, int speedIV) {
         super(level, hpIV, attackIV, defenseIV, specAttIV, specDefIV, speedIV);
         this.currentExpTotal = 0;
+        name = "Squirtle";
+        baseHP = 44;
+        baseAttack = 48;
+        baseDefense = 65;
+        baseSpecialAttack = 50;
+        baseSpecialDefense = 64;
+        baseSpeed = 43;
+        types = new ArrayList<>();
+        types.add("Water");
+        types.add(null);
         this.hitPoints = findHP(baseHP,hpIV,0,level);
         this.attack = findStat(baseAttack,attackIV,0,level);
         this.defense = findStat(baseDefense,defenseIV,0,level);
