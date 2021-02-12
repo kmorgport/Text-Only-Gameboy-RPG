@@ -24,17 +24,17 @@ public class Battle {
     public boolean battleCycle(Pokemon player, Pokemon npc){
         boolean fighting = true;
         boolean winner = true;
-        while(fighting) {
+        while(true) {
             if (player.getSpeed() > npc.getSpeed()) {
                 playerTurn(player, npc);
                 if (player.getHitPoints() <= 0) {
                     System.out.println(player.getName() + " fainted!");
                     fighting = false;
-                    winner = false;
+                    return winner = false;
                 } else if (npc.getHitPoints() <= 0) {
                     System.out.println(npc.getName() + " fainted!");
                     fighting = false;
-                    winner = true;
+                    return winner = true;
                 }
                 npcTurn(player, npc);
             } else {
@@ -42,16 +42,15 @@ public class Battle {
                 if (player.getHitPoints() <= 0) {
                     System.out.println(player.getName() + " fainted!");
                     fighting = false;
-                    winner = false;
+                    return winner = false;
                 } else if (npc.getHitPoints() <= 0) {
                     System.out.println(npc.getName() + " fainted!");
                     fighting = false;
-                    winner = true;
+                    return winner = true;
                 }
                 playerTurn(player, npc);
             }
         }
-        return winner;
     }
 
     public void playerTurn(Pokemon player, Pokemon npc){
@@ -94,7 +93,12 @@ public class Battle {
         int damage = (int) Math.round(calculateDamage(npc.getLevel(),npcMove.power,npc.getAttack(),player.getDefense(),modifier));
         System.out.println(npc.getName() + " hit " + player.getName() + " for " + damage + " points of damage!");
         player.setHitPoints(player.getHitPoints()-damage);
-        System.out.println(player.getName() + " has " + player.getHitPoints() + " remaining!");
+        if(player.getHitPoints()<=0){
+
+        }
+        else {
+            System.out.println(player.getName() + " has " + player.getHitPoints() + " remaining!");
+        }
 
 
     }
@@ -107,7 +111,11 @@ public class Battle {
         System.out.println(player.getName() + " hit " + npc.getName() + " for " + damage + " points of damage!");
         npc.setHitPoints(npc.getHitPoints()-damage);
 //        npc.setHitPoints(npc.getHitPoints()-damage);
-        System.out.println(npc.getName() + " has " + npc.getHitPoints() + " remaining!");
+        if(npc.getHitPoints()<=0){
+
+        }else {
+            System.out.println(npc.getName() + " has " + npc.getHitPoints() + " remaining!");
+        }
     }
 
     public double moveTypeDeterminer(String moveType, Pokemon npc){
