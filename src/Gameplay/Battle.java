@@ -95,9 +95,15 @@ public class Battle {
 
     public void npcTurn(Pokemon player, Pokemon npc){
         Moves[] moveList = npc.pullMoveList();
-        int random = (int) Math.floor(Math.random()*3);
-        Moves npcMove = moveList[random];
-        double modifier = moveTypeDeterminer(npcMove.type,player);
+        int moveRandom = (int) Math.floor(Math.random()*3);
+        Moves npcMove = moveList[moveRandom];
+        int type = (int) moveTypeDeterminer(npcMove.type,player);
+        double stab = determineStab(npc.types.get(0),npc.types.get(1),npcMove.type);
+        double critRando = Math.floor(Math.random()*100);
+        int crit = determineCriticalHit(critRando);
+        int random = (int) Math.floor(Math.random()*100);
+        double burn = 1.0;
+        double modifier = getModifier(crit,random,stab,type,burn);
         //need to code modifier to 'super effective' message
         System.out.println(npc.getName() + " used " + npcMove.name + "!");
         int damage = (int) Math.round(calculateDamage(npc.getLevel(),npcMove.power,npc.getAttack(),player.getDefense(),modifier));
@@ -114,7 +120,13 @@ public class Battle {
     }
 
     public void playerAttack(Pokemon player, Moves move , Pokemon npc){
-        double modifier = moveTypeDeterminer(move.type,npc);
+        int type = (int) moveTypeDeterminer(move.type,npc);
+        double stab = determineStab(player.types.get(0),player.types.get(1),move.type);
+        double critRando = Math.floor(Math.random()*100);
+        int crit = determineCriticalHit(critRando);
+        int random = (int) Math.floor(Math.random()*100);
+        double burn = 1.0;
+        double modifier = getModifier(crit,random,stab,type,burn);
         //need to code modifier to 'super effective' message
         System.out.println(player.getName() + " used " + move.name + "!");
         int damage = (int) Math.round(calculateDamage(player.getLevel(),move.power,player.getAttack(),npc.getDefense(),modifier));
@@ -129,7 +141,13 @@ public class Battle {
     }
 
     public void playerSpecialAttack(Pokemon player, Moves move , Pokemon npc){
-        double modifier = moveTypeDeterminer(move.type,npc);
+        int type = (int) moveTypeDeterminer(move.type,npc);
+        double stab = determineStab(player.types.get(0),player.types.get(1),move.type);
+        double critRando = Math.floor(Math.random()*100);
+        int crit = determineCriticalHit(critRando);
+        int random = (int) Math.floor(Math.random()*100);
+        double burn = 1.0;
+        double modifier = getModifier(crit,random,stab,type,burn);
         //need to code modifier to 'super effective' message
         System.out.println(player.getName() + " used " + move.name + "!");
         int damage = (int) Math.round(calculateDamage(player.getLevel(),move.power,player.getSpecialAttack(),npc.getSpecialDefense(),modifier));
@@ -255,14 +273,16 @@ public class Battle {
         return (((((2*level)/5)+2)*power*(attack/defense)/50)+2)*modifier;
     }
 
-    public double getModifier(int critical, int random, int stab, int type, int burn){
+    public double getModifier(int critical, int random, double stab, int type, double burn){
         return critical*random*stab*type*burn;
     }
 
-    public double determineStab(String monType, String attackType){
+    public double determineStab(String monType,String monType2, String attackType){
         if(monType.equals(attackType)){
             return 1.5;
-        }else{
+        }else if(monType2.equals(attackType)){
+            return 1.5;
+        } else{
             return 1;
         }
     }
