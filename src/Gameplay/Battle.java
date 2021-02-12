@@ -21,17 +21,20 @@ public class Battle {
         battleCycle(playerPokemon,rivalPokemon);
     }
 
-    public void battleCycle(Pokemon player, Pokemon npc){
+    public boolean battleCycle(Pokemon player, Pokemon npc){
         boolean fighting = true;
+        boolean winner = true;
         while(fighting) {
             if (player.getSpeed() > npc.getSpeed()) {
                 playerTurn(player, npc);
                 if (player.getHitPoints() <= 0) {
                     System.out.println(player.getName() + " fainted!");
                     fighting = false;
+                    winner = false;
                 } else if (npc.getHitPoints() <= 0) {
                     System.out.println(npc.getName() + " fainted!");
                     fighting = false;
+                    winner = true;
                 }
                 npcTurn(player, npc);
             } else {
@@ -39,13 +42,16 @@ public class Battle {
                 if (player.getHitPoints() <= 0) {
                     System.out.println(player.getName() + " fainted!");
                     fighting = false;
+                    winner = false;
                 } else if (npc.getHitPoints() <= 0) {
                     System.out.println(npc.getName() + " fainted!");
                     fighting = false;
+                    winner = true;
                 }
                 playerTurn(player, npc);
             }
         }
+        return winner;
     }
 
     public void playerTurn(Pokemon player, Pokemon npc){
@@ -61,10 +67,12 @@ public class Battle {
                 for(Moves move: moveList){
                     if(move.name.toLowerCase().contains(answ.toLowerCase())){
                         playerAttack(player,move,npc);
-                    }else{
-                        System.out.println(player.getName() + " does not know a move named " + answ + "!");
-//                        return playerTurn();  -- once finished out, fill in with arguments to create recursion
+                        break;
                     }
+//                    else{
+//                        System.out.println(player.getName() + " does not know a move named " + answ + "!");
+////                        return playerTurn();  -- once finished out, fill in with arguments to create recursion
+//                    }
                 }
                 break;
             case "item":
@@ -82,9 +90,9 @@ public class Battle {
         Moves npcMove = moveList[random];
         double modifier = moveTypeDeterminer(npcMove.type,player);
         //need to code modifier to 'super effective' message
-        System.out.println(npc.getName() + "used " + npcMove.name + "!");
+        System.out.println(npc.getName() + " used " + npcMove.name + "!");
         int damage = (int) Math.round(calculateDamage(npc.getLevel(),npcMove.power,npc.getAttack(),player.getDefense(),modifier));
-        System.out.println(npc.getName() + "hit " + player.getName() + " for " + damage + " points of damage!");
+        System.out.println(npc.getName() + " hit " + player.getName() + " for " + damage + " points of damage!");
         player.setHitPoints(player.getHitPoints()-damage);
         System.out.println(player.getName() + " has " + player.getHitPoints() + " remaining!");
 
@@ -94,12 +102,12 @@ public class Battle {
     public void playerAttack(Pokemon player, Moves move , Pokemon npc){
         double modifier = moveTypeDeterminer(move.type,npc);
         //need to code modifier to 'super effective' message
-        System.out.println(player.getName() + "used " + move.name + "!");
+        System.out.println(player.getName() + " used " + move.name + "!");
         int damage = (int) Math.round(calculateDamage(player.getLevel(),move.power,player.getAttack(),npc.getDefense(),modifier));
-        System.out.println(player.getName() + "hit " + npc.getName() + " for " + damage + " points of damage!");
+        System.out.println(player.getName() + " hit " + npc.getName() + " for " + damage + " points of damage!");
         npc.setHitPoints(npc.getHitPoints()-damage);
 //        npc.setHitPoints(npc.getHitPoints()-damage);
-        System.out.println(npc.getName() + "has " + npc.getHitPoints() + " remaining!");
+        System.out.println(npc.getName() + " has " + npc.getHitPoints() + " remaining!");
     }
 
     public double moveTypeDeterminer(String moveType, Pokemon npc){
