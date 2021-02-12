@@ -12,27 +12,33 @@ public abstract class Pokemon {
     protected int hpIV;
     protected int hpEV;
     protected int attack;
+    protected int battleAttack;
     protected int baseAttack;
     protected int attackIV;
     protected int attackEV;
     protected int defense;
+    protected int battleDefense;
     protected int baseDefense;
     protected int defenseIV;
     protected int defenseEV;
     protected int specialAttack;
+    protected int battleSpecialAttack;
     protected int baseSpecialAttack;
     protected int specAttIV;
     protected int specAttEV;
     protected int specialDefense;
+    protected int battleSpecialDefense;
     protected int baseSpecialDefense;
     protected int specDefIV;
     protected int specDefEV;
     protected int speed;
+    protected int battleSpeed;
+    protected int evasion;
+    protected int battleEvasion;
     protected int speedIV;
     protected int speedEV;
     protected int baseSpeed;
     protected double critHitRate;
-    protected int evasiveness = 100;
     protected int currentExpTotal;
     protected int expToNextLevel;
     protected int baseExp;
@@ -69,7 +75,6 @@ public abstract class Pokemon {
         this.level = level;
     }
 
-
     public int getHitPoints(){
         return this.hitPoints;
     }
@@ -96,6 +101,10 @@ public abstract class Pokemon {
         this.attack = attack;
     }
 
+    public int getBattleAttack(){return this.battleAttack;}
+
+    public void setBattleAttack(int battleAttack){this.battleAttack = battleAttack;}
+
     public void increaseAttackEV(int attackEv){
         this.attackEV += attackEv;
     }
@@ -110,6 +119,10 @@ public abstract class Pokemon {
         this.defense = defense;
     }
 
+    public int getBattleDefense(){return this.battleDefense;}
+
+    public void setBattleDefense(int battleDefense){this.battleDefense = battleDefense;}
+
     public void increaseDefenseEV(int defenseEv){
         this.defenseEV += defenseEv;
     }
@@ -120,6 +133,14 @@ public abstract class Pokemon {
 
     public void setSpecialAttack(int specialAttack){
         this.specialAttack = specialAttack;
+    }
+
+    public int getBattleSpecialAttack(){
+        return this.battleSpecialAttack;
+    }
+
+    public void setBattleSpecialAttack(int battleSpecialAttack){
+        this.battleSpecialAttack = battleSpecialAttack;
     }
 
     public void increaseSpecialAttackEV(int specialAttackEv){
@@ -134,6 +155,14 @@ public abstract class Pokemon {
         this.specialDefense = specialDefense;
     }
 
+    public int getBattleSpecialDefense(){
+        return this.battleSpecialDefense;
+    }
+
+    public void setBattleSpecialDefense(int battleSpecialDefense){
+        this.battleSpecialDefense = battleSpecialDefense;
+    }
+
     public void increaseSpecialDefenseEV(int specialDefenseEv){
         this.specDefEV += specialDefenseEv;
     }
@@ -146,9 +175,18 @@ public abstract class Pokemon {
         this.speed = speed;
     }
 
+    public int getBattleSpeed(){return this.battleSpeed;}
+
+    public void setBattleSpeed(int battleSpeed){this.battleSpeed = battleSpeed;}
+
     public void increaseSpeedEV(int speedEv){
         this.speedEV += speedEv;
     }
+
+    public int getEvasion(){return this.evasion;}
+
+    public int getBattleEvasion(){return this.battleEvasion;}
+    public void setBattleEvasion(int battleEvasion){this.battleEvasion = battleEvasion;}
 
     public int[] getExpVal(){
         int [] evs = new int[6];
@@ -168,6 +206,10 @@ public abstract class Pokemon {
         increaseSpecialAttackEV(evs[3]);
         increaseSpecialDefenseEV(evs[4]);
         increaseSpeedEV(evs[5]);
+    }
+
+    public void setBattleStats(){
+
     }
 
     public int calcExpGained(boolean wild, boolean owner, int baseEx, int lev, int s){

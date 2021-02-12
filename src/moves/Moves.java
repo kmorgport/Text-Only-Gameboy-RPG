@@ -7,6 +7,9 @@ abstract public class Moves {
     public int powerPoints;
     public int accuracy;
     public int power;
+    public int buffDebuffInteger;
+    public String buffDebuffType;
+    public int buffDebuffChance;
 
     public Moves(String name, String type, String category, int powerPoints, int accuracy){
         this.name = name;

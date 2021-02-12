@@ -15,7 +15,7 @@ public class main {
         Charmander charmander = new Charmander(5,random,random,random,random,random,random);
         Squirtle squirtle = new Squirtle(5,random,random,random,random,random,random);
         Battle battle = new Battle();
-        battle.battleCycle(squirtle, charmander);
+        battle.battleCycle(charmander, squirtle);
 
     }
 }

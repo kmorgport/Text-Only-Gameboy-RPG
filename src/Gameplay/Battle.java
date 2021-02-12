@@ -125,6 +125,27 @@ public class Battle {
 
     }
 
+//    public
+//
+//    public void buff(Pokemon player, Moves move, Pokemon npc){};
+
+//    public void deBuff(Pokemon player, Moves move, Pokemon npc){
+//        switch(move.buffDebuffType){
+//            case "Attack":
+//                break;
+//            case "Defense":
+//                break;
+//            case "SpecAttack":
+//                break;
+//            case "SpecDefense":
+//                break;
+//            case "Speed":
+//                break;
+//            case "Evasion":
+//                break;
+//        }
+//    };
+
     public void playerAttack(Pokemon player, Moves move , Pokemon npc){
         int type = (int) moveTypeDeterminer(move.type,npc);
         double stab = determineStab(player.types,move.type);
@@ -152,7 +173,7 @@ public class Battle {
     }
 
     public void playerSpecialAttack(Pokemon player, Moves move , Pokemon npc){
-        int type = (int) moveTypeDeterminer(move.type,npc);
+        double type = moveTypeDeterminer(move.type,npc);
         double stab = determineStab(player.types,move.type);
         double critRando = Math.floor(Math.random()*100);
         int crit = determineCriticalHit(critRando);
@@ -178,21 +199,28 @@ public class Battle {
     }
 
     public double moveTypeDeterminer(String moveType, Pokemon npc){
+        double type = 0.0;
         switch(moveType.toLowerCase()){
             case "grass":
-                return grassTypeMultiplier(npc.types.get(0),npc.types.get(1));
+                type += grassTypeMultiplier(npc.types.get(0),npc.types.get(1));
+                break;
             case "fire":
-                return fireTypeMultiplier(npc.types.get(0));
+                type += fireTypeMultiplier(npc.types.get(0));
+                break;
             case "water":
-                return waterTypeMultiplier(npc.types.get(0));
+                type += waterTypeMultiplier(npc.types.get(0));
+                break;
             case "normal":
-                return normalTypeMultiplier(npc.types.get(0));
+                type += normalTypeMultiplier(npc.types.get(0));
+                break;
             case "flying":
-                return flyingTypeMultiplier(npc.types.get(0));
+                type += flyingTypeMultiplier(npc.types.get(0));
+                break;
             default:
-                return 1;
+                type += 1;
 
         }
+        return type;
     }
     public double grassTypeMultiplier(String type, String type2 ){
         double multiplier = 0;
@@ -226,49 +254,61 @@ public class Battle {
     }
 
     public double fireTypeMultiplier(String type){
+        double multiplier = 0;
         switch(type){
             case "Rock":
             case "Fire":
             case "Water":
             case "Dragon":
-                return .5;
+                multiplier += 0.5;
+                break;
             case "Bug":
             case "Steel":
             case "Grass":
             case "Ice":
-                return 2;
+                multiplier += 2.0;
+                break;
             default:
-                return 1;
+                multiplier += 1.0;
+                break;
 
         }
+        return multiplier;
     }
 
     public double waterTypeMultiplier(String type){
+        double multiplier = 0;
         switch(type){
             case "Water":
             case "Grass":
             case "Dragon":
-                return .5;
+                multiplier += 0.5;
+                break;
 
             case "Ground":
             case "Rock":
             case "Fire":
-                return 2;
+                multiplier += 2.0;
+                break;
             default:
-                return 1;
+                multiplier += 1.0;
+                break;
         }
+        return multiplier;
     }
 
     public double normalTypeMultiplier(String type){
+        double multiplier = 0.0;
         switch(type){
             case "Ghost":
-                return 0;
+                multiplier += 0.0;
             case "Rock":
             case "Steel":
-                return .5;
+                multiplier += 0.5;
             default:
-                return 1;
+                multiplier += 1.0;
         }
+        return multiplier;
     }
 
     public double flyingTypeMultiplier(String type){
@@ -289,7 +329,7 @@ public class Battle {
         return (((((2*level)/5)+2)*power*(attack/defense)/50)+2)*modifier;
     }
 
-    public double getModifier(int critical, double random, double stab, int type, double burn){
+    public double getModifier(int critical, double random, double stab, double type, double burn){
         return critical*random*stab*type*burn;
     }
 
