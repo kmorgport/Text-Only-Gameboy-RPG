@@ -230,6 +230,9 @@ public abstract class Pokemon {
 
     public int getAccuracy(){return this.accuracy;}
 
+    public int getBattleAccuracy(){return this.battleAccuracy;}
+    public void setBattleAccuracy(int battleAccuracy){this.battleAccuracy = battleAccuracy;}
+
     public int getAccuracyInteger(){return this.accuracyInteger;}
 
     public void setAccuracyInteger(int accuracyInteger){this.accuracyInteger = accuracyInteger;}

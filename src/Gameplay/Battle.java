@@ -125,9 +125,9 @@ public class Battle {
 
     }
 
-    public double evasionConverter(Pokemon pokemon){
+    public double evasionConverter(int buffDeBuffInteger){
         double modifier = 1;
-        switch(pokemon.getBuffDebuffStage()){
+        switch(buffDeBuffInteger){
             case -6:
                 modifier = 3.0;
                 break;
@@ -171,9 +171,9 @@ public class Battle {
         return modifier;
     }
 
-    public double accuracyConverter(Pokemon pokemon){
+    public double accuracyConverter(int buffDeBuffInteger){
         double modifier = 1;
-        switch(pokemon.getBuffDebuffStage()){
+        switch(buffDeBuffInteger){
             case -6:
                 modifier = 0.33;
                 break;
@@ -311,6 +311,25 @@ public class Battle {
                 modifier = integerConverter(pokemon.getSpeedInteger());
                 pokemon.setBattleSpeed((int) (pokemon.getSpeed()*modifier));
                 break;
+            case "Evasion":
+                if(pokemon.getEvasionInteger()==-6){
+                    System.out.println(pokemon.getName() + "'s " + move.buffDebuffType + " can't be lowered any further!"); }
+                if(pokemon.getEvasionInteger()==6){
+                    System.out.println(pokemon.getName() + "'s " + move.buffDebuffType + " can't be raised any further!"); }
+                pokemon.setSpeedInteger((pokemon.getEvasionInteger()+move.buffDebuffInteger));
+                modifier = evasionConverter(pokemon.getEvasionInteger());
+                pokemon.setBattleEvasion((int) (pokemon.getEvasion()*modifier));
+                break;
+            case "Accuracy":
+                if(pokemon.getAccuracyInteger()==-6){
+                    System.out.println(pokemon.getName() + "'s " + move.buffDebuffType + " can't be lowered any further!"); }
+                if(pokemon.getAccuracyInteger()==6){
+                    System.out.println(pokemon.getName() + "'s " + move.buffDebuffType + " can't be raised any further!"); }
+                pokemon.setAccuracyInteger((pokemon.getAccuracyInteger()+move.buffDebuffInteger));
+                modifier = accuracyConverter(pokemon.getAccuracyInteger());
+                pokemon.setBattleAccuracy((int) (pokemon.getAccuracy()*modifier));
+                break;
+
         }
     }
 
