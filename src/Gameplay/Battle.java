@@ -251,6 +251,21 @@ public class Battle {
         return modifier;
     }
 
+    public String buffDebuffMessage(int number){
+        switch(number){
+            case 1:
+                return " rose!";
+            case 2:
+                return " greatly rose!";
+            case -1:
+                return " fell!";
+            case -2:
+                return " greatly fell!";
+            default:
+                return " you should never see this";
+        }
+    }
+
     public void buffDeBuff(Pokemon pokemon, Moves move){
         double modifier = 1;
         switch(move.buffDebuffType){
@@ -260,6 +275,7 @@ public class Battle {
                 if(pokemon.getAttackInteger()==6){
                     System.out.println(pokemon.getName() + "'s " + move.buffDebuffType + " can't be raised any further!"); }
                 pokemon.setAttackInteger(pokemon.getAttackInteger()+move.buffDebuffInteger);
+                System.out.println(pokemon.getName() + "'s attack" + buffDebuffMessage(move.buffDebuffInteger));
                 modifier = integerConverter(pokemon.getAttackInteger());
                 pokemon.setBattleAttack((int) (pokemon.getAttack()*modifier));
                 break;
@@ -269,6 +285,7 @@ public class Battle {
                 if(pokemon.getDefenseInteger()==6){
                     System.out.println(pokemon.getName() + "'s " + move.buffDebuffType + " can't be raised any further!"); }
                 pokemon.setDefenseInteger(pokemon.getDefenseInteger()+move.buffDebuffInteger);
+                System.out.println(pokemon.getName() + "'s defense" + buffDebuffMessage(move.buffDebuffInteger));
                 modifier = integerConverter(pokemon.getDefenseInteger());
                 pokemon.setBattleDefense((int) (pokemon.getDefense()*modifier));
                 break;
@@ -278,6 +295,7 @@ public class Battle {
                 if(pokemon.getSpecialAttackInteger()==6){
                     System.out.println(pokemon.getName() + "'s " + move.buffDebuffType + " can't be raised any further!"); }
                 pokemon.setSpecialAttackInteger(pokemon.getSpecialAttackInteger()+move.buffDebuffInteger);
+                System.out.println(pokemon.getName() + "'s special attack" + buffDebuffMessage(move.buffDebuffInteger));
                 modifier = integerConverter(pokemon.getSpecialAttackInteger());
                 pokemon.setBattleSpecialAttack((int) (pokemon.getSpecialAttack()*modifier));
                 break;
@@ -287,6 +305,7 @@ public class Battle {
                 if(pokemon.getSpecialDefenseInteger()==6){
                     System.out.println(pokemon.getName() + "'s " + move.buffDebuffType + " can't be raised any further!"); }
                 pokemon.setSpecialDefenseInteger(pokemon.getSpecialDefenseInteger()+move.buffDebuffInteger);
+                System.out.println(pokemon.getName() + "'s special defense" + buffDebuffMessage(move.buffDebuffInteger));
                 modifier = integerConverter(pokemon.getSpecialAttackInteger());
                 pokemon.setBattleSpecialDefense((int) (pokemon.getSpecialDefense()*modifier));
                 break;
@@ -296,6 +315,7 @@ public class Battle {
                 if(pokemon.getSpeedInteger()==6){
                     System.out.println(pokemon.getName() + "'s " + move.buffDebuffType + " can't be raised any further!"); }
                 pokemon.setSpeedInteger((pokemon.getSpeedInteger()+move.buffDebuffInteger));
+                System.out.println(pokemon.getName() + "'s speed" + buffDebuffMessage(move.buffDebuffInteger));
                 modifier = integerConverter(pokemon.getSpeedInteger());
                 pokemon.setBattleSpeed((int) (pokemon.getSpeed()*modifier));
                 break;
@@ -305,6 +325,7 @@ public class Battle {
                 if(pokemon.getEvasionInteger()==6){
                     System.out.println(pokemon.getName() + "'s " + move.buffDebuffType + " can't be raised any further!"); }
                 pokemon.setSpeedInteger((pokemon.getEvasionInteger()+move.buffDebuffInteger));
+                System.out.println(pokemon.getName() + "'s evasion" + buffDebuffMessage(move.buffDebuffInteger));
                 modifier = evasionConverter(pokemon.getEvasionInteger());
                 pokemon.setBattleEvasion((int) (pokemon.getEvasion()*modifier));
                 break;
@@ -314,6 +335,7 @@ public class Battle {
                 if(pokemon.getAccuracyInteger()==6){
                     System.out.println(pokemon.getName() + "'s " + move.buffDebuffType + " can't be raised any further!"); }
                 pokemon.setAccuracyInteger((pokemon.getAccuracyInteger()+move.buffDebuffInteger));
+                System.out.println(pokemon.getName() + "'s accuracy" + buffDebuffMessage(move.buffDebuffInteger));
                 modifier = accuracyConverter(pokemon.getAccuracyInteger());
                 pokemon.setBattleAccuracy((int) (pokemon.getAccuracy()*modifier));
                 break;

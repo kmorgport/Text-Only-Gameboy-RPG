@@ -8,7 +8,7 @@ public class SquirtleMoves {
     public static Moves[] findSquirtleMoves(){
         return new Moves[]{
                 new Attack("Tackle","Normal","Physical",35,95,35),
-                new BuffDeBuff("Tail Whip","Debuff","Status",30,100,-1,"Defense",100),
+                new BuffDeBuff("Tail Whip","Normal","Debuff",30,100,-1,"Defense",100),
                 new Attack("Water Gun","Water","Special",25,100,40)
         };
     }
