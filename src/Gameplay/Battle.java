@@ -125,6 +125,98 @@ public class Battle {
 
     }
 
+    public double evasionConverter(Pokemon pokemon){
+        double modifier = 1;
+        switch(pokemon.getBuffDebuffStage()){
+            case -6:
+                modifier = 3.0;
+                break;
+            case -5:
+                modifier = 2.66;
+                break;
+            case -4:
+                modifier = 2.33;
+                break;
+            case -3:
+                modifier = 2.0;
+                break;
+            case -2:
+                modifier = 1.66;
+                break;
+            case -1:
+                modifier = 1.33;
+                break;
+            case 0:
+                modifier = 1;
+                break;
+            case 1:
+                modifier = 0.75;
+                break;
+            case 2:
+                modifier = 0.6;
+                break;
+            case 3:
+                modifier = 0.5;
+                break;
+            case 4:
+                modifier = 0.43;
+                break;
+            case 5:
+                modifier = 0.36;
+                break;
+            case 6:
+                modifier = 0.33;
+                break;
+        }
+        return modifier;
+    }
+
+    public double accuracyConverter(Pokemon pokemon){
+        double modifier = 1;
+        switch(pokemon.getBuffDebuffStage()){
+            case -6:
+                modifier = 0.33;
+                break;
+            case -5:
+                modifier = 0.36;
+                break;
+            case -4:
+                modifier = 0.43;
+                break;
+            case -3:
+                modifier = 0.5;
+                break;
+            case -2:
+                modifier = 0.6;
+                break;
+            case -1:
+                modifier = 0.75;
+                break;
+            case 0:
+                modifier = 1;
+                break;
+            case 1:
+                modifier = 1.33;
+                break;
+            case 2:
+                modifier = 1.66;
+                break;
+            case 3:
+                modifier = 2.0;
+                break;
+            case 4:
+                modifier = 2.33;
+                break;
+            case 5:
+                modifier = 2.66;
+                break;
+            case 6:
+                modifier = 3;
+                break;
+        }
+        return modifier;
+    }
+
     public double integerConverter(Pokemon pokemon){
         double modifier = 0.0;
         switch(pokemon.getBuffDebuffStage()){
@@ -171,7 +263,12 @@ public class Battle {
         return modifier;
     }
 
-    public void buff(Pokemon pokemon, Moves move){};
+    public void evasionAccuracy(Pokemon pokemon, Moves move){
+        double modifier = 1;
+        switch(move.buffDebuffType){
+
+        }
+    };
 
     public void buffDeBuff(Pokemon pokemon, Moves move){
         double modifier = 1;

@@ -13,28 +13,37 @@ public abstract class Pokemon {
     protected int hpEV;
     protected int attack;
     protected int battleAttack;
+    protected int attackInteger;
     protected int baseAttack;
     protected int attackIV;
     protected int attackEV;
     protected int defense;
     protected int battleDefense;
+    protected int defenseInteger;
     protected int baseDefense;
     protected int defenseIV;
     protected int defenseEV;
     protected int specialAttack;
     protected int battleSpecialAttack;
+    protected int specialAttackInteger;
     protected int baseSpecialAttack;
     protected int specAttIV;
     protected int specAttEV;
     protected int specialDefense;
     protected int battleSpecialDefense;
+    protected int specialDefenseInteger;
     protected int baseSpecialDefense;
     protected int specDefIV;
     protected int specDefEV;
     protected int speed;
     protected int battleSpeed;
+    protected int speedInteger;
     protected int evasion;
     protected int battleEvasion;
+    protected int evasionInteger;
+    protected int accuracy;
+    protected int battleAccuracy;
+    protected int accuracyInteger;
     protected int speedIV;
     protected int speedEV;
     protected int baseSpeed;
@@ -54,7 +63,15 @@ public abstract class Pokemon {
         this.specAttIV = specAttIV;
         this.specDefIV = specDefIV;
         this.speedIV =  speedIV;
-        buffDebuffStage = 0;
+        attackInteger = 0;
+        defenseInteger = 0;
+        specialAttackInteger = 0;
+        specialDefenseInteger = 0;
+        speedInteger = 0;
+        evasion = 100;
+        accuracy = 100;
+        evasionInteger = 0;
+        accuracyInteger = 0;
 
 
     }
@@ -107,6 +124,10 @@ public abstract class Pokemon {
 
     public void setBattleAttack(int battleAttack){this.battleAttack = battleAttack;}
 
+    public int getAttackInteger(){return this.attackInteger;}
+
+    public void setAttackInteger(int attackInteger){this.attackInteger = attackInteger;}
+
     public void increaseAttackEV(int attackEv){
         this.attackEV += attackEv;
     }
@@ -124,6 +145,10 @@ public abstract class Pokemon {
     public int getBattleDefense(){return this.battleDefense;}
 
     public void setBattleDefense(int battleDefense){this.battleDefense = battleDefense;}
+
+    public int getDefenseInteger(){return this.defenseInteger;}
+
+    public void setDefenseInteger(int defenseInteger){this.defenseInteger = defenseInteger;}
 
     public void increaseDefenseEV(int defenseEv){
         this.defenseEV += defenseEv;
@@ -145,6 +170,10 @@ public abstract class Pokemon {
         this.battleSpecialAttack = battleSpecialAttack;
     }
 
+    public int getSpecialAttackInteger(){return this.specialAttackInteger;}
+
+    public void setSpecialAttackInteger(int specialAttackInteger){this.specialAttackInteger = specialAttackInteger;}
+
     public void increaseSpecialAttackEV(int specialAttackEv){
         this.specAttEV += specialAttackEv;
     }
@@ -160,6 +189,10 @@ public abstract class Pokemon {
     public int getBattleSpecialDefense(){
         return this.battleSpecialDefense;
     }
+
+    public int getSpecialDefenseInteger(){return this.specialDefenseInteger;}
+
+    public void setSpecialDefenseInteger(int specialDefenseInteger){this.specialDefenseInteger = specialDefenseInteger;}
 
     public void setBattleSpecialDefense(int battleSpecialDefense){
         this.battleSpecialDefense = battleSpecialDefense;
@@ -181,11 +214,25 @@ public abstract class Pokemon {
 
     public void setBattleSpeed(int battleSpeed){this.battleSpeed = battleSpeed;}
 
+    public int getSpeedInteger(){return this.speedInteger;}
+
+    public void setSpeedInteger(int speedInteger){this.speedInteger = speedInteger;}
+
     public void increaseSpeedEV(int speedEv){
         this.speedEV += speedEv;
     }
 
     public int getEvasion(){return this.evasion;}
+
+    public int getEvasionInteger(){return this.evasionInteger;}
+
+    public void setEvasionInteger(int evasionInteger){this.evasionInteger = evasionInteger;}
+
+    public int getAccuracy(){return this.accuracy;}
+
+    public int getAccuracyInteger(){return this.accuracyInteger;}
+
+    public void setAccuracyInteger(int accuracyInteger){this.accuracyInteger = accuracyInteger;}
 
     public int getBuffDebuffStage(){return this.buffDebuffStage;}
 
