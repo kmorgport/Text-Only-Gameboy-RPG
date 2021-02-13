@@ -77,6 +77,10 @@ public class Battle {
                         }else if(move.category.equals("Special")){
                             playerSpecialAttack(player,move,npc);
                             break;
+                        }else if(move.category.equals("Debuff")){
+                            buffDeBuff(npc,move);
+                        }else if(move.category.equals("Buff")){
+                            buffDeBuff(player,move);
                         }
                     }
 //                    else{
@@ -98,28 +102,12 @@ public class Battle {
         Moves[] moveList = npc.pullMoveList();
         int moveRandom = (int) Math.floor(Math.random()*3);
         Moves npcMove = moveList[moveRandom];
-        int type = (int) moveTypeDeterminer(npcMove.type,player);
-        double stab = determineStab(npc.types,npcMove.type);
-        double critRando = Math.floor(Math.random()*100);
-        int crit = determineCriticalHit(critRando);
-        double random =  (Math.random()*.15)+.85;
-        double burn = 1.0;
-        double modifier = getModifier(crit,random,stab,type,burn);
-        //need to code modifier to 'super effective' message
-        System.out.println(npc.getName() + " used " + npcMove.name + "!");
-        if(type>1){
-            System.out.println("It was super effective!");
-        }else if(type<1){
-            System.out.println("It wasn't very effective...");
-        }
-        int damage = (int) Math.ceil(calculateDamage(npc.getLevel(),npcMove.power,npc.getAttack(),player.getDefense(),modifier)+1);
-        System.out.println(npc.getName() + " hit " + player.getName() + " for " + damage + " points of damage!");
-        player.setHitPoints(player.getHitPoints()-damage);
-        if(player.getHitPoints()<=0){
-
-        }
-        else {
-            System.out.println(player.getName() + " has " + player.getHitPoints() + " remaining!");
+        if(npcMove.category.equals("Buff")){
+            buffDeBuff(player,npcMove);
+        }else if(npcMove.category.equals("Physical")){
+            playerAttack(npc,npcMove,player);
+        }else if(npcMove.category.equals("Special")){
+            playerSpecialAttack(npc,npcMove,player);
         }
 
 
@@ -337,55 +325,55 @@ public class Battle {
 
     }
 
-    public void playerAttack(Pokemon player, Moves move , Pokemon npc){
-        int type = (int) moveTypeDeterminer(move.type,npc);
-        double stab = determineStab(player.types,move.type);
+    public void playerAttack(Pokemon attacker, Moves move , Pokemon defender){
+        int type = (int) moveTypeDeterminer(move.type,defender);
+        double stab = determineStab(attacker.types,move.type);
         double critRando = Math.floor(Math.random()*100);
         int crit = determineCriticalHit(critRando);
         double random =  (Math.random()*.15)+.85;
         double burn = 1.0;
         double modifier = getModifier(crit,random,stab,type,burn);
         //need to code modifier to 'super effective' message
-        System.out.println(player.getName() + " used " + move.name + "!");
+        System.out.println(attacker.getName() + " used " + move.name + "!");
         if(type>1){
             System.out.println("It was super effective!");
         }else if(type<1){
             System.out.println("It wasn't very effective...");
         }
-        int damage = (int) Math.round(calculateDamage(player.getLevel(),move.power,player.getAttack(),npc.getDefense(),modifier)+1);
-        System.out.println(player.getName() + " hit " + npc.getName() + " for " + damage + " points of damage!");
-        npc.setHitPoints(npc.getHitPoints()-damage);
+        int damage = (int) Math.round(calculateDamage(attacker.getLevel(),move.power,attacker.getAttack(),defender.getDefense(),modifier)+1);
+        System.out.println(attacker.getName() + " hit " + defender.getName() + " for " + damage + " points of damage!");
+        defender.setHitPoints(defender.getHitPoints()-damage);
 //        npc.setHitPoints(npc.getHitPoints()-damage);
-        if(npc.getHitPoints()<=0){
+        if(defender.getHitPoints()<=0){
 
         }else {
-            System.out.println(npc.getName() + " has " + npc.getHitPoints() + " remaining!");
+            System.out.println(defender.getName() + " has " + defender.getHitPoints() + " remaining!");
         }
     }
 
-    public void playerSpecialAttack(Pokemon player, Moves move , Pokemon npc){
-        double type = moveTypeDeterminer(move.type,npc);
-        double stab = determineStab(player.types,move.type);
+    public void playerSpecialAttack(Pokemon attacker, Moves move , Pokemon defender){
+        double type = moveTypeDeterminer(move.type,defender);
+        double stab = determineStab(attacker.types,move.type);
         double critRando = Math.floor(Math.random()*100);
         int crit = determineCriticalHit(critRando);
         double random =  (Math.random()*.15)+.85;
         double burn = 1.0;
         double modifier = getModifier(crit,random,stab,type,burn);
         //need to code modifier to 'super effective' message
-        System.out.println(player.getName() + " used " + move.name + "!");
+        System.out.println(attacker.getName() + " used " + move.name + "!");
         if(type>1){
             System.out.println("It was super effective!");
         }else if(type<1){
             System.out.println("It wasn't very effective...");
         }
-        int damage = (int) Math.round(calculateDamage(player.getLevel(),move.power,player.getSpecialAttack(),npc.getSpecialDefense(),modifier)+1);
-        System.out.println(player.getName() + " hit " + npc.getName() + " for " + damage + " points of damage!");
-        npc.setHitPoints(npc.getHitPoints()-damage);
+        int damage = (int) Math.round(calculateDamage(attacker.getLevel(),move.power,attacker.getSpecialAttack(),defender.getSpecialDefense(),modifier)+1);
+        System.out.println(attacker.getName() + " hit " + defender.getName() + " for " + damage + " points of damage!");
+        defender.setHitPoints(defender.getHitPoints()-damage);
 //        npc.setHitPoints(npc.getHitPoints()-damage);
-        if(npc.getHitPoints()<=0){
+        if(defender.getHitPoints()<=0){
 
         }else {
-            System.out.println(npc.getName() + " has " + npc.getHitPoints() + " remaining!");
+            System.out.println(defender.getName() + " has " + defender.getHitPoints() + " remaining!");
         }
     }
 
