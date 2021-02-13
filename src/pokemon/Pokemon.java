@@ -42,6 +42,7 @@ public abstract class Pokemon {
     protected int currentExpTotal;
     protected int expToNextLevel;
     protected int baseExp;
+    protected int buffDebuffStage;
     public ArrayList<String> types;
 
 
@@ -53,6 +54,7 @@ public abstract class Pokemon {
         this.specAttIV = specAttIV;
         this.specDefIV = specDefIV;
         this.speedIV =  speedIV;
+        buffDebuffStage = 0;
 
 
     }
@@ -184,6 +186,10 @@ public abstract class Pokemon {
     }
 
     public int getEvasion(){return this.evasion;}
+
+    public int getBuffDebuffStage(){return this.buffDebuffStage;}
+
+    public void setBuffDebuffStage(int buffDebuffStage){this.buffDebuffStage = buffDebuffStage;}
 
     public int getBattleEvasion(){return this.battleEvasion;}
     public void setBattleEvasion(int battleEvasion){this.battleEvasion = battleEvasion;}
