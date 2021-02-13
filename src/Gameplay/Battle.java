@@ -217,9 +217,9 @@ public class Battle {
         return modifier;
     }
 
-    public double integerConverter(Pokemon pokemon){
+    public double integerConverter(int buffDeBuffInteger){
         double modifier = 0.0;
-        switch(pokemon.getBuffDebuffStage()){
+        switch(buffDeBuffInteger){
             case -6:
                 modifier = 0.25;
                 break;
@@ -263,59 +263,52 @@ public class Battle {
         return modifier;
     }
 
-    public void evasionAccuracy(Pokemon pokemon, Moves move){
-        double modifier = 1;
-        switch(move.buffDebuffType){
-
-        }
-    };
-
     public void buffDeBuff(Pokemon pokemon, Moves move){
         double modifier = 1;
         switch(move.buffDebuffType){
             case "Attack":
-                if(pokemon.getBuffDebuffStage()==-6){
+                if(pokemon.getAttackInteger()==-6){
                     System.out.println(pokemon.getName() + "'s " + move.buffDebuffType + " can't be lowered any further!"); }
-                if(pokemon.getBuffDebuffStage()==6){
+                if(pokemon.getAttackInteger()==6){
                     System.out.println(pokemon.getName() + "'s " + move.buffDebuffType + " can't be raised any further!"); }
-                pokemon.setBuffDebuffStage(pokemon.getBuffDebuffStage()+move.buffDebuffInteger);
-                modifier = integerConverter(pokemon);
+                pokemon.setAttackInteger(pokemon.getAttackInteger()+move.buffDebuffInteger);
+                modifier = integerConverter(pokemon.getAttackInteger());
                 pokemon.setBattleAttack((int) (pokemon.getAttack()*modifier));
                 break;
             case "Defense":
-                if(pokemon.getBuffDebuffStage()==-6){
+                if(pokemon.getDefenseInteger()==-6){
                     System.out.println(pokemon.getName() + "'s " + move.buffDebuffType + " can't be lowered any further!"); }
-                if(pokemon.getBuffDebuffStage()==6){
+                if(pokemon.getDefenseInteger()==6){
                     System.out.println(pokemon.getName() + "'s " + move.buffDebuffType + " can't be raised any further!"); }
-                pokemon.setBuffDebuffStage(pokemon.getBuffDebuffStage()+move.buffDebuffInteger);
-                modifier = integerConverter(pokemon);
+                pokemon.setDefenseInteger(pokemon.getDefenseInteger()+move.buffDebuffInteger);
+                modifier = integerConverter(pokemon.getDefenseInteger());
                 pokemon.setBattleDefense((int) (pokemon.getDefense()*modifier));
                 break;
             case "SpecAttack":
-                if(pokemon.getBuffDebuffStage()==-6){
+                if(pokemon.getSpecialAttackInteger()==-6){
                     System.out.println(pokemon.getName() + "'s " + move.buffDebuffType + " can't be lowered any further!"); }
-                if(pokemon.getBuffDebuffStage()==6){
+                if(pokemon.getSpecialAttackInteger()==6){
                     System.out.println(pokemon.getName() + "'s " + move.buffDebuffType + " can't be raised any further!"); }
-                pokemon.setBuffDebuffStage(pokemon.getBuffDebuffStage()+move.buffDebuffInteger);
-                modifier = integerConverter(pokemon);
+                pokemon.setSpecialAttackInteger(pokemon.getSpecialAttackInteger()+move.buffDebuffInteger);
+                modifier = integerConverter(pokemon.getSpecialAttackInteger());
                 pokemon.setBattleSpecialAttack((int) (pokemon.getSpecialAttack()*modifier));
                 break;
             case "SpecDefense":
-                if(pokemon.getBuffDebuffStage()==-6){
+                if(pokemon.getSpecialDefenseInteger()==-6){
                     System.out.println(pokemon.getName() + "'s " + move.buffDebuffType + " can't be lowered any further!"); }
-                if(pokemon.getBuffDebuffStage()==6){
+                if(pokemon.getSpecialDefenseInteger()==6){
                     System.out.println(pokemon.getName() + "'s " + move.buffDebuffType + " can't be raised any further!"); }
-                pokemon.setBuffDebuffStage(pokemon.getBuffDebuffStage()+move.buffDebuffInteger);
-                modifier = integerConverter(pokemon);
+                pokemon.setSpecialDefenseInteger(pokemon.getSpecialDefenseInteger()+move.buffDebuffInteger);
+                modifier = integerConverter(pokemon.getSpecialAttackInteger());
                 pokemon.setBattleSpecialDefense((int) (pokemon.getSpecialDefense()*modifier));
                 break;
             case "Speed":
-                if(pokemon.getBuffDebuffStage()==-6){
+                if(pokemon.getSpeedInteger()==-6){
                     System.out.println(pokemon.getName() + "'s " + move.buffDebuffType + " can't be lowered any further!"); }
-                if(pokemon.getBuffDebuffStage()==6){
+                if(pokemon.getSpeedInteger()==6){
                     System.out.println(pokemon.getName() + "'s " + move.buffDebuffType + " can't be raised any further!"); }
-                pokemon.setBuffDebuffStage(pokemon.getBuffDebuffStage()+move.buffDebuffInteger);
-                modifier = integerConverter(pokemon);
+                pokemon.setSpeedInteger((pokemon.getSpeedInteger()+move.buffDebuffInteger));
+                modifier = integerConverter(pokemon.getSpeedInteger());
                 pokemon.setBattleSpeed((int) (pokemon.getSpeed()*modifier));
                 break;
         }
