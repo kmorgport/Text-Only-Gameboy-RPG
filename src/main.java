@@ -16,7 +16,7 @@ public class main {
         Squirtle squirtle = new Squirtle(5,random,random,random,random,random,random);
         Battle battle = new Battle();
         squirtle.setAttackInteger(2);
-        battle.battleCycle(squirtle, charmander);
+        battle.battleCycle(charmander, squirtle);
 
     }
 }
