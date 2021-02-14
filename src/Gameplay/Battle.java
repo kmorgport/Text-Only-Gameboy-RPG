@@ -17,10 +17,14 @@ public class Battle {
     public void startBattle(Trainer player, Trainer npc){
         Pokemon playerPokemon = player.retrieveTeamStarter();
         Pokemon rivalPokemon = npc.retrieveTeamStarter();
-        battleCycle(playerPokemon,rivalPokemon);
+        battleCycle(player,npc);
     }
 
-    public void battleCycle(Pokemon player, Pokemon npc){
+    public void battleCycle(Trainer protagonist, Trainer rival){
+        Pokemon player = protagonist.retrieveTeamStarter();
+        Pokemon npc = rival.retrieveTeamStarter();
+        System.out.println(rival.getName() + " sent out " + npc.getName() + "!");
+        System.out.println("Go! " + player.getName() + "!");
         while(true) {
             if(npc.getHitPoints()<=0){
                 System.out.println(npc.getName() + " fainted!");
@@ -31,7 +35,7 @@ public class Battle {
                 break;
             }
             if (player.getSpeed() > npc.getSpeed()) {
-                playerTurn(player, npc);
+                playerTurn(protagonist, rival);
                 if (player.getHitPoints() <= 0) {
                     System.out.println(player.getName() + " fainted!");
                     break;
@@ -49,13 +53,15 @@ public class Battle {
                     System.out.println(npc.getName() + " fainted!");
                     break;
                 }
-                playerTurn(player, npc);
+                playerTurn(protagonist, rival);
             }
         }
 //        return winner;
     }
 
-    public void playerTurn(Pokemon player, Pokemon npc){
+    public void playerTurn(Trainer protagonist, Trainer rival){
+        Pokemon player = protagonist.retrieveTeamStarter();
+        Pokemon npc = rival.retrieveTeamStarter();
         Moves[] moveList = player.pullMoveList();
         int accuracyRandom = (int) Math.floor(Math.random()*125);
         System.out.println("What would you like to do?");
@@ -72,6 +78,7 @@ public class Battle {
                             if(accuracyRandom<=calculateAccuracy(player,move,npc)){
                                 playerAttack(player, move, npc);
                             }else{
+                                System.out.println(player.getName() + " used " + move.getName() + "!");
                                 System.out.println("The attack missed!");
                             }
                             break;
@@ -79,6 +86,7 @@ public class Battle {
                             if(accuracyRandom<=calculateAccuracy(player,move,npc)){
                                 playerSpecialAttack(player,move,npc);
                             }else{
+                                System.out.println(player.getName() + " used " + move.getName() + "!");
                                 System.out.println("The attack missed!");
                             }
                             break;
@@ -99,7 +107,8 @@ public class Battle {
             case "pkmn":
                 break;
             case "run":
-                break;
+                System.out.println("You can't run from Trainer battles!");
+                playerTurn(protagonist,rival);
         }
     }
 
@@ -117,12 +126,14 @@ public class Battle {
             if(accuracyRandom<=calculateAccuracy(npc,npcMove,player)) {
                 playerAttack(npc, npcMove, player);
             }else{
+                System.out.println(npc.getName() + " used " + npcMove.getName() + "!");
                 System.out.println("The attack missed!");
             }
         }else if(npcMove.category.equals("Special")){
             if(accuracyRandom<=calculateAccuracy(npc,npcMove,player)){
                 playerSpecialAttack(npc,npcMove,player);
             }else{
+                System.out.println(npc.getName() + " used " + npcMove.getName() + "!");
                 System.out.println("The attack missed!");
             }
         }
