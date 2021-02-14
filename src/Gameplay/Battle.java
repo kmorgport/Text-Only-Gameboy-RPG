@@ -61,6 +61,7 @@ public class Battle {
 
     public void playerTurn(Pokemon player, Pokemon npc){
         Moves[] moveList = player.pullMoveList();
+        int accuracyRandom = (int) Math.floor(Math.random()*255);
         System.out.println("What would you like to do?");
         System.out.println("");
         System.out.println("---FIGHT---ITEM---PKMN---RUN---");
@@ -72,10 +73,18 @@ public class Battle {
                 for(Moves move: moveList){
                     if(move.name.toLowerCase().contains(answ.toLowerCase())){
                         if(move.category.equals("Physical")) {
-                            playerAttack(player, move, npc);
+                            if(accuracyRandom<=calculateAccuracy(player,move,npc)){
+                                playerAttack(player, move, npc);
+                            }else{
+                                System.out.println("The attack missed!");
+                            }
                             break;
                         }else if(move.category.equals("Special")){
-                            playerSpecialAttack(player,move,npc);
+                            if(accuracyRandom<=calculateAccuracy(player,move,npc)){
+                                playerSpecialAttack(player,move,npc);
+                            }else{
+                                System.out.println("The attack missed!");
+                            }
                             break;
                         }else if(move.category.equals("Debuff")){
                             buffDeBuff(npc,move);
@@ -99,15 +108,24 @@ public class Battle {
     }
 
     public void npcTurn(Pokemon player, Pokemon npc){
+        int accuracyRandom = (int) Math.floor(Math.random()*255);
         Moves[] moveList = npc.pullMoveList();
         int moveRandom = (int) Math.floor(Math.random()*3);
         Moves npcMove = moveList[moveRandom];
         if(npcMove.category.equals("Buff")){
             buffDeBuff(player,npcMove);
         }else if(npcMove.category.equals("Physical")){
-            playerAttack(npc,npcMove,player);
+            if(accuracyRandom<=calculateAccuracy(npc,npcMove,player)) {
+                playerAttack(npc, npcMove, player);
+            }else{
+                System.out.println("The attack missed!");
+            }
         }else if(npcMove.category.equals("Special")){
-            playerSpecialAttack(npc,npcMove,player);
+            if(accuracyRandom<=calculateAccuracy(npc,npcMove,player)){
+                playerSpecialAttack(npc,npcMove,player);
+            }else{
+                System.out.println("The attack missed!");
+            }
         }
 
 
@@ -343,7 +361,8 @@ public class Battle {
         }
     }
 
-    public void accuracyAndEvasion(Pokemon pokemon, Moves move){
+    public int calculateAccuracy(Pokemon attacker, Moves move, Pokemon defender){
+        return (int) (move.getAccuracy()*accuracyConverter(attacker.getAccuracyInteger())*evasionConverter(defender.getEvasionInteger()));
 
     }
 
