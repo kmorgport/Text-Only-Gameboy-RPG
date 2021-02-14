@@ -17,14 +17,10 @@ public class Battle {
     public void startBattle(Trainer player, Trainer npc){
         Pokemon playerPokemon = player.retrieveTeamStarter();
         Pokemon rivalPokemon = npc.retrieveTeamStarter();
-        int playerHp = playerPokemon.getHitPoints();
-        int rivalHp = rivalPokemon.getHitPoints();
         battleCycle(playerPokemon,rivalPokemon);
     }
 
     public void battleCycle(Pokemon player, Pokemon npc){
-        boolean fighting = true;
-        boolean winner = true;
         while(true) {
             if(npc.getHitPoints()<=0){
                 System.out.println(npc.getName() + " fainted!");
@@ -287,6 +283,7 @@ public class Battle {
         }
     }
 
+//agent and patient are similar to ergative grammatical concepts so that this method can be used in both stat buffing and stat debuffing Scenarios. For buffing, agent and patient are identical, for debuffing agent and patient are the attacker and defender respectively.
     public void buffDeBuff(Pokemon agent, Moves move, Pokemon patient){
         double modifier = 1;
         System.out.println(agent.getName() + " used " + move.getName());
