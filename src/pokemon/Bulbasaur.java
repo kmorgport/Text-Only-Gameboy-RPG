@@ -32,6 +32,7 @@ public class Bulbasaur extends Pokemon{
         setExpToNextLevel(expToNextLevel(level));
     }
 
+    //medium-slow group
     public int expToNextLevel(int level) {
        return (int) (((6/5)*Math.pow((level+1),3))-(15*Math.pow((level+1),2))+(100*(level+1))-140);
     }
