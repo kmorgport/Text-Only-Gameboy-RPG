@@ -1,4 +1,6 @@
 import Gameplay.Battle;
+import items.Antidote;
+import items.Items;
 import items.Potion;
 import moves.Moves;
 import pokemon.Bulbasaur;
@@ -21,10 +23,13 @@ public class main {
         Squirtle squirtle = new Squirtle(5,random,random,random,random,random,random);
         Battle battle = new Battle();
         Trainer red = new Protagonist("Red");
-        Trainer green = new Rival("Blue");
-        Potion potion = new Potion();
+        Items potion = new Potion();
+        Items antidote = new Antidote();
         potion.setQuantity(2);
-        System.out.println(potion.getPrice());
+        red.addToItems(potion);
+        red.addToItems(antidote);
+        red.mapIterator(red.getItems());
+
 
     }
 }
