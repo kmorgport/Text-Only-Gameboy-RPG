@@ -115,6 +115,7 @@ public class Battle {
 
 //    public void useHealingItem()
 
+
     public void npcTurn(Pokemon player, Pokemon npc){
         int accuracyRandom = (int) Math.floor(Math.random()*125);
         Moves[] moveList = npc.pullMoveList();

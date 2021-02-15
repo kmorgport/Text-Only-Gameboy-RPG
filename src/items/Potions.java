@@ -1,10 +1,9 @@
 package items;
 
 public class Potions extends Items{
-    public Potions(String name, int price, int sellPrice, int healthRecoveryAmount) {
-        super(name);
-        this.price = price;
-        this.sellPrice = sellPrice;
-        this.healthRecoveryAmount = healthRecoveryAmount;
+    public static boolean battleItem = true;
+    public Potions() {
     }
 }
+
+//Potion(Potion, 300, 150, 20)

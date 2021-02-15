@@ -1,4 +1,5 @@
 import Gameplay.Battle;
+import items.Potion;
 import moves.Moves;
 import pokemon.Bulbasaur;
 import pokemon.Charmander;
@@ -21,9 +22,9 @@ public class main {
         Battle battle = new Battle();
         Trainer red = new Protagonist("Red");
         Trainer green = new Rival("Blue");
-        red.addPokemonToTeam(charmander);
-        green.addPokemonToTeam(bulbasaur);
-        battle.battleCycle(red,green);
+        Potion potion = new Potion();
+        potion.setQuantity(2);
+        System.out.println(potion.getPrice());
 
     }
 }

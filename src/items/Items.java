@@ -3,13 +3,13 @@ package items;
 public abstract class Items {
     protected String name;
     protected int price;
+    protected int quantity;
     protected int sellPrice;
     protected String statusRecovery;
     protected int healthRecoveryAmount;
     protected double captureRate;
     protected boolean keyItem;
-    public Items(String name){
-        this.name = name;
+    public Items(){
     }
 
     public String getName(){
@@ -19,6 +19,9 @@ public abstract class Items {
     public int getPrice(){
         return this.price;
     }
+
+    public int getQuantity(){return this.quantity;}
+    public void setQuantity(int quantity){this.quantity += quantity;}
 
     public int getSellPrice(){
         return this.sellPrice;
