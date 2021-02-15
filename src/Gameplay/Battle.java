@@ -105,12 +105,15 @@ public class Battle {
             case "item":
                 break;
             case "pkmn":
-                break;
+                System.out.println("You only have " + player.getName() + "!");
+                playerTurn(protagonist,rival);
             case "run":
                 System.out.println("You can't run from Trainer battles!");
                 playerTurn(protagonist,rival);
         }
     }
+
+//    public void useHealingItem()
 
     public void npcTurn(Pokemon player, Pokemon npc){
         int accuracyRandom = (int) Math.floor(Math.random()*125);
