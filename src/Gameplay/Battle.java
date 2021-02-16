@@ -120,10 +120,12 @@ public class Battle {
     }
 
     public void viewRecoveryItems(Trainer protagonist){
+        protagonist.mapIterator(protagonist.getMedicine());
+        System.out.println("\n");
         System.out.println("Which recovery item would you like to use?");
         System.out.println(" ");
-        protagonist.mapIterator(protagonist.getMedicine());
-        String answ = consoleEntry.getString();
+        String answ = consoleEntry.getString().toUpperCase();
+        System.out.println(protagonist.getMedicine().get(answ));
 
     }
 

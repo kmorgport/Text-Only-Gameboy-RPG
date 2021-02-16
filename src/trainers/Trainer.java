@@ -53,21 +53,21 @@ abstract public class Trainer {
         return this.items;
     }
     public void addToItems(Items item){
-        items.put(item.getName(),item);
+        items.put(item.getName().toUpperCase(),item);
     }
 
     public LinkedHashMap<String,Items> getMedicine(){
         return this.medicine;
     }
     public void addToMedicine(Items item){
-        medicine.put(item.getName(),item);
+        medicine.put(item.getName().toUpperCase(),item);
     }
 
     public LinkedHashMap<String,Items> getBattleItems(){
         return this.battleItems;
     }
     public void addToBattleItems(Items item){
-        battleItems.put(item.getName(), item);
+        battleItems.put(item.getName().toUpperCase(), item);
     }
 
     public LinkedHashMap<String,Items> getTms(){
@@ -81,7 +81,7 @@ abstract public class Trainer {
         return this.keyItems;
     }
     public void addToKeyItems(Items item){
-        keyItems.put(item.getName(), item);
+        keyItems.put(item.getName().toUpperCase(), item);
     }
 
 
