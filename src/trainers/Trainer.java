@@ -90,7 +90,8 @@ abstract public class Trainer {
         Iterator<Map.Entry<String, Items>> itr = map.entrySet().iterator();
         while (itr.hasNext()) {
             Map.Entry<String, Items> entry = itr.next();
-            System.out.println(entry.getKey() + " " + entry.getValue().getQuantity());
+//            System.out.print(entry.getKey() + " " + entry.getValue().getQuantity());
+            System.out.print(entry.getValue().getQuantity() + " " + entry.getKey() + " - - ");
         }
     }
 }

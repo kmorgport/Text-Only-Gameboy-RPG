@@ -26,9 +26,10 @@ public class main {
         Items potion = new Potion();
         Items antidote = new Antidote();
         potion.setQuantity(2);
-        red.addToItems(potion);
-        red.addToItems(antidote);
-        red.mapIterator(red.getItems());
+        red.addToMedicine(potion);
+        red.addToMedicine(antidote);
+        battle.viewRecoveryItems(red);
+//        red.mapIterator(red.getMedicine());
 
 
     }

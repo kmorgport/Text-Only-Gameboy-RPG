@@ -1,11 +1,13 @@
 package Gameplay;
 
+import items.Items;
 import moves.Moves;
 import pokemon.Pokemon;
 import trainers.Trainer;
 import util.Input;
 
 import java.util.ArrayList;
+import java.util.LinkedHashMap;
 import java.util.Objects;
 
 public class Battle {
@@ -113,7 +115,17 @@ public class Battle {
         }
     }
 
-//    public void useHealingItem()
+    public void viewItems(Trainer protagonist){
+
+    }
+
+    public void viewRecoveryItems(Trainer protagonist){
+        System.out.println("Which recovery item would you like to use?");
+        System.out.println(" ");
+        protagonist.mapIterator(protagonist.getMedicine());
+        String answ = consoleEntry.getString();
+
+    }
 
 
     public void npcTurn(Pokemon player, Pokemon npc){
