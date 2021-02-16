@@ -106,6 +106,7 @@ public class Battle {
                 }
                 break;
             case "item":
+                useRecoveryItems(protagonist,rival);
                 break;
             case "pkmn":
                 System.out.println("You only have " + player.getName() + "!");
@@ -120,7 +121,7 @@ public class Battle {
 
     }
 
-    public void useRecoveryItems(Trainer protagonist){
+    public void useRecoveryItems(Trainer protagonist, Trainer rival){
         protagonist.mapIterator(protagonist.getMedicine());
         System.out.println("\n");
         System.out.println("Which recovery item would you like to use?");
@@ -128,7 +129,28 @@ public class Battle {
         String answ = consoleEntry.getString().toUpperCase();
         Items item = protagonist.getMedicine().get(answ);
         if(item.getHealthRecoveryAmount()>0){
-            Pokemon current = protagonist.retrieveTeamStarter();
+            Pokemon currentPokemon = protagonist.retrieveTeamStarter();
+            if(currentPokemon.getHitPoints()==currentPokemon.getMaxHitPoints()){
+                System.out.println(currentPokemon.getName() + "is at max HP, cannot heal any further!");
+                playerTurn(protagonist,rival);
+            }
+            if(currentPokemon.getHitPoints()+item.getHealthRecoveryAmount()>=currentPokemon.getMaxHitPoints()){
+                currentPokemon.setHitPoints(currentPokemon.getMaxHitPoints());
+                System.out.println(currentPokemon.getName() + "has been recovered to max health!");
+                item.setQuantity(-1);
+                System.out.println(item.getQuantity());
+                if(item.getQuantity()<=0){
+                    protagonist.getMedicine().remove(answ);
+                }
+            }else{
+                currentPokemon.setHitPoints(currentPokemon.getHitPoints()+ item.getHealthRecoveryAmount());
+                System.out.println(currentPokemon.getName() + "has been healed for " + item.getHealthRecoveryAmount());
+                System.out.println(currentPokemon.getName() + " has " + currentPokemon.getHitPoints() + "!");
+                item.setQuantity(-1);
+                if(item.getQuantity()<=0){
+                    protagonist.getMedicine().remove(answ);
+                }
+            }
         }else{
             System.out.println(item.getStatusRecovery());}
 

@@ -20,7 +20,8 @@ public class Squirtle extends Pokemon{
         types = new ArrayList<>();
         types.add("Water");
         types.add(null);
-        this.hitPoints = findHP(baseHP,hpIV,0,level);
+        this.maxHitPoints = findHP(baseHP,hpIV,0,level);
+        this.hitPoints = this.maxHitPoints;
         this.attack = findStat(baseAttack,attackIV,0,level);
         this.defense = findStat(baseDefense,defenseIV,0,level);
         this.specialAttack = findStat(baseSpecialAttack,specAttIV,0,level);

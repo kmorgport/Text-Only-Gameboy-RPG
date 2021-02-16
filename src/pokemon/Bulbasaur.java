@@ -21,7 +21,8 @@ public class Bulbasaur extends Pokemon{
         types = new ArrayList<>();
         types.add("Grass");
         types.add("Poison");
-        this.hitPoints = findHP(baseHP,hpIV,0,level);
+        this.maxHitPoints = findHP(baseHP,hpIV,0,level);
+        this.hitPoints = this.maxHitPoints;
         this.attack = findStat(baseAttack,attackIV,0,level);
         this.defense = findStat(baseDefense,defenseIV,0,level);
         this.specialAttack = findStat(baseSpecialAttack,specAttIV,0,level);

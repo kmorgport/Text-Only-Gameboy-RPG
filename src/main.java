@@ -23,12 +23,19 @@ public class main {
         Squirtle squirtle = new Squirtle(5,random,random,random,random,random,random);
         Battle battle = new Battle();
         Trainer red = new Protagonist("Red");
+        Trainer blue = new Rival("Green");
+        red.addPokemonToTeam(charmander);
+        blue.addPokemonToTeam(bulbasaur);
         Items potion = new Potion();
         Items antidote = new Antidote();
-        potion.setQuantity(2);
+        potion.setQuantity(1);
         red.addToMedicine(potion);
         red.addToMedicine(antidote);
-        battle.useRecoveryItems(red);
+        battle.battleCycle(red,blue);
+//        potion.setQuantity(2);
+//        red.addToMedicine(potion);
+//        red.addToMedicine(antidote);
+//        battle.useRecoveryItems(red);
 //        red.mapIterator(red.getMedicine());
 
 
