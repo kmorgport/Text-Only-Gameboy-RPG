@@ -28,7 +28,7 @@ public class main {
         potion.setQuantity(2);
         red.addToMedicine(potion);
         red.addToMedicine(antidote);
-        battle.viewRecoveryItems(red);
+        battle.useRecoveryItems(red);
 //        red.mapIterator(red.getMedicine());
 
 

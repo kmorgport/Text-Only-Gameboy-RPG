@@ -6,6 +6,7 @@ import pokemon.Pokemon;
 import trainers.Trainer;
 import util.Input;
 
+import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.Objects;
@@ -119,13 +120,18 @@ public class Battle {
 
     }
 
-    public void viewRecoveryItems(Trainer protagonist){
+    public void useRecoveryItems(Trainer protagonist){
         protagonist.mapIterator(protagonist.getMedicine());
         System.out.println("\n");
         System.out.println("Which recovery item would you like to use?");
         System.out.println(" ");
         String answ = consoleEntry.getString().toUpperCase();
-        System.out.println(protagonist.getMedicine().get(answ));
+        Items item = protagonist.getMedicine().get(answ);
+        if(item.getHealthRecoveryAmount()>0){
+            Pokemon current = protagonist.retrieveTeamStarter();
+        }else{
+            System.out.println(item.getStatusRecovery());}
+
 
     }
 

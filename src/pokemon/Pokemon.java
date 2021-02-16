@@ -8,6 +8,7 @@ public abstract class Pokemon {
     protected String name;
     protected int level;
     protected int hitPoints;
+    protected int workingHitPoints;
     protected int baseHP;
     protected int hpIV;
     protected int hpEV;
@@ -101,6 +102,9 @@ public abstract class Pokemon {
     public void setHitPoints(int hp){
         this.hitPoints = hp;
     }
+
+    public int getWorkingHitPoints(){return this.workingHitPoints;}
+    public void setWorkingHitPoints(int hp){this.workingHitPoints = hp;}
 
     public int getHitPointsEV(){
         return this.hpEV;
