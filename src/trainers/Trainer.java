@@ -87,11 +87,14 @@ abstract public class Trainer {
 
 
     public void mapIterator(Map<String,Items> map) {
+        StringBuilder message = new StringBuilder();
         Iterator<Map.Entry<String, Items>> itr = map.entrySet().iterator();
         while (itr.hasNext()) {
             Map.Entry<String, Items> entry = itr.next();
 //            System.out.print(entry.getKey() + " " + entry.getValue().getQuantity());
-            System.out.print(entry.getValue().getQuantity() + " " + entry.getKey() + " - - ");
+            message.append(entry.getValue().getQuantity()).append(" ").append(entry.getKey()).append(" - - ");
         }
+        message.append("BACK");
+        System.out.println(message.toString());
     }
 }

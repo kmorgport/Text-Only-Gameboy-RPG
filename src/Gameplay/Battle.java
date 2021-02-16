@@ -73,8 +73,11 @@ public class Battle {
         String answ = consoleEntry.getString();
         switch(answ.toLowerCase()){
             case "fight":
-                System.out.println("---" + moveList[0].name + "---" + moveList[1].name + "---" + moveList[2].name + "---");
+                System.out.println("---" + moveList[0].name + "---" + moveList[1].name + "---" + moveList[2].name + "---"+"Back");
                 answ = consoleEntry.getString();
+                if(answ.toLowerCase().equals("back")){
+                    playerTurn(protagonist,rival);
+                }
                 for(Moves move: moveList){
                     if(move.name.toLowerCase().contains(answ.toLowerCase())){
                         if(move.category.equals("Physical")) {
@@ -128,6 +131,9 @@ public class Battle {
         System.out.println(" ");
         String answ = consoleEntry.getString().toUpperCase();
         Items item = protagonist.getMedicine().get(answ);
+        if(answ.equals("BACK")){
+            playerTurn(protagonist,rival);
+        }
         if(item.getHealthRecoveryAmount()>0){
             Pokemon currentPokemon = protagonist.retrieveTeamStarter();
             if(currentPokemon.getHitPoints()==currentPokemon.getMaxHitPoints()){
@@ -136,6 +142,7 @@ public class Battle {
             }
             if(currentPokemon.getHitPoints()+item.getHealthRecoveryAmount()>=currentPokemon.getMaxHitPoints()){
                 currentPokemon.setHitPoints(currentPokemon.getMaxHitPoints());
+                System.out.println("You used " + item.getName() + "!");
                 System.out.println(currentPokemon.getName() + "has been recovered to max health!");
                 item.setQuantity(-1);
                 System.out.println(item.getQuantity());
@@ -144,6 +151,7 @@ public class Battle {
                 }
             }else{
                 currentPokemon.setHitPoints(currentPokemon.getHitPoints()+ item.getHealthRecoveryAmount());
+                System.out.println("You used " + item.getName() + "!");
                 System.out.println(currentPokemon.getName() + "has been healed for " + item.getHealthRecoveryAmount());
                 System.out.println(currentPokemon.getName() + " has " + currentPokemon.getHitPoints() + "!");
                 item.setQuantity(-1);
@@ -621,6 +629,7 @@ public class Battle {
 
     public int determineCriticalHit(double rando){
         if(rando>0 && rando<=12.5){
+            System.out.println("Critical hit!");
             return 2;
         }else{
             return 1;
