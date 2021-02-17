@@ -10,8 +10,35 @@ public class PlayerHouseDownstairs {
     public void navigateLowerFloor(Trainer player,Trainer rival, Computer computer){
         System.out.println(" ");
         System.out.println(" ");
-        System.out.println("You walk downstairs and see your mother seated at the table drinking some tea.");
         inspectDownstairsRoom(player);
+        leaveDownstairsRoom(player,rival,computer);
+
+    }
+
+    public int leaveDownstairsRoom(Trainer player, Trainer rival, Computer computer){
+        System.out.println("Where would you like to go?");
+        System.out.println(" - - - UPSTAIRS - - - OUTSIDE - - -STAY");
+        String answ = io.getString();
+        switch(answ.toLowerCase()){
+            case "upstairs":
+                System.out.println(" - - - - - - - -");
+                System.out.println("You head upstairs to go back to your room");
+                PlayerHouse playerHouse = new PlayerHouse();
+                playerHouse.navigateHouse(player,rival,computer);
+                break;
+            case "outside":
+                System.out.println("You leave your house, to go find Professor LIVEOAK!");
+                Hometown palletteTown = new Hometown();
+                palletteTown.navigateHomeTown(player, rival, computer);
+                break;
+            case "stay":
+                navigateLowerFloor(player,rival,computer);
+                break;
+            default:
+                return leaveDownstairsRoom(player,rival,computer);
+
+        }
+        return 1;
     }
 
     public int inspectDownstairsRoom(Trainer player){

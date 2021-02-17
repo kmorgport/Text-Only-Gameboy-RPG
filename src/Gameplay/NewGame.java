@@ -36,7 +36,7 @@ public class NewGame {
         Trainer protagonist = new Protagonist(name);
         Trainer rival = new Rival(rivalName);
         Computer computer = new Computer();
-        PlayerHouse playerHouse = new PlayerHouse(protagonist,rival,computer);
+        PlayerHouse playerHouse = new PlayerHouse();
         playerHouse.navigateHouse(protagonist,rival,computer);
 
     }

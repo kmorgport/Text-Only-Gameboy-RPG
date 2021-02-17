@@ -8,7 +8,7 @@ import util.Input;
 
 public class PlayerHouse {
     Input io;
-    public PlayerHouse(Trainer player, Trainer rival, Computer computer){
+    public PlayerHouse(){
     }
 
     public void navigateHouse(Trainer player, Trainer rival,Computer computer){
@@ -22,6 +22,7 @@ public class PlayerHouse {
             System.out.println(" ");
             System.out.println("You head down the stairs. Pictures of your family from when you were little are on the hallway. It seems so long ago since you were all together...");
             System.out.println(" - - - - - - - - - - ");
+            System.out.println("You walk downstairs and see your mother seated at the table drinking some tea.");
             downstairs.navigateLowerFloor(player, rival, computer);
         }else{
             inspectRoom(player);
