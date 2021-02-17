@@ -36,13 +36,6 @@ public class Pidgey extends Pokemon{
         return (int) (((6/5)*Math.pow((level+1),3))-(15*Math.pow((level+1),2))+(100*(level+1))-140);
     }
 
-    @Override
-    public Moves[] pullMoveList() {
-        Moves[] allmoves = PidgeyMoves.findPidgeyMoves();
-        Moves[] moveset = new Moves[3];
-        System.arraycopy(allmoves, 0, moveset, 0, allmoves.length);
-        return moveset;
-    }
 
     public ArrayList<Moves> pullMoveArrayList() {
         return BulbasaurMoves.findBulbasaurMovesArrayList();

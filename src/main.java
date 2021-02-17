@@ -16,7 +16,7 @@ import java.util.Arrays;
 import java.util.List;
 
 public class main {
-    public static void main(String[] args){
+f    public static void main(String[] args){
         int random = (int) Math.floor(Math.random()*15)+1;
         Bulbasaur bulbasaur = new Bulbasaur(5,random,random,random,random,random,random);
         Charmander charmander = new Charmander(5,random,random,random,random,random,random);

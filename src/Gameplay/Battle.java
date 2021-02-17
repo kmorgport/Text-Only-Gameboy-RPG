@@ -66,7 +66,6 @@ public class Battle {
     public int playerTurn(Trainer protagonist, Trainer rival){
         Pokemon player = protagonist.retrieveTeamStarter();
         Pokemon npc = rival.retrieveTeamStarter();
-//        Moves[] moveList = player.pullMoveList();
         ArrayList<Moves> moveList2 = player.pullMoveArrayList();
         int accuracyRandom = (int) Math.floor(Math.random()*125);
         System.out.println("What would you like to do?");
@@ -75,11 +74,9 @@ public class Battle {
         String answ = consoleEntry.getString();
         switch(answ.toLowerCase()){
             case "fight":
-//                System.out.println("---" + moveList[0].name + "---" + moveList[1].name + "---" + moveList[2].name + "---"+"Back");
                 System.out.println("---" + moveList2.get(0).name + "---" + moveList2.get(1).name + "---" + moveList2.get(2).name + "---"+"Back");
                 answ = consoleEntry.getString();
                 if(answ.toLowerCase().equals("back")){
-                    //allows player to back out of menu;
                     return playerTurn(protagonist,rival);
                 }
                 ArrayList<String> moveName = new ArrayList<>();
@@ -118,10 +115,6 @@ public class Battle {
                             break;
                         }
                     }
-//                    else{
-//                        System.out.println(player.getName() + " does not know a move named " + answ + "!");
-////                        return playerTurn();  -- once finished out, fill in with arguments to create recursion
-//                    }
                 }
                 break;
             case "item":
@@ -133,13 +126,15 @@ public class Battle {
             case "run":
                 System.out.println("You can't run from Trainer battles!");
                 return playerTurn(protagonist,rival);
+                default:
+                    System.out.println(" ");
+                    System.out.println("That's not a valid entry: ");
+                    System.out.println(" ");
+                    return playerTurn(protagonist,rival);
         }
         return 1;
     }
 
-    public void viewItems(Trainer protagonist){
-
-    }
 
     public int useRecoveryItems(Trainer protagonist, Trainer rival){
         protagonist.mapIterator(protagonist.getMedicine());

@@ -37,15 +37,6 @@ public class Squirtle extends Pokemon{
         return (int) (((6/5)*Math.pow((level+1),3))-(15*Math.pow((level+1),2))+(100*(level+1))-140);
     }
 
-    @Override
-    public Moves[] pullMoveList() {
-        Moves[] allmoves = SquirtleMoves.findSquirtleMoves();
-        Moves[] moveset = new Moves[3];
-        for(int i=0; i<allmoves.length; i++){
-            moveset[i]= allmoves[i];
-        }
-        return moveset;
-    }
 
     public ArrayList<Moves> pullMoveArrayList() {
         return SquirtleMoves.findSquirtleMovesArrayList();

@@ -311,8 +311,6 @@ public abstract class Pokemon {
         this.currentExpTotal = baseExp;
     }
 
-    abstract public Moves[] pullMoveList();
-
     abstract public ArrayList<Moves> pullMoveArrayList();
 
 

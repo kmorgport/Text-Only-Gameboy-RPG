@@ -8,13 +8,6 @@ import java.util.ArrayList;
 import java.util.Arrays;
 
 public class CharmanderMoves {
-    public static Moves[] findCharmanderMoves(){
-        return new Moves[]{
-                new Attack("Scratch","Normal","Physical",35,100,40),
-                new BuffDeBuff("Growl","Normal","Debuff",40,100,-1,"Attack",100),
-                new Attack("Ember","Fire","Special",25,100,40)
-        };
-    }
     public static ArrayList<Moves> findCharmanderMovesArrayList(){
         return new ArrayList<>(Arrays.asList(
                 new Attack("Scratch","Normal","Physical",35,100,40),
