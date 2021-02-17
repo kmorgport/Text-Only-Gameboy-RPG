@@ -1,5 +1,7 @@
 package Gameplay;
 
+import items.Items;
+import items.Potion;
 import trainers.Trainer;
 import util.Input;
 
@@ -10,11 +12,11 @@ public class PlayerHouse {
 
     public void navigateHouse(Trainer player, Trainer rival){
         System.out.println("You look around your room");
-        inspectRoom();
+        inspectRoom(player);
 
     }
 
-    public int inspectRoom(){
+    public int inspectRoom(Trainer player){
         io = new Input();
         System.out.println("Would you like to inspect \n BED -- TV -- PLANT -- COMPUTER");
         String input = io.getString();
@@ -24,7 +26,7 @@ public class PlayerHouse {
                 System.out.println("Would you like to inspect something else in the room? Y/N");
                 String answ = io.getString();
                 if(answ.toLowerCase().equals("y")||answ.toLowerCase().equals("yes")){
-                    return inspectRoom();
+                    return inspectRoom(player);
                 }else{
                     break;
                 }
@@ -34,7 +36,7 @@ public class PlayerHouse {
                 System.out.println("Would you like to inspect something else in the room? Y/N");
                 answ = io.getString();
                 if(answ.toLowerCase().equals("y")||answ.toLowerCase().equals("yes")){
-                    return inspectRoom();
+                    return inspectRoom(player);
                 }else{
                     break;
                 }
@@ -43,7 +45,7 @@ public class PlayerHouse {
                 System.out.println("Would you like to inspect something else in the room? Y/N");
                 answ = io.getString();
                 if(answ.toLowerCase().equals("y")||answ.toLowerCase().equals("yes")){
-                    return inspectRoom();
+                    return inspectRoom(player);
                 }else{
                     break;
                 }
@@ -51,20 +53,48 @@ public class PlayerHouse {
                 System.out.println("It's your LEPPA BERRY Laptop! Would you like to use it? Y/N");
                 answ = io.getString();
                 if(answ.toLowerCase().equals("y")||answ.toLowerCase().equals("yes")){
-                    //open computer
+                    accessPersonalComputer(player);
+                    System.out.println("Would you like to inspect something else in the room? Y/N");
+                    answ = io.getString();
+                    if(answ.toLowerCase().equals("y")||answ.toLowerCase().equals("yes")){
+                        return inspectRoom(player);
+                    }else{
+                        break;
+                    }
                 }else{
                     System.out.println("Would you like to inspect something else in the room? Y/N");
                     answ = io.getString();
                     if(answ.toLowerCase().equals("y")||answ.toLowerCase().equals("yes")){
-                        return inspectRoom();
+                        return inspectRoom(player);
                     }else{
                         break;
                     }
                 }
             default:
-                return inspectRoom();
+                return inspectRoom(player);
 
         }
         return 1;
+    }
+
+    public int accessPersonalComputer(Trainer player){
+        System.out.println("What would you like to withdraw?");
+        System.out.println("--POTION--BACK--");
+        String answ = io.getString();
+        if(answ.toLowerCase().equals("potion")){
+            Items potion = new Potion();
+            player.addToMedicine(potion);
+            System.out.println(player.getName() + " withdrew a " + potion.getName() + "!");
+        }else{
+            System.out.println("Would you like to continue using the computer?");
+            answ = io.getString();
+            if(answ.toLowerCase().equals("y")||answ.toLowerCase().equals("yes")){
+                return accessPersonalComputer(player);
+            }else{
+                System.out.println(player.getName() + " logged out of the computer!");
+            }
+        }
+
+    return 1;
     }
 }
