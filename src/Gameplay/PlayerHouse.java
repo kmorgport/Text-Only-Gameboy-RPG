@@ -12,27 +12,37 @@ public class PlayerHouse {
     }
 
     public void navigateHouse(Trainer player, Trainer rival,Computer computer){
+        PlayerHouseDownstairs downstairs = new PlayerHouseDownstairs();
         System.out.println(" ");
-        System.out.println("You look around your room");
-        inspectRoom(player);
-        System.out.println("Would you like to go downstairs? Y/N");
-        String answ = io.getString();
-        if(answ.toLowerCase().equals("y")||answ.toLowerCase().equals("yes")){
-            PlayerHouseDownstairs downstairs = new PlayerHouseDownstairs();
-            System.out.println(" ");
-            System.out.println("You head down the stairs. Pictures of your family from when you were little are on the hallway. It seems so long ago since you were all together...");
-            System.out.println(" - - - - - - - - - - ");
-            System.out.println("You walk downstairs and see your mother seated at the table drinking some tea.");
-            downstairs.navigateLowerFloor(player, rival, computer);
-        }else{
-            inspectRoom(player);
-        }
+        boolean loop = true;
+        while(loop){
+            System.out.println("What would you like to do?");
+            System.out.println(" - - - INSPECT - - - LEAVE - - -");
+            io = new Input();
+            String answ = io.getString();
+            if(answ.toLowerCase().equals("inspect")){
+                System.out.println("You look around your room");
+                inspectRoom(player, rival, computer);
 
+            }else{
+                System.out.println("Would you like to go downstairs? Y/N");
+                answ = io.getString();
+                if(answ.toLowerCase().equals("y")||answ.toLowerCase().equals("yes")) {
+                    System.out.println(" ");
+                    System.out.println("You head down the stairs. Pictures of your family from when you were little are on the hallway. It seems so long ago since you were all together...");
+                    System.out.println(" - - - - - - - - - - ");
+                    System.out.println("You walk downstairs and see your mother seated at the table drinking some tea.");
+                    downstairs.navigateLowerFloor(player, rival, computer);
+                    loop = false;
+
+                }
+            }
+        }
     }
 
-    public int inspectRoom(Trainer player){
+    public int inspectRoom(Trainer player, Trainer rival, Computer computer){
         io = new Input();
-        System.out.println("Would you like to inspect \n BED -- TV -- PLANT -- COMPUTER");
+        System.out.println("Would you like to inspect \n BED -- TV -- PLANT -- COMPUTER -- BACK");
         String input = io.getString();
         switch(input.toUpperCase()){
             case "BED":
@@ -42,7 +52,7 @@ public class PlayerHouse {
                 System.out.println("Would you like to inspect something else in the room? Y/N");
                 String answ = io.getString();
                 if(answ.toLowerCase().equals("y")||answ.toLowerCase().equals("yes")){
-                    return inspectRoom(player);
+                    return inspectRoom(player, rival, computer);
                 }else{
                     break;
                 }
@@ -55,7 +65,7 @@ public class PlayerHouse {
                 System.out.println("Would you like to inspect something else in the room? Y/N");
                 answ = io.getString();
                 if(answ.toLowerCase().equals("y")||answ.toLowerCase().equals("yes")){
-                    return inspectRoom(player);
+                    return inspectRoom(player, rival, computer);
                 }else{
                     break;
                 }
@@ -66,7 +76,7 @@ public class PlayerHouse {
                 System.out.println("Would you like to inspect something else in the room? Y/N");
                 answ = io.getString();
                 if(answ.toLowerCase().equals("y")||answ.toLowerCase().equals("yes")){
-                    return inspectRoom(player);
+                    return inspectRoom(player, rival, computer);
                 }else{
                     break;
                 }
@@ -80,7 +90,7 @@ public class PlayerHouse {
                     System.out.println("Would you like to inspect something else in the room? Y/N");
                     answ = io.getString();
                     if(answ.toLowerCase().equals("y")||answ.toLowerCase().equals("yes")){
-                        return inspectRoom(player);
+                        return inspectRoom(player, rival, computer);
                     }else{
                         break;
                     }
@@ -89,13 +99,16 @@ public class PlayerHouse {
                     System.out.println("Would you like to inspect something else in the room? Y/N");
                     answ = io.getString();
                     if(answ.toLowerCase().equals("y")||answ.toLowerCase().equals("yes")){
-                        return inspectRoom(player);
+                        return inspectRoom(player, rival, computer);
                     }else{
                         break;
                     }
                 }
+            case "BACK":
+                break;
+
             default:
-                return inspectRoom(player);
+                return inspectRoom(player, rival, computer);
 
         }
         return 1;

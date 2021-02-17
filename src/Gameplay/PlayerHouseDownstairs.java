@@ -9,9 +9,24 @@ public class PlayerHouseDownstairs {
 
     public void navigateLowerFloor(Trainer player,Trainer rival, Computer computer){
         System.out.println(" ");
-        System.out.println(" ");
-        inspectDownstairsRoom(player);
-        leaveDownstairsRoom(player,rival,computer);
+        boolean loop = true;
+        while(loop){
+            System.out.println("What would you like to do?");
+            System.out.println(" - - - INSPECT - - - UPSTAIRS - - - LEAVE - - -");
+            io = new Input();
+            String answ = io.getString();
+            if(answ.toLowerCase().equals("inspect")){
+                inspectDownstairsRoom(player);
+            }else if(answ.toLowerCase().equals("upstairs")){
+                System.out.println("You head upstairs to go back to your room");
+                PlayerHouse playerHouse = new PlayerHouse();
+                playerHouse.navigateHouse(player,rival,computer);
+                loop = false;
+            }else{
+                leaveDownstairsRoom(player,rival,computer);
+                loop = false;
+            }
+        }
 
     }
 
