@@ -22,13 +22,14 @@ public class main {
         Charmander charmander = new Charmander(5,random,random,random,random,random,random);
         Squirtle squirtle = new Squirtle(5,random,random,random,random,random,random);
         Battle battle = new Battle();
+//        System.out.println(bulbasaur.pullMoveArrayList());
         Trainer red = new Protagonist("Red");
         Trainer blue = new Rival("Green");
         red.addPokemonToTeam(charmander);
         blue.addPokemonToTeam(bulbasaur);
         Items potion = new Potion();
         Items antidote = new Antidote();
-        potion.setQuantity(1);
+//        potion.setQuantity(1);
         red.addToMedicine(potion);
         red.addToMedicine(antidote);
         battle.battleCycle(red,blue);

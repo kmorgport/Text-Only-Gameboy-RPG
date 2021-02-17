@@ -313,5 +313,7 @@ public abstract class Pokemon {
 
     abstract public Moves[] pullMoveList();
 
+    abstract public ArrayList<Moves> pullMoveArrayList();
+
 
 }

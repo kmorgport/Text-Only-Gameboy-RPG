@@ -43,4 +43,8 @@ public class Pidgey extends Pokemon{
         System.arraycopy(allmoves, 0, moveset, 0, allmoves.length);
         return moveset;
     }
+
+    public ArrayList<Moves> pullMoveArrayList() {
+        return BulbasaurMoves.findBulbasaurMovesArrayList();
+    }
 }

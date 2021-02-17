@@ -46,4 +46,8 @@ public class Squirtle extends Pokemon{
         }
         return moveset;
     }
+
+    public ArrayList<Moves> pullMoveArrayList() {
+        return SquirtleMoves.findSquirtleMovesArrayList();
+    }
 }

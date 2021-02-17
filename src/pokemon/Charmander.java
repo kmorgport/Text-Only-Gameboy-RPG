@@ -48,4 +48,8 @@ public class Charmander extends Pokemon{
         }
         return moveset;
     }
+
+    public ArrayList<Moves> pullMoveArrayList() {
+        return CharmanderMoves.findCharmanderMovesArrayList();
+    }
 }

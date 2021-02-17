@@ -48,5 +48,9 @@ public class Bulbasaur extends Pokemon{
         return moveset;
     }
 
+    public ArrayList<Moves> pullMoveArrayList() {
+        return BulbasaurMoves.findBulbasaurMovesArrayList();
+    }
+
 
 }

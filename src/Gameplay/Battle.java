@@ -62,10 +62,11 @@ public class Battle {
 //        return winner;
     }
 
-    public void playerTurn(Trainer protagonist, Trainer rival){
+    public int playerTurn(Trainer protagonist, Trainer rival){
         Pokemon player = protagonist.retrieveTeamStarter();
         Pokemon npc = rival.retrieveTeamStarter();
-        Moves[] moveList = player.pullMoveList();
+//        Moves[] moveList = player.pullMoveList();
+        ArrayList<Moves> moveList2 = player.pullMoveArrayList();
         int accuracyRandom = (int) Math.floor(Math.random()*125);
         System.out.println("What would you like to do?");
         System.out.println("");
@@ -73,12 +74,14 @@ public class Battle {
         String answ = consoleEntry.getString();
         switch(answ.toLowerCase()){
             case "fight":
-                System.out.println("---" + moveList[0].name + "---" + moveList[1].name + "---" + moveList[2].name + "---"+"Back");
+//                System.out.println("---" + moveList[0].name + "---" + moveList[1].name + "---" + moveList[2].name + "---"+"Back");
+                System.out.println("---" + moveList2.get(0).name + "---" + moveList2.get(1).name + "---" + moveList2.get(2).name + "---"+"Back");
                 answ = consoleEntry.getString();
                 if(answ.toLowerCase().equals("back")){
+                    //allows player to back out of menu;
                     playerTurn(protagonist,rival);
                 }
-                for(Moves move: moveList){
+                for(Moves move: moveList2){
                     if(move.name.toLowerCase().contains(answ.toLowerCase())){
                         if(move.category.equals("Physical")) {
                             if(accuracyRandom<=calculateAccuracy(player,move,npc)){
@@ -118,13 +121,14 @@ public class Battle {
                 System.out.println("You can't run from Trainer battles!");
                 playerTurn(protagonist,rival);
         }
+        return 1;
     }
 
     public void viewItems(Trainer protagonist){
 
     }
 
-    public void useRecoveryItems(Trainer protagonist, Trainer rival){
+    public int useRecoveryItems(Trainer protagonist, Trainer rival){
         protagonist.mapIterator(protagonist.getMedicine());
         System.out.println("\n");
         System.out.println("Which recovery item would you like to use?");
@@ -132,21 +136,23 @@ public class Battle {
         String answ = consoleEntry.getString().toUpperCase();
         Items item = protagonist.getMedicine().get(answ);
         if(answ.equals("BACK")){
-            playerTurn(protagonist,rival);
+            //allows player to back out of item menu
+            return playerTurn(protagonist,rival);
         }
         if(item.getHealthRecoveryAmount()>0){
             Pokemon currentPokemon = protagonist.retrieveTeamStarter();
             if(currentPokemon.getHitPoints()==currentPokemon.getMaxHitPoints()){
+                //prevents HP from being healed higher than max HP for current level
                 System.out.println(currentPokemon.getName() + "is at max HP, cannot heal any further!");
-                playerTurn(protagonist,rival);
+                return useRecoveryItems(protagonist,rival);
             }
             if(currentPokemon.getHitPoints()+item.getHealthRecoveryAmount()>=currentPokemon.getMaxHitPoints()){
                 currentPokemon.setHitPoints(currentPokemon.getMaxHitPoints());
                 System.out.println("You used " + item.getName() + "!");
-                System.out.println(currentPokemon.getName() + "has been recovered to max health!");
+                System.out.println(currentPokemon.getName() + " has been recovered to max health!");
                 item.setQuantity(-1);
-                System.out.println(item.getQuantity());
                 if(item.getQuantity()<=0){
+                    //removes item from inventory if quantity is less or equal to 0;
                     protagonist.getMedicine().remove(answ);
                 }
             }else{
@@ -156,11 +162,13 @@ public class Battle {
                 System.out.println(currentPokemon.getName() + " has " + currentPokemon.getHitPoints() + "!");
                 item.setQuantity(-1);
                 if(item.getQuantity()<=0){
+                    //removes item from inventory if quantity is less or equal to 0;
                     protagonist.getMedicine().remove(answ);
                 }
             }
         }else{
             System.out.println(item.getStatusRecovery());}
+        return 1;
 
 
     }
@@ -168,9 +176,10 @@ public class Battle {
 
     public void npcTurn(Pokemon player, Pokemon npc){
         int accuracyRandom = (int) Math.floor(Math.random()*125);
-        Moves[] moveList = npc.pullMoveList();
+//        Moves[] moveList = npc.pullMoveList();
+        ArrayList<Moves> moveList2 = npc.pullMoveArrayList();
         int moveRandom = (int) Math.floor(Math.random()*3);
-        Moves npcMove = moveList[moveRandom];
+        Moves npcMove = moveList2.get(moveRandom);
         if(npcMove.category.equals("Buff")){
             buffDeBuff(npc,npcMove,npc);
         }else if(npcMove.category.equals("Debuff")){
