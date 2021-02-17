@@ -1,5 +1,6 @@
 package Gameplay;
 
+import pc.Computer;
 import trainers.Protagonist;
 import trainers.Rival;
 import trainers.Trainer;
@@ -34,8 +35,9 @@ public class NewGame {
                 "            dreams and adventures with POKEMON awaits! Let's go!");
         Trainer protagonist = new Protagonist(name);
         Trainer rival = new Rival(rivalName);
-        PlayerHouse playerHouse = new PlayerHouse(protagonist,rival);
-        playerHouse.navigateHouse(protagonist,rival);
+        Computer computer = new Computer();
+        PlayerHouse playerHouse = new PlayerHouse(protagonist,rival,computer);
+        playerHouse.navigateHouse(protagonist,rival,computer);
 
     }
 }
