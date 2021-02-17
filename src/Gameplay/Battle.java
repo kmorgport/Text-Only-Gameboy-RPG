@@ -8,6 +8,7 @@ import util.Input;
 
 import java.lang.reflect.Field;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.LinkedHashMap;
 import java.util.Objects;
 
@@ -79,30 +80,42 @@ public class Battle {
                 answ = consoleEntry.getString();
                 if(answ.toLowerCase().equals("back")){
                     //allows player to back out of menu;
-                    playerTurn(protagonist,rival);
+                    return playerTurn(protagonist,rival);
+                }
+                ArrayList<String> moveName = new ArrayList<>();
+                for(Moves move: moveList2){
+                    moveName.add(move.name.toLowerCase());
                 }
                 for(Moves move: moveList2){
+                    if(!moveName.contains(answ)){
+                        System.out.println("Professor Oak: " + player.getName() + " doesn't understand that command! Try again!");
+                        return playerTurn(protagonist,rival);
+                    }
                     if(move.name.toLowerCase().contains(answ.toLowerCase())){
                         if(move.category.equals("Physical")) {
                             if(accuracyRandom<=calculateAccuracy(player,move,npc)){
                                 playerAttack(player, move, npc);
+                                break;
                             }else{
                                 System.out.println(player.getName() + " used " + move.getName() + "!");
                                 System.out.println("The attack missed!");
+                                break;
                             }
-                            break;
                         }else if(move.category.equals("Special")){
                             if(accuracyRandom<=calculateAccuracy(player,move,npc)){
                                 playerSpecialAttack(player,move,npc);
+                                break;
                             }else{
                                 System.out.println(player.getName() + " used " + move.getName() + "!");
                                 System.out.println("The attack missed!");
+                                break;
                             }
-                            break;
                         }else if(move.category.equals("Debuff")){
                             buffDeBuff(player,move, npc);
+                            break;
                         }else if(move.category.equals("Buff")){
                             buffDeBuff(player,move, player);
+                            break;
                         }
                     }
 //                    else{
@@ -116,10 +129,10 @@ public class Battle {
                 break;
             case "pkmn":
                 System.out.println("You only have " + player.getName() + "!");
-                playerTurn(protagonist,rival);
+                return playerTurn(protagonist,rival);
             case "run":
                 System.out.println("You can't run from Trainer battles!");
-                playerTurn(protagonist,rival);
+                return playerTurn(protagonist,rival);
         }
         return 1;
     }
