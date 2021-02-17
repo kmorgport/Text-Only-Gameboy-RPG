@@ -1,4 +1,5 @@
 import Gameplay.Battle;
+import Gameplay.NewGame;
 import items.Antidote;
 import items.Items;
 import items.Potion;
@@ -16,28 +17,32 @@ import java.util.Arrays;
 import java.util.List;
 
 public class main {
-f    public static void main(String[] args){
+    public static void main(String[] args){
         int random = (int) Math.floor(Math.random()*15)+1;
-        Bulbasaur bulbasaur = new Bulbasaur(5,random,random,random,random,random,random);
-        Charmander charmander = new Charmander(5,random,random,random,random,random,random);
-        Squirtle squirtle = new Squirtle(5,random,random,random,random,random,random);
-        Battle battle = new Battle();
-//        System.out.println(bulbasaur.pullMoveArrayList());
-        Trainer red = new Protagonist("Red");
-        Trainer blue = new Rival("Green");
-        red.addPokemonToTeam(charmander);
-        blue.addPokemonToTeam(bulbasaur);
-        Items potion = new Potion();
-        Items antidote = new Antidote();
-//        potion.setQuantity(1);
-        red.addToMedicine(potion);
-        red.addToMedicine(antidote);
-        battle.battleCycle(red,blue);
-//        potion.setQuantity(2);
+
+        NewGame newGame = new NewGame();
+        newGame.beginGame();
+
+
+
+
+        //BATTLE TESTING
+//        Bulbasaur bulbasaur = new Bulbasaur(5,random,random,random,random,random,random);
+//        Charmander charmander = new Charmander(5,random,random,random,random,random,random);
+//        Squirtle squirtle = new Squirtle(5,random,random,random,random,random,random);
+//        Battle battle = new Battle();
+////        System.out.println(bulbasaur.pullMoveArrayList());
+//        Trainer red = new Protagonist("Red");
+//        Trainer blue = new Rival("Green");
+//        red.addPokemonToTeam(charmander);
+//        blue.addPokemonToTeam(bulbasaur);
+//        Items potion = new Potion();
+//        Items antidote = new Antidote();
+////        potion.setQuantity(1);
 //        red.addToMedicine(potion);
 //        red.addToMedicine(antidote);
-//        battle.useRecoveryItems(red);
-//        red.mapIterator(red.getMedicine());
+//        battle.battleCycle(red,blue);
+
 
 
     }
