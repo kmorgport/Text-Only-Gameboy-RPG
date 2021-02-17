@@ -1,9 +1,13 @@
 package Gameplay;
 
+import trainers.Protagonist;
+import trainers.Rival;
+import trainers.Trainer;
 import util.Input;
 
 public class NewGame {
-
+    protected Trainer player;
+    protected Trainer rival;
     Input input = new Input();
 
     public NewGame(){}
@@ -20,5 +24,18 @@ public class NewGame {
             name = "RED";
         }
         System.out.println("LIVEOAK: Right! So your name is " + name + "!");
+        System.out.println("LIVEOAK: Oh that's right, you grew up with my grandson! Y'all have been rivals since you were youngin's.\n...Erm, what is his name again?");
+        String rivalName = input.getString();
+        if(rivalName.isEmpty()) {
+            rivalName = "GREEN";
+        }
+        System.out.println("LIVEOAK: That's right! I remember now! His name is " + rivalName + "!");
+        System.out.println("LIVEOAK: " + name + "! Your very own POKEMON legend is about to unfold! A world of\n" +
+                "            dreams and adventures with POKEMON awaits! Let's go!");
+        Trainer protagonist = new Protagonist(name);
+        Trainer rival = new Rival(rivalName);
+        PlayerHouse playerHouse = new PlayerHouse(protagonist,rival);
+        playerHouse.navigateHouse(protagonist,rival);
+
     }
 }

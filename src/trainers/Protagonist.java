@@ -6,9 +6,8 @@ import pokemon.Pokemon;
 import java.util.*;
 
 public class Protagonist extends Trainer {
-    protected String trainerName;
     public Protagonist(String name){
-        this.trainerName = name;
+        this.name = name;
         money = 500;
         pokemonTeam = new ArrayList<>();
         inventory = new LinkedHashMap<>();
