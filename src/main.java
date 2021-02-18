@@ -1,9 +1,11 @@
 import Gameplay.Battle;
+import Gameplay.Hometown;
 import Gameplay.NewGame;
 import items.Antidote;
 import items.Items;
 import items.Potion;
 import moves.Moves;
+import pc.Computer;
 import pokemon.Bulbasaur;
 import pokemon.Charmander;
 import pokemon.Pokemon;
@@ -19,9 +21,13 @@ import java.util.List;
 public class main {
     public static void main(String[] args){
         int random = (int) Math.floor(Math.random()*15)+1;
-
-        NewGame newGame = new NewGame();
-        newGame.beginGame();
+        Trainer red = new Protagonist("Red");
+        Trainer blue = new Rival("Blue");
+        Computer pc = new Computer();
+//        NewGame newGame = new NewGame();
+//        newGame.beginGame();
+        Hometown pallet = new Hometown();
+        pallet.navigateHomeTown(red,blue,pc);
 
 
 
