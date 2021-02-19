@@ -1,7 +1,4 @@
-import Gameplay.Battle;
-import Gameplay.Hometown;
-import Gameplay.NewGame;
-import Gameplay.PlayerHouse;
+import Gameplay.*;
 import items.Antidote;
 import items.Items;
 import items.Potion;
@@ -29,9 +26,8 @@ public class main {
 //        newGame.beginGame();
 //        Hometown pallet = new Hometown();
 //        pallet.returnToLab(red,blue,pc);
-
-        PlayerHouse test = new PlayerHouse();
-        test.navigateHouse(red,blue,pc);
+        Hometown test = new Hometown();
+        test.homeTownFirstVisit(red, blue,pc);
 
 
 
