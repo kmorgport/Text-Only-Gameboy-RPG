@@ -15,10 +15,10 @@ public class Hometown {
     public Hometown(){}
 
     public void homeTownFirstVisit(Trainer player, Trainer rival, Computer computer){
-        boolean storyInput = true;
         io = new Input();
             centerOfTown(player,rival,computer);
             returnToLab(player,rival,computer);
+            centerOfTown2(player,rival,computer);
     }
 
     public void centerOfTown(Trainer player, Trainer rival, Computer computer){
@@ -53,6 +53,39 @@ public class Hometown {
         }
     }
 
+    public void centerOfTown2(Trainer player, Trainer rival, Computer computer){
+        scanner.nextLine();
+        boolean loop = true;
+        while(loop){
+            System.out.println("Your HOME is to the WEST , to the EAST you see your rival, " + rival.getName() + "'s house. To the SOUTH you see PROFESSOR LIVEOAK'S lab and the bay that leads to the Kanjoh sea. \nTo the NORTH is ROUTE 1 leading to VIRIDIAN CITY.");
+            System.out.println("Which path do you choose?: NORTH -- EAST -- SOUTH -- WEST");
+            String answ = io.getString();
+            switch(answ.toUpperCase()){
+                case "NORTH":
+                    Route1 route1 = new Route1();
+                    route1.navigateRoute1FirstTime(player, rival, computer);
+                    loop = false;
+                    break;
+                case "EAST":
+                    headToRivalsHouse(player,rival,computer);
+                    break;
+                case "SOUTH":
+                    headToSouthernHalfOfTown(player, rival,computer);
+                    break;
+                case "WEST":
+                    System.out.println("You head back home..");
+                    loop=false;
+                    PlayerHouseDownstairs home = new PlayerHouseDownstairs();
+                    home.navigateLowerFloor2(player,rival,computer);
+                    break;
+                default:
+                    System.out.println("Ooops, there was a typo");
+
+            }
+        }
+    }
+
+
     public void leaveHomeTown(Trainer player, Trainer rival, Computer computer){
         System.out.println(" - - - - - - - -");
         System.out.println("You start heading towards the grassy path leaving Pallet Town, excited to start your new adventure!");
@@ -68,6 +101,7 @@ public class Hometown {
         //go to lab method
 
     }
+
 
     public void returnToLab(Trainer player, Trainer rival, Computer computer){
         io = new Input();
@@ -217,6 +251,30 @@ public class Hometown {
         }else{
             System.out.println(blue + ": YEAH! Am I great or what!");
         }
+        System.out.println(rival.getName().toUpperCase() + ": Okay! I'm going to make my " + rival.retrieveTeamStarter().getName().toUpperCase() + " fight to toughen it up!");
+        scanner.nextLine();
+        System.out.println(rival.getName().toUpperCase() + ": Smell y'all later!");
+        scanner.nextLine();
+        System.out.println("PROF LIVEOAK: " + rival.getName().toUpperCase() + "! Wait!");
+        scanner.nextLine();
+        System.out.println(rival.getName().toUpperCase() + " is already out of earshot.");
+        scanner.nextLine();
+        System.out.println("PROF LIVEOAK: That boy....well anyways,");
+        scanner.nextLine();
+        System.out.println("He turns to you...");
+        scanner.nextLine();
+        System.out.println("PROF LIVEOAK: " + player.getName().toUpperCase() + "! Now that you have your first POKEMON, I need you to do me a huge favor!");
+        scanner.nextLine();
+        System.out.println("PROF LIVEOAK: I need you to go to VIRIDIAN CITY and pick up a package for me!");
+        scanner.nextLine();
+        System.out.println(". . . .");
+        scanner.nextLine();
+        System.out.println("PROF LIVEOAK: Don't worry, now that you have your first POKEMON the wild POKEMON Route 1 won't be a bother.");
+        scanner.nextLine();
+        System.out.println("PROF LIVEOAK: All right, see you soon!");
+        scanner.nextLine();
+        System.out.println("You return to the center of the city...");
+
 
     }
 

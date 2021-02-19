@@ -311,6 +311,10 @@ public abstract class Pokemon {
         this.currentExpTotal = baseExp;
     }
 
+    public void healPokemon(){
+        this.hitPoints = this.maxHitPoints;
+    }
+
     abstract public ArrayList<Moves> pullMoveArrayList();
 
 
