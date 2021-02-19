@@ -18,10 +18,17 @@ public class Battle {
 
     }
 
-    public void startBattle(Trainer player, Trainer npc){
+    public boolean startBattle(Trainer player, Trainer npc){
         Pokemon playerPokemon = player.retrieveTeamStarter();
         Pokemon rivalPokemon = npc.retrieveTeamStarter();
         battleCycle(player,npc);
+        if(playerPokemon.getHitPoints()<=0){
+            return false;
+        }else if(rivalPokemon.getHitPoints()<=0){
+            return true;
+        }else{
+            return true;
+        }
     }
 
     public void battleCycle(Trainer protagonist, Trainer rival){

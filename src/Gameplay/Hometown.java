@@ -1,7 +1,9 @@
 package Gameplay;
 import pc.Computer;
 import pokemon.Bulbasaur;
+import pokemon.Charmander;
 import pokemon.Pokemon;
+import pokemon.Squirtle;
 import trainers.Trainer;
 import util.Input;
 
@@ -97,26 +99,120 @@ public class Hometown {
         scanner.nextLine();
         System.out.println("You approach the table nervously, you can feel " + blue + "'s eyes boring DIGLET tunnels into the back of your skull");
         scanner.nextLine();
+        System.out.println("There are placards in front of the 3 POKEBALLS");
+        System.out.println("Who do you choose?");
         while(loop){
-            System.out.println("There are placards in front of the 3 POKEBALLS");
             scanner.nextLine();
             System.out.println("-- BULBASAUR -- CHARMANDER -- SQUIRTLE --");
-            scanner.nextLine();
-            System.out.println("Who do you choose?");
-            String answ = io.getString();
-            switch(answ.toUpperCase()){
+            String playerChoice = io.getString();
+            switch(playerChoice.toUpperCase()){
                 case "BULBASAUR":
-                    System.out.println("So you want the Photosynthesizing Therapsid, BULBASAUR? Y/N");
-                    answ = io.getString();
-                    if(answ.toLowerCase().equals("y")||answ.toLowerCase().equals("yes")){
-                        Pokemon bulbasaur = new Bulbasaur(5,playerHpRandom,playerAttRandom,playerDefRandom,playerSpAttRandom,playerSpDefRandom,playerSpeedRandom);
-                        player.addPokemonToTeam(bulbasaur);
-                        System.out.println("You selected BULBASAUR!!");
+                    System.out.println("Do you choose the Photosynthesizing Therapsid: BULBASAUR? Y/N");
+                    String answ = io.getString();
+                    boolean yesNoLoop = true;
+                    while(yesNoLoop){
+                        if(answ.toLowerCase().equals("y")||answ.toLowerCase().equals("yes")){
+                            Pokemon bulbasaur = new Bulbasaur(5,playerHpRandom,playerAttRandom,playerDefRandom,playerSpAttRandom,playerSpDefRandom,playerSpeedRandom);
+                            player.addPokemonToTeam(bulbasaur);
+                            System.out.println("You chose BULBASAUR!!");
+                            loop = false;
+                            yesNoLoop = false;
+                            break;
+                        }else if(answ.toLowerCase().equals("n")||answ.toLowerCase().equals("no")){
+                            System.out.println("Who do you choose?");
+                            yesNoLoop = false;
+                            break;
+                        }else{
+                            System.out.println("Ooops, there was a typo");
+                            scanner.nextLine();
+                            System.out.println("Do you want BULBASAUR? Y/N");
+                        }
                     }
-
+                case "CHARMANDER":
+                    System.out.println("Do you choose hard mo...I mean, the Flame tailed Theropod: CHARMANDER?");
+                    answ = io.getString();
+                    yesNoLoop = true;
+                    while(yesNoLoop){
+                        if(answ.toLowerCase().equals("y")||answ.toLowerCase().equals("yes")){
+                            Pokemon  charmander = new Charmander(5,playerHpRandom,playerAttRandom,playerDefRandom,playerSpAttRandom,playerSpDefRandom,playerSpeedRandom);
+                            player.addPokemonToTeam(charmander);
+                            System.out.println("You chose CHARMANDER!!");
+                            loop = false;
+                            yesNoLoop = false;
+                            break;
+                        }else if(answ.toLowerCase().equals("n")||answ.toLowerCase().equals("no")){
+                            System.out.println("Who do you choose?");
+                            yesNoLoop = false;
+                            break;
+                        }else{
+                            System.out.println("Ooops, there was a typo");
+                            scanner.nextLine();
+                            System.out.println("Do you want CHARMANDER? Y/N");
+                        }
+                    }
+                case "SQUIRTLE":
+                    System.out.println("Do you choose the Tiny Water Turtle (wait what's a turtle....) : SQUIRTLE?");
+                    answ = io.getString();
+                    yesNoLoop = true;
+                    while(yesNoLoop){
+                        if(answ.toLowerCase().equals("y")||answ.toLowerCase().equals("yes")){
+                            Pokemon squirtle = new Squirtle(5,playerHpRandom,playerAttRandom,playerDefRandom,playerSpAttRandom,playerSpDefRandom,playerSpeedRandom);
+                            player.addPokemonToTeam(squirtle);
+                            System.out.println("You chose SQUIRTLE!!");
+                            loop = false;
+                            yesNoLoop = false;
+                            break;
+                        }else if(answ.toLowerCase().equals("n")||answ.toLowerCase().equals("no")){
+                            System.out.println("Who do you choose?");
+                            yesNoLoop = false;
+                            break;
+                        }else{
+                            System.out.println("Ooops, there was a typo");
+                            scanner.nextLine();
+                            System.out.println("Do you want SQUIRTLE? Y/N");
+                        }
+                    }
+                case "PIKACHU":
+                    System.out.println("Oh, you think you're clever don't you?");
+                    scanner.nextLine();
+                    System.out.println("You realize the first Gym leader here uses GROUND types right?");
+                    scanner.nextLine();
+                    System.out.println("No judgement, but you probably want to stick with BULBASAUR or SQUIRTLE.");
+                    System.out.println("Who do you choose?");
+                    break;
+                default:
+                    System.out.println("Ooops, there was a typo");
+                    scanner.nextLine();
+                    System.out.println("Who do you choose?");
+                    scanner.nextLine();
             }
         }
-
+        System.out.println(blue + ": All right! It's MY turn now!");
+        System.out.println(blue + " gets a mischievous look in his eye.");
+        scanner.nextLine();
+        System.out.println(blue + ": I think I'll pick....");
+        switch(player.retrieveTeamStarter().getName()){
+            case "BULBASAUR":
+                Pokemon charmander = new Charmander(5,rivalHpRandom,rivalAttRandom,rivalDefRandom,rivalSpAttRandom,rivalSpDefRandom,rivalSpeedRandom);
+                rival.addPokemonToTeam(charmander);
+                break;
+            case "CHARMANDER":
+                Pokemon squirtle = new Squirtle(5,rivalHpRandom,rivalAttRandom,rivalDefRandom,rivalSpAttRandom,rivalSpDefRandom,rivalSpeedRandom);
+                rival.addPokemonToTeam(squirtle);
+                break;
+            case "Squirtle":
+                Pokemon bulbasaur = new Bulbasaur(5,rivalHpRandom,rivalAttRandom,rivalDefRandom,rivalSpAttRandom,rivalSpDefRandom,rivalSpeedRandom);
+                rival.addPokemonToTeam(bulbasaur);
+                break;
+        }
+        System.out.println(blue + " chose " + rival.retrieveTeamStarter().getName() + "!");
+        scanner.nextLine();
+        System.out.println("PROF LIVEOAK: Now if a wild POKEMON appears, your POKEMON can help protect you!");
+        System.out.println("You get ready to leave when you hear "+blue+"call your name..");
+        scanner.nextLine();
+        System.out.println(blue + ": " + player.getName().toUpperCase() + "! Let's check out our POKEMON! Come on! I'll take you on!");
+        Battle battle = new Battle();
+        boolean outcome = battle.startBattle(player,rival);
 
     }
 
