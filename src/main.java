@@ -1,6 +1,7 @@
 import Gameplay.Battle;
 import Gameplay.Hometown;
 import Gameplay.NewGame;
+import Gameplay.PlayerHouse;
 import items.Antidote;
 import items.Items;
 import items.Potion;
@@ -26,8 +27,11 @@ public class main {
         Computer pc = new Computer();
 //        NewGame newGame = new NewGame();
 //        newGame.beginGame();
-        Hometown pallet = new Hometown();
-        pallet.returnToLab(red,blue,pc);
+//        Hometown pallet = new Hometown();
+//        pallet.returnToLab(red,blue,pc);
+
+        PlayerHouse test = new PlayerHouse();
+        test.navigateHouse(red,blue,pc);
 
 
 
