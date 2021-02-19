@@ -21,13 +21,13 @@ import java.util.List;
 public class main {
     public static void main(String[] args){
         int random = (int) Math.floor(Math.random()*15)+1;
-//        Trainer red = new Protagonist("Red");
-//        Trainer blue = new Rival("Blue");
-//        Computer pc = new Computer();
-        NewGame newGame = new NewGame();
-        newGame.beginGame();
-//        Hometown pallet = new Hometown();
-//        pallet.navigateHomeTown(red,blue,pc);
+        Trainer red = new Protagonist("Red");
+        Trainer blue = new Rival("Blue");
+        Computer pc = new Computer();
+//        NewGame newGame = new NewGame();
+//        newGame.beginGame();
+        Hometown pallet = new Hometown();
+        pallet.returnToLab(red,blue,pc);
 
 
 

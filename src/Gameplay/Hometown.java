@@ -64,6 +64,7 @@ public class Hometown {
     }
 
     public void returnToLab(Trainer player, Trainer rival, Computer computer){
+        io = new Input();
         int playerHpRandom = (int) Math.floor(Math.random()*15)+1;
         int playerAttRandom = (int) Math.floor(Math.random()*15)+1;
         int playerDefRandom = (int) Math.floor(Math.random()*15)+1;
@@ -91,36 +92,31 @@ public class Hometown {
         scanner.nextLine();
         System.out.println("Professor Liveoak turns to you...");
         scanner.nextLine();
-        System.out.println("PROF LIVEOAK: " + player.getName().toUpperCase() + "! There are 3 POKEMON here! They are inside the POKEBALLS! When I was young, I was a serious TRAINER! I travelled the world with my POKEMON partners going on adventures! These 3 POKEMON are descendents of those POKEMON! Choose one " + player.getName().toUpperCase() + " choose whichever one you'd like!");
+        System.out.println("PROF LIVEOAK: " + player.getName().toUpperCase() + "! There are 3 POKEMON here! They are inside the POKEBALLS! When I was young, I was a serious TRAINER!\nI travelled the world with my POKEMON partners going on adventures!\nThese 3 POKEMON are descendents of those POKEMON! Choose one " + player.getName().toUpperCase() + " choose whichever one you'd like!");
         scanner.nextLine();
         System.out.println(blue + ": GRAMPS?! WHAT ABOUT ME?!");
         scanner.nextLine();
         System.out.println("PROF LIVEOAK: BE PATIENT...." + "I mean, " + rival.getName() + " you can have one too after he's selected.");
         scanner.nextLine();
-        System.out.println("You approach the table nervously, you can feel " + blue + "'s eyes boring DIGLET tunnels into the back of your skull");
-        scanner.nextLine();
+        System.out.println("You approach the table nervously, you can feel " + blue + "'s eyes boring DIGLET tunnels into the back of your skull.");
         System.out.println("There are placards in front of the 3 POKEBALLS");
         System.out.println("Who do you choose?");
         while(loop){
-            scanner.nextLine();
             System.out.println("-- BULBASAUR -- CHARMANDER -- SQUIRTLE --");
             String playerChoice = io.getString();
             switch(playerChoice.toUpperCase()){
                 case "BULBASAUR":
                     System.out.println("Do you choose the Photosynthesizing Therapsid: BULBASAUR? Y/N");
-                    String answ = io.getString();
-                    boolean yesNoLoop = true;
-                    while(yesNoLoop){
+                    while(true){
+                        String answ = io.getString();
                         if(answ.toLowerCase().equals("y")||answ.toLowerCase().equals("yes")){
                             Pokemon bulbasaur = new Bulbasaur(5,playerHpRandom,playerAttRandom,playerDefRandom,playerSpAttRandom,playerSpDefRandom,playerSpeedRandom);
                             player.addPokemonToTeam(bulbasaur);
                             System.out.println("You chose BULBASAUR!!");
                             loop = false;
-                            yesNoLoop = false;
                             break;
                         }else if(answ.toLowerCase().equals("n")||answ.toLowerCase().equals("no")){
                             System.out.println("Who do you choose?");
-                            yesNoLoop = false;
                             break;
                         }else{
                             System.out.println("Ooops, there was a typo");
@@ -128,21 +124,19 @@ public class Hometown {
                             System.out.println("Do you want BULBASAUR? Y/N");
                         }
                     }
+                    break;
                 case "CHARMANDER":
-                    System.out.println("Do you choose hard mo...I mean, the Flame tailed Theropod: CHARMANDER?");
-                    answ = io.getString();
-                    yesNoLoop = true;
-                    while(yesNoLoop){
+                    System.out.println("Do you choose hard mo...I mean, the Flame tailed Theropod: CHARMANDER? Y/N");
+                    while(true){
+                        String answ = io.getString();
                         if(answ.toLowerCase().equals("y")||answ.toLowerCase().equals("yes")){
                             Pokemon  charmander = new Charmander(5,playerHpRandom,playerAttRandom,playerDefRandom,playerSpAttRandom,playerSpDefRandom,playerSpeedRandom);
                             player.addPokemonToTeam(charmander);
                             System.out.println("You chose CHARMANDER!!");
                             loop = false;
-                            yesNoLoop = false;
                             break;
                         }else if(answ.toLowerCase().equals("n")||answ.toLowerCase().equals("no")){
                             System.out.println("Who do you choose?");
-                            yesNoLoop = false;
                             break;
                         }else{
                             System.out.println("Ooops, there was a typo");
@@ -150,21 +144,19 @@ public class Hometown {
                             System.out.println("Do you want CHARMANDER? Y/N");
                         }
                     }
+                    break;
                 case "SQUIRTLE":
-                    System.out.println("Do you choose the Tiny Water Turtle (wait what's a turtle....) : SQUIRTLE?");
-                    answ = io.getString();
-                    yesNoLoop = true;
-                    while(yesNoLoop){
+                    System.out.println("Do you choose the Tiny Water Turtle (wait what's a turtle....) : SQUIRTLE? Y/N");
+                    while(true){
+                        String answ = io.getString();
                         if(answ.toLowerCase().equals("y")||answ.toLowerCase().equals("yes")){
                             Pokemon squirtle = new Squirtle(5,playerHpRandom,playerAttRandom,playerDefRandom,playerSpAttRandom,playerSpDefRandom,playerSpeedRandom);
                             player.addPokemonToTeam(squirtle);
                             System.out.println("You chose SQUIRTLE!!");
                             loop = false;
-                            yesNoLoop = false;
                             break;
                         }else if(answ.toLowerCase().equals("n")||answ.toLowerCase().equals("no")){
                             System.out.println("Who do you choose?");
-                            yesNoLoop = false;
                             break;
                         }else{
                             System.out.println("Ooops, there was a typo");
@@ -172,6 +164,7 @@ public class Hometown {
                             System.out.println("Do you want SQUIRTLE? Y/N");
                         }
                     }
+                    break;
                 case "PIKACHU":
                     System.out.println("Oh, you think you're clever don't you?");
                     scanner.nextLine();
@@ -184,7 +177,6 @@ public class Hometown {
                     System.out.println("Ooops, there was a typo");
                     scanner.nextLine();
                     System.out.println("Who do you choose?");
-                    scanner.nextLine();
             }
         }
         System.out.println(blue + ": All right! It's MY turn now!");
@@ -192,11 +184,11 @@ public class Hometown {
         scanner.nextLine();
         System.out.println(blue + ": I think I'll pick....");
         switch(player.retrieveTeamStarter().getName()){
-            case "BULBASAUR":
+            case "Bulbasaur":
                 Pokemon charmander = new Charmander(5,rivalHpRandom,rivalAttRandom,rivalDefRandom,rivalSpAttRandom,rivalSpDefRandom,rivalSpeedRandom);
                 rival.addPokemonToTeam(charmander);
                 break;
-            case "CHARMANDER":
+            case "Charmander":
                 Pokemon squirtle = new Squirtle(5,rivalHpRandom,rivalAttRandom,rivalDefRandom,rivalSpAttRandom,rivalSpDefRandom,rivalSpeedRandom);
                 rival.addPokemonToTeam(squirtle);
                 break;
@@ -208,11 +200,18 @@ public class Hometown {
         System.out.println(blue + " chose " + rival.retrieveTeamStarter().getName() + "!");
         scanner.nextLine();
         System.out.println("PROF LIVEOAK: Now if a wild POKEMON appears, your POKEMON can help protect you!");
-        System.out.println("You get ready to leave when you hear "+blue+"call your name..");
+        System.out.println("You get ready to leave when you hear "+blue+" call your name..");
         scanner.nextLine();
         System.out.println(blue + ": " + player.getName().toUpperCase() + "! Let's check out our POKEMON! Come on! I'll take you on!");
+        scanner.nextLine();
         Battle battle = new Battle();
+        scanner.nextLine();
         boolean outcome = battle.startBattle(player,rival);
+        if(outcome){
+            System.out.println(blue + ": SERIOUSLY?! I picked the wrong POKEMON!!");
+        }else{
+            System.out.println(blue + ": YEAH! Am I great or what!");
+        }
 
     }
 
