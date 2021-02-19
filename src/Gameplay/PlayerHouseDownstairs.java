@@ -44,7 +44,7 @@ public class PlayerHouseDownstairs {
             case "outside":
                 System.out.println("You leave your house, to go find Professor LIVEOAK!");
                 Hometown palletteTown = new Hometown();
-                palletteTown.navigateHomeTown(player, rival, computer);
+                palletteTown.homeTownFirstVisit(player, rival, computer);
                 break;
             case "stay":
                 navigateLowerFloor(player,rival,computer);
@@ -127,7 +127,7 @@ public class PlayerHouseDownstairs {
     }
 
     public void convoWithMom(){
-        System.out.println("Mom: Right. All boys leave home some day. It said so on TV. \nPROF.OAK, next door, is looking for you.");
+        System.out.println("Mom: Right. All boys leave home some day. It said so on TV. \nPROF.LIVEOAK, next door, is looking for you.");
         System.out.println(" ");
         System.out.println("- - - - - - - - - - ");
     }

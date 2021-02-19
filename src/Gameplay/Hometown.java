@@ -1,13 +1,18 @@
 package Gameplay;
 import pc.Computer;
+import pokemon.Bulbasaur;
+import pokemon.Pokemon;
 import trainers.Trainer;
 import util.Input;
 
+import java.util.Scanner;
+
 public class Hometown {
     Input io;
+    Scanner scanner = new Scanner(System.in);
     public Hometown(){}
 
-    public void navigateHomeTown(Trainer player, Trainer rival, Computer computer){
+    public void homeTownFirstVisit(Trainer player, Trainer rival, Computer computer){
         boolean storyInput = true;
         io = new Input();
             centerOfTown(player,rival,computer);
@@ -53,6 +58,65 @@ public class Hometown {
         System.out.println("PROF LIVEOAK runs up to you, slightly out of breath.");
         System.out.println("PROF LIVEOAK: It's unsafe! Wild POKEMON live in tall grass! You need your own\nPOKEMON for your protection. I know! Here, come with me!");
         //go to lab method
+
+    }
+
+    public void returnToLab(Trainer player, Trainer rival, Computer computer){
+        int playerHpRandom = (int) Math.floor(Math.random()*15)+1;
+        int playerAttRandom = (int) Math.floor(Math.random()*15)+1;
+        int playerDefRandom = (int) Math.floor(Math.random()*15)+1;
+        int playerSpAttRandom = (int) Math.floor(Math.random()*15)+1;
+        int playerSpDefRandom = (int) Math.floor(Math.random()*15)+1;
+        int playerSpeedRandom = (int) Math.floor(Math.random()*15)+1;
+        int rivalHpRandom = (int) Math.floor(Math.random()*15)+1;
+        int rivalAttRandom = (int) Math.floor(Math.random()*15)+1;
+        int rivalDefRandom = (int) Math.floor(Math.random()*15)+1;
+        int rivalSpAttRandom = (int) Math.floor(Math.random()*15)+1;
+        int rivalSpDefRandom = (int) Math.floor(Math.random()*15)+1;
+        int rivalSpeedRandom = (int) Math.floor(Math.random()*15)+1;
+
+        boolean loop = true;
+        String blue = rival.getName().toUpperCase();
+        System.out.println("PROF LIVEOAK leads you out of the tall grass back to his lab in the southern half of town.");
+        scanner.nextLine();
+        System.out.println("As he leads you up the stairs to the floor where his lab is, you see " + blue + " standing there impatiently. Shifting his weight from foot to foot");
+        scanner.nextLine();
+        System.out.println(blue + ": Gramps! C'mon! I'm tired of waiting!!");
+        scanner.nextLine();
+        System.out.println("PROF LIVEOAK: " + blue + "? OH! that's right! I told you you could come too!");
+        scanner.nextLine();
+        System.out.println(blue + "'s face turned red, you can't tell if he's embarrassed or angry, maybe both?");
+        scanner.nextLine();
+        System.out.println("Professor Liveoak turns to you...");
+        scanner.nextLine();
+        System.out.println("PROF LIVEOAK: " + player.getName().toUpperCase() + "! There are 3 POKEMON here! They are inside the POKEBALLS! When I was young, I was a serious TRAINER! I travelled the world with my POKEMON partners going on adventures! These 3 POKEMON are descendents of those POKEMON! Choose one " + player.getName().toUpperCase() + " choose whichever one you'd like!");
+        scanner.nextLine();
+        System.out.println(blue + ": GRAMPS?! WHAT ABOUT ME?!");
+        scanner.nextLine();
+        System.out.println("PROF LIVEOAK: BE PATIENT...." + "I mean, " + rival.getName() + " you can have one too after he's selected.");
+        scanner.nextLine();
+        System.out.println("You approach the table nervously, you can feel " + blue + "'s eyes boring DIGLET tunnels into the back of your skull");
+        scanner.nextLine();
+        while(loop){
+            System.out.println("There are placards in front of the 3 POKEBALLS");
+            scanner.nextLine();
+            System.out.println("-- BULBASAUR -- CHARMANDER -- SQUIRTLE --");
+            scanner.nextLine();
+            System.out.println("Who do you choose?");
+            String answ = io.getString();
+            switch(answ.toUpperCase()){
+                case "BULBASAUR":
+                    System.out.println("So you want the Photosynthesizing Therapsid, BULBASAUR? Y/N");
+                    answ = io.getString();
+                    if(answ.toLowerCase().equals("y")||answ.toLowerCase().equals("yes")){
+                        Pokemon bulbasaur = new Bulbasaur(5,playerHpRandom,playerAttRandom,playerDefRandom,playerSpAttRandom,playerSpDefRandom,playerSpeedRandom);
+                        player.addPokemonToTeam(bulbasaur);
+                        System.out.println("You selected BULBASAUR!!");
+                    }
+
+            }
+        }
+
 
     }
 
