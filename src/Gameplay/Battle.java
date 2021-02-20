@@ -25,6 +25,10 @@ public class Battle {
         if(playerPokemon.getHitPoints()<=0){
             return false;
         }else if(rivalPokemon.getHitPoints()<=0){
+            playerPokemon.earnEVS(rivalPokemon.getExpVal());
+            int exp =Pokemon.calcExpGained(false,true,rivalPokemon.getBaseExp(),rivalPokemon.getLevel(),1);
+            System.out.println(playerPokemon.getName() + " earned " + exp + " experience points!");
+            playerPokemon.addExp(exp);
             return true;
         }else{
             return true;
@@ -150,6 +154,9 @@ public class Battle {
         System.out.println(" ");
         String answ = consoleEntry.getString().toUpperCase();
         Items item = protagonist.getMedicine().get(answ);
+        if(answ.isEmpty()){
+            return playerTurn(protagonist,rival);
+        }
         if(answ.equals("BACK")){
             //allows player to back out of item menu
             return playerTurn(protagonist,rival);

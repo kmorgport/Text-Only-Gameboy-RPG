@@ -271,8 +271,10 @@ public abstract class Pokemon {
     public void setBattleStats(){
 
     }
-
-    public int calcExpGained(boolean wild, boolean owner, int baseEx, int lev, int s){
+    //wild determines if combat is against wild or tamed
+    //owner is if pokemon was originally caught by another person
+    //s is how many pokemon participated in fight(create an arrayList that tracks how many different pokemon get swapped in?)
+    public static int calcExpGained(boolean wild, boolean owner, int baseEx, int lev, int s){
         if(!wild && !owner){
             return (int) Math.round((1.5*1.5*baseEx*1*lev)/7*s);
         }else if(wild && !owner){
@@ -291,6 +293,8 @@ public abstract class Pokemon {
     public int getCurrentExpTotal(){
         return this.currentExpTotal;
     }
+
+    public void addExp(int exp){this.currentExpTotal+=exp;}
 
     public int getExpToNextLevel(){
         return this.expToNextLevel;
