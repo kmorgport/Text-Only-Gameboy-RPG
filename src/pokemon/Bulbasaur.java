@@ -13,11 +13,17 @@ public class Bulbasaur extends Pokemon{
         this.currentExpTotal = 0;
         name = "Bulbasaur";
         baseHP = 45;
+        this.hpIV = hpIV;
         baseAttack = 49;
+        this.attackIV = attackIV;
         baseDefense = 49;
+        this.defenseIV = defenseIV;
         baseSpecialAttack = 65;
+        this.specAttIV = specAttIV;
         baseSpecialDefense = 65;
+        this.specDefIV = specDefIV;
         baseSpeed = 45;
+        this.speedIV = speedIV;
         types = new ArrayList<>();
         types.add("Grass");
         types.add("Poison");

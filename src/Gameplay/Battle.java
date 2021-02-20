@@ -28,7 +28,7 @@ public class Battle {
             playerPokemon.earnEVS(rivalPokemon.getExpVal());
             int exp =Pokemon.calcExpGained(false,true,rivalPokemon.getBaseExp(),rivalPokemon.getLevel(),1);
             System.out.println(playerPokemon.getName() + " earned " + exp + " experience points!");
-            playerPokemon.addExp(exp);
+            playerPokemon.levelUp(exp);
             return true;
         }else{
             return true;

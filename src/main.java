@@ -48,9 +48,12 @@ public class main {
 //        red.addToMedicine(potion);
 //        red.addToMedicine(antidote);
         battle.startBattle(red,blue);
-//        System.out.println(bulbasaur.getHitPointsEV());
-//        bulbasaur.earnEVS(charmander.getExpVal());
-//        System.out.println(bulbasaur.getHitPointsEV());
+        battle.startBattle(red,blue);
+        battle.startBattle(red,blue);
+////        System.out.println(bulbasaur.getHitPointsEV());
+//        System.out.println(charmander.getCurrentExpTotal());
+//        System.out.println(charmander.getExpToNextLevel());
+
 
 
     }

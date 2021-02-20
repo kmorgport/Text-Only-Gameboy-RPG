@@ -3,6 +3,7 @@ package pokemon;
 import moves.Moves;
 
 import java.util.ArrayList;
+import java.util.Scanner;
 
 public abstract class Pokemon {
     protected String name;
@@ -91,13 +92,17 @@ public abstract class Pokemon {
         return this.level;
     }
 
-    public void setLevel(int level){
-        this.level = level;
+    public void setLevel(){
+        this.level +=1;
     }
 
     public int getHitPoints(){
         return this.hitPoints;
     }
+
+    public int getBaseHP(){return this.baseHP;}
+
+    public int getHpIV(){return this.hpIV;}
 
     public void setHitPoints(int hp){
         this.hitPoints = hp;
@@ -118,6 +123,10 @@ public abstract class Pokemon {
         return this.attack;
     }
 
+    public int getBaseAttack(){return this.baseAttack;}
+
+    public int getAttackIV(){return this.attackIV;}
+
     public int getAttackEV(){return this.attackEV;}
 
     public void setAttack(int attack){
@@ -136,9 +145,11 @@ public abstract class Pokemon {
         this.attackEV += attackEv;
     }
 
-    public int getDefense(){
-        return this.defense;
-    }
+    public int getDefense(){ return this.defense;}
+
+    public int getBaseDefense(){return this.baseDefense;}
+
+    public int getDefenseIV(){return this.defenseIV;}
 
     public int getDefenseEV(){return this.defenseEV;}
 
@@ -161,6 +172,12 @@ public abstract class Pokemon {
     public int getSpecialAttack(){
         return this.specialAttack;
     }
+
+    public int getBaseSpecialAttack(){return this.baseSpecialAttack;}
+
+    public int getSpecAttEV(){return this.specAttEV;}
+
+    public int getSpecAttIV(){return this.specAttIV;}
 
     public void setSpecialAttack(int specialAttack){
         this.specialAttack = specialAttack;
@@ -186,6 +203,12 @@ public abstract class Pokemon {
         return this.specialDefense;
     }
 
+    public int getBaseSpecialDefense(){return this.baseSpecialDefense;}
+
+    public int getSpecDefIV(){return this.specDefIV;}
+
+    public int getSpecDefEV(){return this.specDefEV;}
+
     public void setSpecialDefense(int specialDefense){
         this.specialDefense = specialDefense;
     }
@@ -206,9 +229,13 @@ public abstract class Pokemon {
         this.specDefEV += specialDefenseEv;
     }
 
-    public int getSpeed(){
-        return this.speed;
-    }
+    public int getSpeed(){ return this.speed; }
+
+    public int getBaseSpeed(){return this.baseSpeed;}
+
+    public int getSpeedIV(){return this.speedIV;}
+
+    public int getSpeedEV(){return this.speedEV;}
 
     public void setSpeed(int speed){
         this.speed = speed;
@@ -317,6 +344,33 @@ public abstract class Pokemon {
 
     public void healPokemon(){
         this.hitPoints = this.maxHitPoints;
+    }
+
+    public void levelUp(int earnedExp){
+        Scanner scanner = new Scanner(System.in);
+        this.addExp(earnedExp);
+        while(this.getCurrentExpTotal()>this.getExpToNextLevel()){
+            if(this.getCurrentExpTotal()>this.getExpToNextLevel()){
+                this.setLevel();
+                System.out.println(this.getName() + " grew to Level " + this.getLevel() + "!");
+                scanner.nextLine();
+                this.setMaxHitPoints(findHP(this.getBaseHP(),this.getHpIV(),this.getHitPointsEV(),this.getLevel()));
+                System.out.println("HP: " + this.getMaxHitPoints());
+                this.setHitPoints(this.getMaxHitPoints());
+                this.setAttack(findStat(this.getBaseAttack(),this.getAttackIV(),this.getAttackEV(),this.getLevel()));
+                System.out.println("Attack: " + this.getAttack());
+                this.setDefense(findStat(this.getBaseDefense(),this.getDefenseIV(),this.getDefenseEV(),this.getLevel()));
+                System.out.println("Defense: " + this.getDefense());
+                this.setSpecialAttack(findStat(this.getBaseSpecialAttack(),this.getSpecAttIV(),this.getSpecAttEV(),this.getLevel()));
+                System.out.println("Special Attack: " + this.getSpecialAttack());
+                this.setSpecialDefense(findStat(this.getBaseSpecialDefense(),this.getSpecDefIV(),this.getSpecDefEV(),this.getLevel()));
+                System.out.println("Special Defense: " + this.getSpecialDefense());
+                this.setSpeed(findStat(this.getBaseSpeed(),this.getSpeedIV(),this.getSpeedEV(),this.getLevel()));
+                System.out.println("Speed: " + this.getSpeed());
+                this.setExpToNextLevel(this.expToNextLevel(this.getLevel()));
+            }
+        }
+
     }
 
     abstract public ArrayList<Moves> pullMoveArrayList();
