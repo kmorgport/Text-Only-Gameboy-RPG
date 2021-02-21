@@ -47,9 +47,12 @@ public class main {
 //        potion.setQuantity(1);
 //        red.addToMedicine(potion);
 //        red.addToMedicine(antidote);
-        battle.startBattle(red,blue);
-        battle.startBattle(red,blue);
-        battle.startBattle(red,blue);
+        boolean winOrLose = battle.revisedPokemonBattle(red,blue);
+        if(winOrLose){
+            System.out.println("you won!");
+        }else {
+            System.out.println("You lost!");
+        }
 ////        System.out.println(bulbasaur.getHitPointsEV());
 //        System.out.println(charmander.getCurrentExpTotal());
 //        System.out.println(charmander.getExpToNextLevel());

@@ -33,12 +33,47 @@ public class Battle {
         }
     }
 
+    public boolean revisedPokemonBattle(Trainer player, Trainer npc){
+        Pokemon playerPokemon = player.retrieveTeamStarter();
+        Pokemon npcPokemon = npc.retrieveTeamStarter();
+        commenceBattle(player,npc);
+        while(true){
+            revisedBattleCycle(player, npc);
+            if(playerPokemon.getHitPoints()<=0){
+                return false;
+            }else if(npcPokemon.getHitPoints()<=0){
+                playerPokemon.earnEVS(npcPokemon.getExpVal());
+                System.out.println(playerPokemon.getName() + " earned 130 experience points!");
+                playerPokemon.levelUp(140);
+                return true;
+            }
+        }
+    }
+
+
+    public void commenceBattle(Trainer player, Trainer npc){
+        Pokemon playerPokemon = player.retrieveTeamStarter();
+        Pokemon npcPokemon = npc.retrieveTeamStarter();
+        resetBattleStatValue(playerPokemon);
+        resetBattleStatValue(npcPokemon);
+
+    }
+
+    public void resetBattleStatValue(Pokemon pokemon){
+        pokemon.setBattleAttack(pokemon.getAttack());
+        pokemon.setBattleDefense(pokemon.getDefense());
+        pokemon.setBattleSpecialAttack(pokemon.getSpecialAttack());
+        pokemon.setBattleSpecialDefense(pokemon.getSpecialDefense());
+        pokemon.setBattleSpeed(pokemon.getSpeed());
+        pokemon.setBattleEvasion(100);
+        pokemon.setBattleAccuracy(100);
+
+    }
+
     public void revisedBattleCycle(Trainer player, Trainer npc){
         System.out.println("What will you do?");
-        scanner.nextLine();
         while(true){
             System.out.println("--FIGHT--ITEM--PKMN--RUN--");
-            scanner.nextLine();
             String answ = consoleEntry.getString();
             if(answ.isEmpty()){
                 System.out.println("Please choose an option");
@@ -61,14 +96,24 @@ public class Battle {
                 Moves playerMove = playerMoveSelection(player);
                 Moves npcMove = npcMoveSelection(npc);
                 if(playerMove.priority>npcMove.priority){
-                    revisedPlayerTurn(player,playerMove,npc);
-                    revisedNpcTurn(player,npc,npcMove);
+                    revisedTurn(player,playerMove,npc);
+                    revisedTurn(npc,npcMove,player);
                     break;
                 }else if(npcMove.priority>playerMove.priority){
-                    revisedNpcTurn(player,npc,npcMove);
-                    revisedPlayerTurn(player,playerMove,npc);
+                    revisedTurn(npc,npcMove,player);
+                    revisedTurn(player,playerMove,npc);
                     break;
                 }
+                if(player.retrieveTeamStarter().getBattleSpeed()>npc.retrieveTeamStarter().getBattleSpeed()){
+                    revisedTurn(player,playerMove,npc);
+                    revisedTurn(npc,npcMove,player);
+                    break;
+                }else if(npc.retrieveTeamStarter().getBattleSpeed()>player.retrieveTeamStarter().getBattleSpeed()){
+                    revisedTurn(npc,npcMove,player);
+                    revisedTurn(player,playerMove,npc);
+                    break;
+                }
+
 
             }else{
                 System.out.println("Ooops, there was a typo");
@@ -78,62 +123,72 @@ public class Battle {
             }
         }
     }
+//
+//    public void revisedNpcTurn(Trainer player, Trainer npc, Moves npcMove){
+//        Pokemon playerPokemon = player.retrieveTeamStarter();
+//        Pokemon npcPokemon = npc.retrieveTeamStarter();
+//        int accuracyRandom = (int) Math.floor(Math.random()*125);
+//        switch (npcMove.category) {
+//            case "Physical":
+//                if (accuracyRandom <= calculateAccuracy(playerPokemon, npcMove, npcPokemon)) {
+//                    playerAttack(npcPokemon, npcMove, playerPokemon);
+//                } else {
+//                    System.out.println(npcPokemon.getName() + " used " + npcMove.name + "!");
+//                    scanner.nextLine();
+//                    System.out.println("The attack missed!");
+//                    scanner.nextLine();
+//                }
+//                break;
+//            case "Special":
+//                if (accuracyRandom <= calculateAccuracy(playerPokemon, npcMove, npcPokemon)) {
+//                    playerSpecialAttack(npcPokemon, npcMove, playerPokemon);
+//                } else {
+//                    System.out.println(playerPokemon.getName() + " used " + npcMove.name + "!");
+//                    scanner.nextLine();
+//                    System.out.println("The attack missed!");
+//                    scanner.nextLine();
+//                }
+//                break;
+//            case "Debuff":
+//                buffDeBuff(npcPokemon, npcMove, playerPokemon);
+//                break;
+//            case "Buff":
+//                buffDeBuff(npcPokemon, npcMove, npcPokemon);
+//                break;
+//        }
+//    }
 
-    public void revisedNpcTurn(Trainer player, Trainer npc, Moves npcMove){
-        Pokemon playerPokemon = player.retrieveTeamStarter();
-        Pokemon npcPokemon = npc.retrieveTeamStarter();
+    public void revisedTurn(Trainer attacker, Moves playerMove, Trainer defender){
+        Pokemon attackingPokemon = attacker.retrieveTeamStarter();
+        Pokemon defendingPokemon = defender.retrieveTeamStarter();
         int accuracyRandom = (int) Math.floor(Math.random()*125);
-        if(npcMove.category.equals("Physical")){
-            if(accuracyRandom<=calculateAccuracy(playerPokemon,npcMove,npcPokemon)){
-                playerAttack(npcPokemon,npcMove,playerPokemon);
-            }else{
-                System.out.println(npcPokemon.getName() + " used " + npcMove.name + "!");
-                scanner.nextLine();
-                System.out.println("The attack missed!");
-                scanner.nextLine();
-            }
-        }else if(npcMove.category.equals("Special")){
-            if(accuracyRandom<=calculateAccuracy(playerPokemon,npcMove,npcPokemon)){
-                playerSpecialAttack(npcPokemon,npcMove,playerPokemon);
-            }else{
-                System.out.println(playerPokemon.getName() + " used " + npcMove.name + "!");
-                scanner.nextLine();
-                System.out.println("The attack missed!");
-                scanner.nextLine();
-            }
-        }else if(npcMove.category.equals("Debuff")){
-            buffDeBuff(npcPokemon,npcMove, playerPokemon);
-        }else if(npcMove.category.equals("Buff")){
-            buffDeBuff(npcPokemon,npcMove, npcPokemon);
-        }
-    }
-
-    public void revisedPlayerTurn(Trainer player, Moves playerMove, Trainer npc){
-        Pokemon playerPokemon = player.retrieveTeamStarter();
-        Pokemon npcPokemon = npc.retrieveTeamStarter();
-        int accuracyRandom = (int) Math.floor(Math.random()*125);
-        if(playerMove.category.equals("Physical")){
-            if(accuracyRandom<=calculateAccuracy(playerPokemon,playerMove,npcPokemon)){
-                playerAttack(playerPokemon,playerMove,npcPokemon);
-            }else{
-                System.out.println(playerPokemon.getName() + " used " + playerMove.name + "!");
-                scanner.nextLine();
-                System.out.println("The attack missed!");
-                scanner.nextLine();
-            }
-        }else if(playerMove.category.equals("Special")){
-            if(accuracyRandom<=calculateAccuracy(playerPokemon,playerMove,npcPokemon)){
-                playerSpecialAttack(playerPokemon,playerMove,npcPokemon);
-            }else{
-                System.out.println(playerPokemon.getName() + " used " + playerMove.name + "!");
-                scanner.nextLine();
-                System.out.println("The attack missed!");
-                scanner.nextLine();
-            }
-        }else if(playerMove.category.equals("Debuff")){
-            buffDeBuff(playerPokemon,playerMove, npcPokemon);
-        }else if(playerMove.category.equals("Buff")){
-            buffDeBuff(playerPokemon,playerMove, playerPokemon);
+        switch (playerMove.category) {
+            case "Physical":
+                if (accuracyRandom <= calculateAccuracy(attackingPokemon, playerMove, defendingPokemon)) {
+                    playerAttack(attackingPokemon, playerMove, defendingPokemon);
+                } else {
+                    System.out.println(attackingPokemon.getName() + " used " + playerMove.name + "!");
+                    scanner.nextLine();
+                    System.out.println("The attack missed!");
+                    scanner.nextLine();
+                }
+                break;
+            case "Special":
+                if (accuracyRandom <= calculateAccuracy(attackingPokemon, playerMove, defendingPokemon)) {
+                    playerSpecialAttack(attackingPokemon, playerMove, defendingPokemon);
+                } else {
+                    System.out.println(attackingPokemon.getName() + " used " + playerMove.name + "!");
+                    scanner.nextLine();
+                    System.out.println("The attack missed!");
+                    scanner.nextLine();
+                }
+                break;
+            case "Debuff":
+                buffDeBuff(attackingPokemon, playerMove, defendingPokemon);
+                break;
+            case "Buff":
+                buffDeBuff(attackingPokemon, playerMove, attackingPokemon);
+                break;
         }
     }
 
