@@ -7,18 +7,16 @@ import trainers.Trainer;
 import util.Input;
 
 import java.lang.reflect.Field;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.LinkedHashMap;
-import java.util.Objects;
+import java.util.*;
 
 public class Battle {
     protected Input consoleEntry = new Input();
+    protected Scanner scanner = new Scanner(System.in);
     public Battle(){
 
     }
 
-    public boolean startBattle(Trainer player, Trainer npc){
+    public boolean startRivalBattle(Trainer player, Trainer npc){
         Pokemon playerPokemon = player.retrieveTeamStarter();
         Pokemon rivalPokemon = npc.retrieveTeamStarter();
         battleCycle(player,npc);
@@ -26,12 +24,81 @@ public class Battle {
             return false;
         }else if(rivalPokemon.getHitPoints()<=0){
             playerPokemon.earnEVS(rivalPokemon.getExpVal());
-            int exp =Pokemon.calcExpGained(false,true,rivalPokemon.getBaseExp(),rivalPokemon.getLevel(),1);
-            System.out.println(playerPokemon.getName() + " earned " + exp + " experience points!");
-            playerPokemon.levelUp(exp);
+//            int exp =Pokemon.calcExpGained(false,true,rivalPokemon.getBaseExp(),rivalPokemon.getLevel(),1);
+            System.out.println(playerPokemon.getName() + " earned 130 experience points!");
+            playerPokemon.levelUp(130);
             return true;
         }else{
             return true;
+        }
+    }
+
+    public void revisedBattleCycle(Trainer player, Trainer npc){
+        System.out.println("What will you do?");
+        scanner.nextLine();
+        while(true){
+            System.out.println("--FIGHT--ITEM--PKMN--RUN--");
+            scanner.nextLine();
+            String answ = consoleEntry.getString();
+            if(answ.isEmpty()){
+                System.out.println("Please choose an option");
+            }
+            if(answ.toUpperCase().equals("ITEM")){
+                useRecoveryItems(player,npc);
+                npcTurn(player.retrieveTeamStarter(),npc.retrieveTeamStarter());
+                break;
+            }else if(answ.toUpperCase().equals("PKMN")){
+                System.out.println("You only have one POKEMON!");
+                scanner.nextLine();
+                System.out.println("What will you do?");
+                scanner.nextLine();
+            }else if(answ.toUpperCase().equals("RUN")){
+                System.out.println("You can't run from TRAINER battles!");
+                scanner.nextLine();
+                System.out.println("What will you do?");
+                scanner.nextLine();
+            }else if(answ.toUpperCase().equals("FIGHT")){
+                Moves playerMove = playerMoveSelection(player);
+                Moves npcMove = npcMoveSelection(npc);
+            }else{
+                System.out.println("Ooops, there was a typo");
+                scanner.nextLine();
+                System.out.println("What will you do?");
+                scanner.nextLine();
+            }
+        }
+    }
+
+    public Moves npcMoveSelection(Trainer npc){
+
+    }
+
+    public Moves playerMoveSelection(Trainer player){
+        Moves playerMove;
+        ArrayList<String> names = new ArrayList<>();
+        ArrayList<Moves> moveList = player.retrieveTeamStarter().pullMoveArrayList();
+        StringBuilder printMoves = new StringBuilder();
+        for (Moves move : moveList) {
+            printMoves.append("---").append(move.name);
+            names.add(move.name.toLowerCase());
+        }
+        printMoves.append("---BACK");
+        while(true){
+            System.out.println(printMoves.toString());
+            String answ = consoleEntry.getString();
+            if(answ.isEmpty()){
+                return null;
+            }
+            if(!names.contains(answ.toLowerCase())){
+                System.out.println("PROF LIVEOAK: " + player.retrieveTeamStarter().getName() + " doesn't understand that command! Try again!");
+            }else{
+                for(Moves move: moveList){
+                    if(move.name.toLowerCase().contains(answ.toLowerCase())){
+                        playerMove = move;
+                        return playerMove;
+                    }
+                }
+            }
         }
     }
 
