@@ -60,6 +60,16 @@ public class Battle {
             }else if(answ.toUpperCase().equals("FIGHT")){
                 Moves playerMove = playerMoveSelection(player);
                 Moves npcMove = npcMoveSelection(npc);
+                if(playerMove.priority>npcMove.priority){
+                    revisedPlayerTurn(player,playerMove,npc);
+                    revisedNpcTurn(player,npc,npcMove);
+                    break;
+                }else if(npcMove.priority>playerMove.priority){
+                    revisedNpcTurn(player,npc,npcMove);
+                    revisedPlayerTurn(player,playerMove,npc);
+                    break;
+                }
+
             }else{
                 System.out.println("Ooops, there was a typo");
                 scanner.nextLine();
@@ -69,8 +79,68 @@ public class Battle {
         }
     }
 
-    public Moves npcMoveSelection(Trainer npc){
+    public void revisedNpcTurn(Trainer player, Trainer npc, Moves npcMove){
+        Pokemon playerPokemon = player.retrieveTeamStarter();
+        Pokemon npcPokemon = npc.retrieveTeamStarter();
+        int accuracyRandom = (int) Math.floor(Math.random()*125);
+        if(npcMove.category.equals("Physical")){
+            if(accuracyRandom<=calculateAccuracy(playerPokemon,npcMove,npcPokemon)){
+                playerAttack(npcPokemon,npcMove,playerPokemon);
+            }else{
+                System.out.println(npcPokemon.getName() + " used " + npcMove.name + "!");
+                scanner.nextLine();
+                System.out.println("The attack missed!");
+                scanner.nextLine();
+            }
+        }else if(npcMove.category.equals("Special")){
+            if(accuracyRandom<=calculateAccuracy(playerPokemon,npcMove,npcPokemon)){
+                playerSpecialAttack(npcPokemon,npcMove,playerPokemon);
+            }else{
+                System.out.println(playerPokemon.getName() + " used " + npcMove.name + "!");
+                scanner.nextLine();
+                System.out.println("The attack missed!");
+                scanner.nextLine();
+            }
+        }else if(npcMove.category.equals("Debuff")){
+            buffDeBuff(npcPokemon,npcMove, playerPokemon);
+        }else if(npcMove.category.equals("Buff")){
+            buffDeBuff(npcPokemon,npcMove, npcPokemon);
+        }
+    }
 
+    public void revisedPlayerTurn(Trainer player, Moves playerMove, Trainer npc){
+        Pokemon playerPokemon = player.retrieveTeamStarter();
+        Pokemon npcPokemon = npc.retrieveTeamStarter();
+        int accuracyRandom = (int) Math.floor(Math.random()*125);
+        if(playerMove.category.equals("Physical")){
+            if(accuracyRandom<=calculateAccuracy(playerPokemon,playerMove,npcPokemon)){
+                playerAttack(playerPokemon,playerMove,npcPokemon);
+            }else{
+                System.out.println(playerPokemon.getName() + " used " + playerMove.name + "!");
+                scanner.nextLine();
+                System.out.println("The attack missed!");
+                scanner.nextLine();
+            }
+        }else if(playerMove.category.equals("Special")){
+            if(accuracyRandom<=calculateAccuracy(playerPokemon,playerMove,npcPokemon)){
+                playerSpecialAttack(playerPokemon,playerMove,npcPokemon);
+            }else{
+                System.out.println(playerPokemon.getName() + " used " + playerMove.name + "!");
+                scanner.nextLine();
+                System.out.println("The attack missed!");
+                scanner.nextLine();
+            }
+        }else if(playerMove.category.equals("Debuff")){
+            buffDeBuff(playerPokemon,playerMove, npcPokemon);
+        }else if(playerMove.category.equals("Buff")){
+            buffDeBuff(playerPokemon,playerMove, playerPokemon);
+        }
+    }
+
+    public Moves npcMoveSelection(Trainer npc){
+        int lengthOfNpcMoveList = npc.retrieveTeamStarter().pullMoveArrayList().size();
+        int moveRandom = (int) Math.floor(Math.random()*lengthOfNpcMoveList);
+         return npc.retrieveTeamStarter().pullMoveArrayList().get(moveRandom);
     }
 
     public Moves playerMoveSelection(Trainer player){

@@ -4,8 +4,8 @@ public class StatusEffect extends Moves{
     protected String status;
     protected int statusChance;
 
-    public StatusEffect(String name, String type, String category, int powerPoints, int accuracy, String status, int statusChance) {
-        super(name, type, category, powerPoints, accuracy);
+    public StatusEffect(String name, String type, String category, int powerPoints, int accuracy,int priority, String status, int statusChance) {
+        super(name, type, category, powerPoints, accuracy, priority);
         this.status = status;
         this.statusChance = statusChance;
     }

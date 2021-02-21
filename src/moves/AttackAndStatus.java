@@ -5,8 +5,8 @@ public class AttackAndStatus extends Moves{
     protected String status;
     protected int statusChance;
 
-    public AttackAndStatus(String name, String type, String category, int powerPoints, int accuracy, int power, String status, int statusChance) {
-        super(name, type, category, powerPoints, accuracy);
+    public AttackAndStatus(String name, String type, String category, int powerPoints, int accuracy,int priority, int power, String status, int statusChance) {
+        super(name, type, category, powerPoints, accuracy, priority);
         this.power = power;
         this.status = status;
         this.statusChance = statusChance;

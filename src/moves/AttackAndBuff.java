@@ -6,8 +6,8 @@ public class AttackAndBuff extends Moves{
     protected String buffDebuffType;
     protected int buffDebuffChance;
 
-    public AttackAndBuff(String name, String type, String category, int powerPoints, int accuracy, int power, int buffDebuffInteger, String buffDebuffType, int buffDebuffChance) {
-        super(name, type, category, powerPoints, accuracy);
+    public AttackAndBuff(String name, String type, String category, int powerPoints, int accuracy,int priority, int power, int buffDebuffInteger, String buffDebuffType, int buffDebuffChance) {
+        super(name, type, category, powerPoints, accuracy, priority);
         this.power = power;
         this.buffDebuffInteger = buffDebuffInteger;
         this.buffDebuffType = buffDebuffType;

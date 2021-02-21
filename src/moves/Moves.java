@@ -4,6 +4,7 @@ abstract public class Moves {
     public String name;
     public String type;
     public String category;
+    public int priority;
     public int powerPoints;
     public int accuracy;
     public int power;
@@ -11,12 +12,13 @@ abstract public class Moves {
     public String buffDebuffType;
     public int buffDebuffChance;
 
-    public Moves(String name, String type, String category, int powerPoints, int accuracy){
+    public Moves(String name, String type, String category, int powerPoints, int accuracy, int priority){
         this.name = name;
         this.type = type;
         this.category = category;
         this.powerPoints = powerPoints;
         this.accuracy = accuracy;
+        this.priority = priority;
     }
 
     public String getName(){
