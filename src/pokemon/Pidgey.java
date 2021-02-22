@@ -5,7 +5,7 @@ import moves.Moves;
 import java.util.ArrayList;
 
 public class Pidgey extends Pokemon{
-    Pidgey(int level, int hpIV, int attackIV, int defenseIV, int specAttIV, int specDefIV, int speedIV) {
+    public Pidgey(int level, int hpIV, int attackIV, int defenseIV, int specAttIV, int specDefIV, int speedIV) {
         super(level, hpIV, attackIV, defenseIV, specAttIV, specDefIV, speedIV);
         this.currentExpTotal = 0;
         name = "Pidgey";
@@ -38,6 +38,6 @@ public class Pidgey extends Pokemon{
 
 
     public ArrayList<Moves> pullMoveArrayList() {
-        return BulbasaurMoves.findBulbasaurMovesArrayList();
+        return PidgeyMoves.findPidgeyMovesArrayList();
     }
 }

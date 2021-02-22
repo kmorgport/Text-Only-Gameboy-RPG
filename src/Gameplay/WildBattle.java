@@ -15,6 +15,7 @@ public class WildBattle {
     public WildBattle(){};
 
     public boolean wildPokemonBattle(Trainer player, Pokemon pokemon){
+        System.out.println("A wild " + pokemon.getName() + " appeared!!");
         Pokemon playerPokemon = player.retrieveTeamStarter();
         commenceBattle(player,pokemon);
         while(true){

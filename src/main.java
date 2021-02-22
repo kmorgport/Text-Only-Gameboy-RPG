@@ -4,10 +4,7 @@ import items.Items;
 import items.Potion;
 import moves.Moves;
 import pc.Computer;
-import pokemon.Bulbasaur;
-import pokemon.Charmander;
-import pokemon.Pokemon;
-import pokemon.Squirtle;
+import pokemon.*;
 import trainers.Protagonist;
 import trainers.Rival;
 import trainers.Trainer;
@@ -36,8 +33,10 @@ public class main {
         Bulbasaur bulbasaur = new Bulbasaur(5,random,random,random,random,random,random);
         Charmander charmander = new Charmander(5,random,random,random,random,random,random);
         Squirtle squirtle = new Squirtle(5,random,random,random,random,random,random);
-        Battle battle = new Battle();
+        Pidgey pidgey = new Pidgey(5,random,random,random,random,random,random);
+//        Battle battle = new Battle();
 //////        System.out.println(bulbasaur.pullMoveArrayList());
+        WildBattle test = new WildBattle();
         Trainer red = new Protagonist("Red");
         Trainer blue = new Rival("Green");
         red.addPokemonToTeam(charmander);
@@ -47,7 +46,7 @@ public class main {
 //        potion.setQuantity(1);
         red.addToMedicine(potion);
 //        red.addToMedicine(antidote);
-        boolean winOrLose = battle.revisedPokemonBattle(red,blue);
+        boolean winOrLose = test.wildPokemonBattle(red,pidgey);
         if(winOrLose){
             System.out.println("you won!");
         }else {
