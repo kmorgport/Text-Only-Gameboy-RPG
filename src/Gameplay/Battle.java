@@ -16,23 +16,6 @@ public class Battle {
 
     }
 
-    public boolean startRivalBattle(Trainer player, Trainer npc){
-        Pokemon playerPokemon = player.retrieveTeamStarter();
-        Pokemon rivalPokemon = npc.retrieveTeamStarter();
-        battleCycle(player,npc);
-        if(playerPokemon.getHitPoints()<=0){
-            return false;
-        }else if(rivalPokemon.getHitPoints()<=0){
-            playerPokemon.earnEVS(rivalPokemon.getExpVal());
-//            int exp =Pokemon.calcExpGained(false,true,rivalPokemon.getBaseExp(),rivalPokemon.getLevel(),1);
-            System.out.println(playerPokemon.getName() + " earned 130 experience points!");
-            playerPokemon.levelUp(130);
-            return true;
-        }else{
-            return true;
-        }
-    }
-
     public boolean revisedPokemonBattle(Trainer player, Trainer npc){
         Pokemon playerPokemon = player.retrieveTeamStarter();
         Pokemon npcPokemon = npc.retrieveTeamStarter();
@@ -40,10 +23,12 @@ public class Battle {
         while(true){
             revisedBattleCycle(player, npc);
             if(playerPokemon.getHitPoints()<=0){
+                System.out.println(playerPokemon.getName() + " fainted!");
                 return false;
             }else if(npcPokemon.getHitPoints()<=0){
                 playerPokemon.earnEVS(npcPokemon.getExpVal());
-                System.out.println(playerPokemon.getName() + " earned 130 experience points!");
+                System.out.println(npcPokemon.getName() + " fainted!");
+                System.out.println(playerPokemon.getName() + " earned 140 experience points!");
                 playerPokemon.levelUp(140);
                 return true;
             }
@@ -70,7 +55,9 @@ public class Battle {
 
     }
 
-    public Moves revisedBattleCycle(Trainer player, Trainer npc){
+    public void revisedBattleCycle(Trainer player, Trainer npc){
+        Pokemon playerPokemon = player.retrieveTeamStarter();
+        Pokemon npcPokemon = npc.retrieveTeamStarter();
         System.out.println("What will you do?");
         while(true){
             System.out.println("--FIGHT--ITEM--PKMN--RUN--");
@@ -80,7 +67,8 @@ public class Battle {
             }
             if(answ.toUpperCase().equals("ITEM")){
                 useRecoveryItems(player,npc);
-                npcTurn(player.retrieveTeamStarter(),npc.retrieveTeamStarter());
+                Moves npcMove = npcMoveSelection(npc);
+                revisedTurn(npc,npcMove,player);
                 break;
             }else if(answ.toUpperCase().equals("PKMN")){
                 System.out.println("You only have one POKEMON!");
@@ -91,25 +79,38 @@ public class Battle {
                 System.out.println("What will you do?");
                 System.out.println(" ");
             }else if(answ.toUpperCase().equals("FIGHT")){
-                Moves playerMove = playerMoveSelection(player, npc);
+                Moves playerMove = playerMoveSelection(player);
                 Moves npcMove = npcMoveSelection(npc);
-                if(playerMove.priority>npcMove.priority){
+                if (playerMove == null){
+                    System.out.println("What will you do?");
+                }else if(playerMove.priority>npcMove.priority){
                     revisedTurn(player,playerMove,npc);
+                    if(playerPokemon.getHitPoints()<=0||npcPokemon.getHitPoints()<=0){
+                        break;
+                    }
                     revisedTurn(npc,npcMove,player);
                     System.out.println(" ");
                     break;
                 }else if(npcMove.priority>playerMove.priority){
                     revisedTurn(npc,npcMove,player);
+                    if(playerPokemon.getHitPoints()<=0||npcPokemon.getHitPoints()<=0){
+                        break;
+                    }
                     revisedTurn(player,playerMove,npc);
                     System.out.println(" ");
                     break;
-                }
-                if(player.retrieveTeamStarter().getBattleSpeed()>npc.retrieveTeamStarter().getBattleSpeed()){
+                }else if(player.retrieveTeamStarter().getBattleSpeed()>npc.retrieveTeamStarter().getBattleSpeed()){
                     revisedTurn(player,playerMove,npc);
+                    if(playerPokemon.getHitPoints()<=0||npcPokemon.getHitPoints()<=0){
+                        break;
+                    }
                     revisedTurn(npc,npcMove,player);
                     break;
                 }else if(npc.retrieveTeamStarter().getBattleSpeed()>player.retrieveTeamStarter().getBattleSpeed()){
                     revisedTurn(npc,npcMove,player);
+                    if(playerPokemon.getHitPoints()<=0||npcPokemon.getHitPoints()<=0){
+                        break;
+                    }
                     revisedTurn(player,playerMove,npc);
                     break;
                 }
@@ -120,7 +121,6 @@ public class Battle {
                 System.out.println("What will you do?");
             }
         }
-        return null;
     }
 
     public void revisedTurn(Trainer attacker, Moves playerMove, Trainer defender){
@@ -133,7 +133,6 @@ public class Battle {
                     playerAttack(attackingPokemon, playerMove, defendingPokemon);
                 } else {
                     System.out.println(attackingPokemon.getName() + " used " + playerMove.name + "!");
-                    scanner.nextLine();
                     System.out.println("The attack missed!");
                     scanner.nextLine();
                 }
@@ -143,7 +142,6 @@ public class Battle {
                     playerSpecialAttack(attackingPokemon, playerMove, defendingPokemon);
                 } else {
                     System.out.println(attackingPokemon.getName() + " used " + playerMove.name + "!");
-                    scanner.nextLine();
                     System.out.println("The attack missed!");
                     scanner.nextLine();
                 }
@@ -163,7 +161,7 @@ public class Battle {
          return npc.retrieveTeamStarter().pullMoveArrayList().get(moveRandom);
     }
 
-    public Moves playerMoveSelection(Trainer player, Trainer rival){
+    public Moves playerMoveSelection(Trainer player){
         Moves playerMove;
         ArrayList<String> names = new ArrayList<>();
         ArrayList<Moves> moveList = player.retrieveTeamStarter().pullMoveArrayList();
@@ -179,7 +177,7 @@ public class Battle {
             if(answ.isEmpty()){
             }
             if(answ.toLowerCase().equals("back")){
-                return revisedBattleCycle(player, rival);
+                return null;
             }
             if(!names.contains(answ.toLowerCase())){
                 System.out.println("PROF LIVEOAK: " + player.retrieveTeamStarter().getName() + " doesn't understand that command! Try again!");
@@ -192,117 +190,6 @@ public class Battle {
                 }
             }
         }
-    }
-
-    public void battleCycle(Trainer protagonist, Trainer rival){
-        Pokemon player = protagonist.retrieveTeamStarter();
-        Pokemon npc = rival.retrieveTeamStarter();
-        System.out.println(rival.getName() + " sent out " + npc.getName() + "!");
-        System.out.println("Go! " + player.getName() + "!");
-        while(true) {
-            if(npc.getHitPoints()<=0){
-                System.out.println(npc.getName() + " fainted!");
-                break;
-            }
-            if(player.getHitPoints()<=0){
-                System.out.println(player.getName() + " fainted!");
-                break;
-            }
-            if (player.getSpeed() > npc.getSpeed()) {
-                playerTurn(protagonist, rival);
-                if (player.getHitPoints() <= 0) {
-                    System.out.println(player.getName() + " fainted!");
-                    break;
-                } else if (npc.getHitPoints() <= 0) {
-                    System.out.println(npc.getName() + " fainted!");
-                    break;
-                }
-                npcTurn(player, npc);
-            } else if(player.getSpeed() < npc.getSpeed()){
-                npcTurn(player, npc);
-                if (player.getHitPoints() <= 0) {
-                    System.out.println(player.getName() + " fainted!");
-                    break;
-                } else if (npc.getHitPoints() <= 0) {
-                    System.out.println(npc.getName() + " fainted!");
-                    break;
-                }
-                playerTurn(protagonist, rival);
-            }
-        }
-//        return winner;
-    }
-
-    public int playerTurn(Trainer protagonist, Trainer rival){
-        Pokemon player = protagonist.retrieveTeamStarter();
-        Pokemon npc = rival.retrieveTeamStarter();
-        ArrayList<Moves> moveList2 = player.pullMoveArrayList();
-        int accuracyRandom = (int) Math.floor(Math.random()*125);
-        System.out.println("What would you like to do?");
-        System.out.println("");
-        System.out.println("---FIGHT---ITEM---PKMN---RUN---");
-        String answ = consoleEntry.getString();
-        switch(answ.toLowerCase()){
-            case "fight":
-                System.out.println("---" + moveList2.get(0).name + "---" + moveList2.get(1).name + "---" + moveList2.get(2).name + "---"+"Back");
-                answ = consoleEntry.getString();
-                if(answ.toLowerCase().equals("back")){
-                    return playerTurn(protagonist,rival);
-                }
-                ArrayList<String> moveName = new ArrayList<>();
-                for(Moves move: moveList2){
-                    moveName.add(move.name.toLowerCase());
-                }
-                for(Moves move: moveList2){
-                    if(!moveName.contains(answ)){
-                        System.out.println("Professor Oak: " + player.getName() + " doesn't understand that command! Try again!");
-                        return playerTurn(protagonist,rival);
-                    }
-                    if(move.name.toLowerCase().contains(answ.toLowerCase())){
-                        if(move.category.equals("Physical")) {
-                            if(accuracyRandom<=calculateAccuracy(player,move,npc)){
-                                playerAttack(player, move, npc);
-                                break;
-                            }else{
-                                System.out.println(player.getName() + " used " + move.getName() + "!");
-                                System.out.println("The attack missed!");
-                                break;
-                            }
-                        }else if(move.category.equals("Special")){
-                            if(accuracyRandom<=calculateAccuracy(player,move,npc)){
-                                playerSpecialAttack(player,move,npc);
-                                break;
-                            }else{
-                                System.out.println(player.getName() + " used " + move.getName() + "!");
-                                System.out.println("The attack missed!");
-                                break;
-                            }
-                        }else if(move.category.equals("Debuff")){
-                            buffDeBuff(player,move, npc);
-                            break;
-                        }else if(move.category.equals("Buff")){
-                            buffDeBuff(player,move, player);
-                            break;
-                        }
-                    }
-                }
-                break;
-            case "item":
-                useRecoveryItems(protagonist,rival);
-                break;
-            case "pkmn":
-                System.out.println("You only have " + player.getName() + "!");
-                return playerTurn(protagonist,rival);
-            case "run":
-                System.out.println("You can't run from Trainer battles!");
-                return playerTurn(protagonist,rival);
-                default:
-                    System.out.println(" ");
-                    System.out.println("That's not a valid entry: ");
-                    System.out.println(" ");
-                    return playerTurn(protagonist,rival);
-        }
-        return 1;
     }
 
 
@@ -350,37 +237,6 @@ public class Battle {
         }else{
             System.out.println(item.getStatusRecovery());}
         return 1;
-
-
-    }
-
-
-    public void npcTurn(Pokemon player, Pokemon npc){
-        int accuracyRandom = (int) Math.floor(Math.random()*125);
-//        Moves[] moveList = npc.pullMoveList();
-        ArrayList<Moves> moveList2 = npc.pullMoveArrayList();
-        int moveRandom = (int) Math.floor(Math.random()*3);
-        Moves npcMove = moveList2.get(moveRandom);
-        if(npcMove.category.equals("Buff")){
-            buffDeBuff(npc,npcMove,npc);
-        }else if(npcMove.category.equals("Debuff")){
-            buffDeBuff(npc,npcMove,player);
-        }
-        else if(npcMove.category.equals("Physical")){
-            if(accuracyRandom<=calculateAccuracy(npc,npcMove,player)) {
-                playerAttack(npc, npcMove, player);
-            }else{
-                System.out.println(npc.getName() + " used " + npcMove.getName() + "!");
-                System.out.println("The attack missed!");
-            }
-        }else if(npcMove.category.equals("Special")){
-            if(accuracyRandom<=calculateAccuracy(npc,npcMove,player)){
-                playerSpecialAttack(npc,npcMove,player);
-            }else{
-                System.out.println(npc.getName() + " used " + npcMove.getName() + "!");
-                System.out.println("The attack missed!");
-            }
-        }
 
 
     }
