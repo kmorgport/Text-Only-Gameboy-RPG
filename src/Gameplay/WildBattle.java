@@ -14,7 +14,7 @@ public class WildBattle {
     protected Scanner scanner = new Scanner(System.in);
     public WildBattle(){};
 
-    public boolean wildPokemonBattle(Trainer player, Pokemon pokemon){
+    public boolean wildMonsterBattle(Trainer player, Pokemon pokemon){
         System.out.println("A wild " + pokemon.getName() + " appeared!!");
         Pokemon playerPokemon = player.retrieveTeamStarter();
         commenceBattle(player,pokemon);

@@ -19,8 +19,8 @@ public class main {
 //        Trainer red = new Protagonist("Red");
 //        Trainer blue = new Rival("Blue");
 //        Computer pc = new Computer();
-//        NewGame newGame = new NewGame();
-//        newGame.beginGame();
+        NewGame newGame = new NewGame();
+        newGame.beginGame();
 //        Hometown pallet = new Hometown();
 //        pallet.returnToLab(red,blue,pc);
 //        Hometown test = new Hometown();
@@ -29,30 +29,30 @@ public class main {
 
 
 
-        //BATTLE TESTING
-        Bulbasaur bulbasaur = new Bulbasaur(5,random,random,random,random,random,random);
-        Charmander charmander = new Charmander(5,random,random,random,random,random,random);
-        Squirtle squirtle = new Squirtle(5,random,random,random,random,random,random);
-        Pidgey pidgey = new Pidgey(5,random,random,random,random,random,random);
+//        //BATTLE TESTING
+//        Bulbasaur bulbasaur = new Bulbasaur(5,random,random,random,random,random,random);
+//        Charmander charmander = new Charmander(5,random,random,random,random,random,random);
+//        Squirtle squirtle = new Squirtle(5,random,random,random,random,random,random);
+//        Pidgey pidgey = new Pidgey(5,random,random,random,random,random,random);
 //        Battle battle = new Battle();
-//////        System.out.println(bulbasaur.pullMoveArrayList());
-        WildBattle test = new WildBattle();
-        Trainer red = new Protagonist("Red");
-        Trainer blue = new Rival("Green");
-        red.addPokemonToTeam(charmander);
-        blue.addPokemonToTeam(bulbasaur);
-        Items potion = new Potion();
-////        Items antidote = new Antidote();
+//        System.out.println(bulbasaur.pullMoveArrayList());
+//        WildBattle test = new WildBattle();
+//        Trainer red = new Protagonist("Red");
+//        Trainer blue = new Rival("Green");
+//        red.addPokemonToTeam(charmander);
+//        blue.addPokemonToTeam(bulbasaur);
+//        Items potion = new Potion();
+//        Items antidote = new Antidote();
 //        potion.setQuantity(1);
-        red.addToMedicine(potion);
+//        red.addToMedicine(potion);
 //        red.addToMedicine(antidote);
-        boolean winOrLose = test.wildPokemonBattle(red,pidgey);
-        if(winOrLose){
-            System.out.println("you won!");
-        }else {
-            System.out.println("You lost!");
-        }
-////        System.out.println(bulbasaur.getHitPointsEV());
+//        boolean winOrLose = test.wildPokemonBattle(red,pidgey);
+//        if(winOrLose){
+//            System.out.println("you won!");
+//        }else {
+//            System.out.println("You lost!");
+//        }
+//        System.out.println(bulbasaur.getHitPointsEV());
 //        System.out.println(charmander.getCurrentExpTotal());
 //        System.out.println(charmander.getExpToNextLevel());
 
