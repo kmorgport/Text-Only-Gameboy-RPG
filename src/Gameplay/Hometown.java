@@ -245,7 +245,7 @@ public class Hometown {
         System.out.println(blue + ": " + player.getName().toUpperCase() + "! Let's check out our POKEMON! Come on! I'll take you on!");
         Battle battle = new Battle();
         scanner.nextLine();
-        boolean outcome = battle.startRivalBattle(player,rival);
+        boolean outcome = battle.revisedPokemonBattle(player,rival);
         if(outcome){
             System.out.println(blue + ": SERIOUSLY?! I picked the wrong POKEMON!!");
         }else{

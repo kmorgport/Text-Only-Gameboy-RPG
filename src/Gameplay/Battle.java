@@ -59,66 +59,77 @@ public class Battle {
         Pokemon playerPokemon = player.retrieveTeamStarter();
         Pokemon npcPokemon = npc.retrieveTeamStarter();
         System.out.println("What will you do?");
+        label:
         while(true){
             System.out.println("--FIGHT--ITEM--PKMN--RUN--");
             String answ = consoleEntry.getString();
             if(answ.isEmpty()){
                 System.out.println("Please choose an option");
             }
-            if(answ.toUpperCase().equals("ITEM")){
-                useRecoveryItems(player,npc);
-                Moves npcMove = npcMoveSelection(npc);
-                revisedTurn(npc,npcMove,player);
-                break;
-            }else if(answ.toUpperCase().equals("PKMN")){
-                System.out.println("You only have one POKEMON!");
-                System.out.println("What will you do?");
-                System.out.println(" ");
-            }else if(answ.toUpperCase().equals("RUN")){
-                System.out.println("You can't run from TRAINER battles!");
-                System.out.println("What will you do?");
-                System.out.println(" ");
-            }else if(answ.toUpperCase().equals("FIGHT")){
-                Moves playerMove = playerMoveSelection(player);
-                Moves npcMove = npcMoveSelection(npc);
-                if (playerMove == null){
+            switch (answ.toUpperCase()) {
+                case "ITEM":
+                    boolean useItem = revisedRecoveryItem(player);
+                    if (useItem) {
+                        Moves npcMove = npcMoveSelection(npc);
+                        revisedTurn(npc, npcMove, player);
+                        break label;
+                    } else {
+                        System.out.println("What will you do?");
+                    }
+                    break;
+                case "PKMN":
+                    System.out.println("You only have one POKEMON!");
                     System.out.println("What will you do?");
-                }else if(playerMove.priority>npcMove.priority){
-                    revisedTurn(player,playerMove,npc);
-                    if(playerPokemon.getHitPoints()<=0||npcPokemon.getHitPoints()<=0){
-                        break;
-                    }
-                    revisedTurn(npc,npcMove,player);
                     System.out.println(" ");
                     break;
-                }else if(npcMove.priority>playerMove.priority){
-                    revisedTurn(npc,npcMove,player);
-                    if(playerPokemon.getHitPoints()<=0||npcPokemon.getHitPoints()<=0){
-                        break;
-                    }
-                    revisedTurn(player,playerMove,npc);
+                case "RUN":
+                    System.out.println("You can't run from TRAINER battles!");
+                    System.out.println("What will you do?");
                     System.out.println(" ");
                     break;
-                }else if(player.retrieveTeamStarter().getBattleSpeed()>npc.retrieveTeamStarter().getBattleSpeed()){
-                    revisedTurn(player,playerMove,npc);
-                    if(playerPokemon.getHitPoints()<=0||npcPokemon.getHitPoints()<=0){
-                        break;
+                case "FIGHT":
+                    Moves playerMove = playerMoveSelection(player);
+                    Moves npcMove = npcMoveSelection(npc);
+                    if (playerMove == null) {
+                        System.out.println("What will you do?");
+                    } else if (playerMove.priority > npcMove.priority) {
+                        revisedTurn(player, playerMove, npc);
+                        if (playerPokemon.getHitPoints() <= 0 || npcPokemon.getHitPoints() <= 0) {
+                            break label;
+                        }
+                        revisedTurn(npc, npcMove, player);
+                        System.out.println(" ");
+                        break label;
+                    } else if (npcMove.priority > playerMove.priority) {
+                        revisedTurn(npc, npcMove, player);
+                        if (playerPokemon.getHitPoints() <= 0 || npcPokemon.getHitPoints() <= 0) {
+                            break label;
+                        }
+                        revisedTurn(player, playerMove, npc);
+                        System.out.println(" ");
+                        break label;
+                    } else if (player.retrieveTeamStarter().getBattleSpeed() > npc.retrieveTeamStarter().getBattleSpeed()) {
+                        revisedTurn(player, playerMove, npc);
+                        if (playerPokemon.getHitPoints() <= 0 || npcPokemon.getHitPoints() <= 0) {
+                            break label;
+                        }
+                        revisedTurn(npc, npcMove, player);
+                        break label;
+                    } else if (npc.retrieveTeamStarter().getBattleSpeed() > player.retrieveTeamStarter().getBattleSpeed()) {
+                        revisedTurn(npc, npcMove, player);
+                        if (playerPokemon.getHitPoints() <= 0 || npcPokemon.getHitPoints() <= 0) {
+                            break label;
+                        }
+                        revisedTurn(player, playerMove, npc);
+                        break label;
                     }
-                    revisedTurn(npc,npcMove,player);
-                    break;
-                }else if(npc.retrieveTeamStarter().getBattleSpeed()>player.retrieveTeamStarter().getBattleSpeed()){
-                    revisedTurn(npc,npcMove,player);
-                    if(playerPokemon.getHitPoints()<=0||npcPokemon.getHitPoints()<=0){
-                        break;
-                    }
-                    revisedTurn(player,playerMove,npc);
-                    break;
-                }
 
 
-            }else{
-                System.out.println("Ooops, there was a typo");
-                System.out.println("What will you do?");
+                    break;
+                default:
+                    System.out.println("Ooops, there was a typo");
+                    System.out.println("What will you do?");
+                    break;
             }
         }
     }
@@ -191,55 +202,99 @@ public class Battle {
             }
         }
     }
-
-
-    public int useRecoveryItems(Trainer protagonist, Trainer rival){
-        protagonist.mapIterator(protagonist.getMedicine());
+    public boolean revisedRecoveryItem(Trainer player){
+        player.mapIterator(player.getMedicine());
         System.out.println("\n");
         System.out.println("Which recovery item would you like to use?");
         System.out.println(" ");
-        String answ = consoleEntry.getString().toUpperCase();
-        Items item = protagonist.getMedicine().get(answ);
-        if(answ.isEmpty()){
-            return playerTurn(protagonist,rival);
-        }
-        if(answ.equals("BACK")){
-            //allows player to back out of item menu
-            return playerTurn(protagonist,rival);
-        }
-        if(item.getHealthRecoveryAmount()>0){
-            Pokemon currentPokemon = protagonist.retrieveTeamStarter();
-            if(currentPokemon.getHitPoints()==currentPokemon.getMaxHitPoints()){
-                //prevents HP from being healed higher than max HP for current level
-                System.out.println(currentPokemon.getName() + "is at max HP, cannot heal any further!");
-                return useRecoveryItems(protagonist,rival);
-            }
-            if(currentPokemon.getHitPoints()+item.getHealthRecoveryAmount()>=currentPokemon.getMaxHitPoints()){
-                currentPokemon.setHitPoints(currentPokemon.getMaxHitPoints());
-                System.out.println("You used " + item.getName() + "!");
-                System.out.println(currentPokemon.getName() + " has been recovered to max health!");
-                item.setQuantity(-1);
-                if(item.getQuantity()<=0){
-                    //removes item from inventory if quantity is less or equal to 0;
-                    protagonist.getMedicine().remove(answ);
+        while(true){
+            String answ = consoleEntry.getString().toUpperCase();
+            Items item = player.getMedicine().get(answ);
+            if(answ.isEmpty()){
+                System.out.println("Which recovery item would you like to use?");
+            }else if(answ.equals("BACK")){
+                return false;
+            }else if(item.getHealthRecoveryAmount()>0){
+                Pokemon currentPokemon = player.retrieveTeamStarter();
+                if(currentPokemon.getHitPoints()==currentPokemon.getMaxHitPoints()){
+                    //prevents HP from being healed higher than max HP for current level
+                    System.out.println(currentPokemon.getName() + "is at max HP, cannot heal any further!");
+                    return false;
                 }
-            }else{
-                currentPokemon.setHitPoints(currentPokemon.getHitPoints()+ item.getHealthRecoveryAmount());
-                System.out.println("You used " + item.getName() + "!");
-                System.out.println(currentPokemon.getName() + "has been healed for " + item.getHealthRecoveryAmount());
-                System.out.println(currentPokemon.getName() + " has " + currentPokemon.getHitPoints() + "!");
-                item.setQuantity(-1);
-                if(item.getQuantity()<=0){
-                    //removes item from inventory if quantity is less or equal to 0;
-                    protagonist.getMedicine().remove(answ);
+                if(currentPokemon.getHitPoints()+item.getHealthRecoveryAmount()>=currentPokemon.getMaxHitPoints()){
+                    currentPokemon.setHitPoints(currentPokemon.getMaxHitPoints());
+                    System.out.println("You used " + item.getName() + "!");
+                    System.out.println(currentPokemon.getName() + " has been recovered to max health!");
+                    item.setQuantity(-1);
+                    if(item.getQuantity()<=0){
+                        //removes item from inventory if quantity is less or equal to 0;
+                        player.getMedicine().remove(answ);
+                    }
+                    return true;
+                }else{
+                    currentPokemon.setHitPoints(currentPokemon.getHitPoints()+ item.getHealthRecoveryAmount());
+                    System.out.println("You used " + item.getName() + "!");
+                    System.out.println(currentPokemon.getName() + "has been healed for " + item.getHealthRecoveryAmount());
+                    System.out.println(currentPokemon.getName() + " has " + currentPokemon.getHitPoints() + "!");
+                    item.setQuantity(-1);
+                    if(item.getQuantity()<=0){
+                        //removes item from inventory if quantity is less or equal to 0;
+                        player.getMedicine().remove(answ);
+                    }
+                    return true;
                 }
             }
-        }else{
-            System.out.println(item.getStatusRecovery());}
-        return 1;
-
-
+            //else{status recovery here}
+        }
     }
+
+//    public int useRecoveryItems(Trainer protagonist, Trainer rival){
+//        protagonist.mapIterator(protagonist.getMedicine());
+//        System.out.println("\n");
+//        System.out.println("Which recovery item would you like to use?");
+//        System.out.println(" ");
+//        String answ = consoleEntry.getString().toUpperCase();
+//        Items item = protagonist.getMedicine().get(answ);
+//        if(answ.isEmpty()){
+//            return playerTurn(protagonist,rival);
+//        }
+//        if(answ.equals("BACK")){
+//            //allows player to back out of item menu
+//            return playerTurn(protagonist,rival);
+//        }
+//        if(item.getHealthRecoveryAmount()>0){
+//            Pokemon currentPokemon = protagonist.retrieveTeamStarter();
+//            if(currentPokemon.getHitPoints()==currentPokemon.getMaxHitPoints()){
+//                //prevents HP from being healed higher than max HP for current level
+//                System.out.println(currentPokemon.getName() + "is at max HP, cannot heal any further!");
+//                return useRecoveryItems(protagonist,rival);
+//            }
+//            if(currentPokemon.getHitPoints()+item.getHealthRecoveryAmount()>=currentPokemon.getMaxHitPoints()){
+//                currentPokemon.setHitPoints(currentPokemon.getMaxHitPoints());
+//                System.out.println("You used " + item.getName() + "!");
+//                System.out.println(currentPokemon.getName() + " has been recovered to max health!");
+//                item.setQuantity(-1);
+//                if(item.getQuantity()<=0){
+//                    //removes item from inventory if quantity is less or equal to 0;
+//                    protagonist.getMedicine().remove(answ);
+//                }
+//            }else{
+//                currentPokemon.setHitPoints(currentPokemon.getHitPoints()+ item.getHealthRecoveryAmount());
+//                System.out.println("You used " + item.getName() + "!");
+//                System.out.println(currentPokemon.getName() + "has been healed for " + item.getHealthRecoveryAmount());
+//                System.out.println(currentPokemon.getName() + " has " + currentPokemon.getHitPoints() + "!");
+//                item.setQuantity(-1);
+//                if(item.getQuantity()<=0){
+//                    //removes item from inventory if quantity is less or equal to 0;
+//                    protagonist.getMedicine().remove(answ);
+//                }
+//            }
+//        }else{
+//            System.out.println(item.getStatusRecovery());}
+//        return 1;
+//
+//
+//    }
 
     public double evasionConverter(int buffDeBuffInteger){
         double modifier = 1;

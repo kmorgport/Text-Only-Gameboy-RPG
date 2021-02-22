@@ -42,10 +42,10 @@ public class main {
         Trainer blue = new Rival("Green");
         red.addPokemonToTeam(charmander);
         blue.addPokemonToTeam(bulbasaur);
-//        Items potion = new Potion();
+        Items potion = new Potion();
 ////        Items antidote = new Antidote();
 //        potion.setQuantity(1);
-//        red.addToMedicine(potion);
+        red.addToMedicine(potion);
 //        red.addToMedicine(antidote);
         boolean winOrLose = battle.revisedPokemonBattle(red,blue);
         if(winOrLose){
