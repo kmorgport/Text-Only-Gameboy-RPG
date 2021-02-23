@@ -12,50 +12,53 @@ import util.Input;
 import java.util.Scanner;
 
 public class Route1 {
-    Input io;
+    Input io = new Input();
     Scanner scanner = new Scanner(System.in);
     public Route1(){};
 
     public void navigateRoute1FirstTime(Trainer player, Trainer rival, Computer computer){
         System.out.println("The first steps of a new adventure await!!");
-        scanner.nextLine();
+//        scanner.nextLine();
         System.out.println("You head into the tall grass leaving Pallet Town");
+        southernHalfRoute1NexusFirstTime(player, rival, computer);
 
     }
 
     public void southernHalfRoute1NexusFirstTime(Trainer player,Trainer rival,Computer computer){
         scanner.nextLine();
-        System.out.println("There are three paths before you. To the EAST is a tall patch of grass. To the WEST is more grass, beyond which you can see the road leading to VIRIDIN CTY. To the SOUTH is PALLET TOWN.");
-        scanner.nextLine();
-        System.out.println("Which direction do you choose?");
         boolean choice = true;
         while(choice){
-            System.out.println("There are three paths before you. To the EAST is a tall patch of grass. To the WEST is more grass, beyond which you can see the road leading to VIRIDIN CTY. To the SOUTH is PALLET TOWN.");
+            System.out.println("There are three paths before you. To the EAST is a tall patch of grass. To the WEST is more grass,\nbeyond which you can see the road leading to\nVIRIDIN CTY. To the SOUTH is PALLET TOWN.");
             scanner.nextLine();
             System.out.println("Which direction do you choose?");
             String answ = io.getString();
-            switch(answ.toUpperCase()){
-                case "EAST":
-                    tallFieldNavigation(player);
-                    System.out.println("You return to the path");
-                    choice = true;
-                    break;
-                case "WEST":
-                    tallFieldNavigation(player);
-                    System.out.println("You continue walking thru the tall grass...");
-                    tallFieldNavigation(player);
-                    middleRoute1Nexus(player, rival, computer);
-                    choice = false;
-                    break;
-                case "SOUTH":
-                    Hometown hometown = new Hometown();
-                    hometown.centerOfTown2(player, rival, computer);
-                    choice = false;
-                    break;
-                default:
-                    System.out.println("Oops, there was a typo!");
+            if(answ.isEmpty()){
+                System.out.println("Oops, there was a typo!");
+            }else{
+                switch(answ.toUpperCase()){
+                    case "EAST":
+                        tallFieldNavigation(player);
+                        System.out.println("You return to the path");
+                        choice = true;
+                        break;
+                    case "WEST":
+                        tallFieldNavigation(player);
+                        System.out.println("You continue walking thru the tall grass...");
+                        tallFieldNavigation(player);
+                        middleRoute1Nexus(player, rival, computer);
+                        choice = false;
+                        break;
+                    case "SOUTH":
+                        Hometown hometown = new Hometown();
+                        hometown.centerOfTown2(player, rival, computer);
+                        choice = false;
+                        break;
+                    default:
+                        System.out.println("Oops, there was a typo!");
 
+                }
             }
+
         }
 
     }
