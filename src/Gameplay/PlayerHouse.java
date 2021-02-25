@@ -163,9 +163,8 @@ public class PlayerHouse {
             System.out.println("--POTION--BACK--");
             String answ = io.getString();
             if(answ.toLowerCase().equals("potion")){
-                Items potion = new Potion();
-                player.addToMedicine(potion);
-                System.out.println(player.getName() + " withdrew a " + potion.getName() + "!");
+                player.addItem("Potion",1);
+                System.out.println(player.getName() + " withdrew a Potion!");
                 scanner.nextLine();
                 break;
             }else if(answ.toLowerCase().equals("back")){

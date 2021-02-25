@@ -83,8 +83,9 @@ public class Route1 {
                 System.out.println("CLERK: You look like a new TRAINER, you ever been to a POKEMART? They have useful items that can\nhelp you raise your POKEMON!");
                 scanner.nextLine();
                 System.out.println("CLERK: Here, I think I have a free sample on me...");
-                Items potion = new Potion();
-                player.addToMedicine(potion);
+                player.addItem("potion",1);
+//                Items potion = new Potion();
+//                player.addToMedicine(potion);
                 System.out.println("The CLERK handed you a POTION");
                 scanner.nextLine();
                 System.out.println("All right, I better be heading back to work, hope to see you soon!");

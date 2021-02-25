@@ -1,12 +1,11 @@
 package trainers;
 
+import items.Antidote;
 import items.Items;
+import items.Potion;
 import pokemon.Pokemon;
 
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.LinkedHashMap;
-import java.util.Map;
+import java.util.*;
 
 abstract public class Trainer {
     protected String name;
@@ -97,4 +96,30 @@ abstract public class Trainer {
         message.append("BACK");
         System.out.println(message.toString());
     }
+
+
+    public void addItem(String item, int quant){
+        if(this.getMedicine().containsKey(item)){
+            Items newItem = this.getMedicine().get(item);
+            newItem.setQuantity(quant);
+        }else if(!this.getMedicine().containsKey(item)){
+            Items newItem = generateItem(item);
+            if(quant>1){
+                newItem.setQuantity(quant-1);
+            }
+            this.getMedicine().put(newItem.getName(), newItem);
+        }
+    }
+
+    public Items generateItem(String item){
+        switch(item.toLowerCase()){
+            case "potion":
+                return new Potion();
+            case "antidote":
+                return new Antidote();
+            default:
+                return null;
+        }
+    }
+
 }
