@@ -12,6 +12,7 @@ import util.Input;
 import java.util.Scanner;
 
 public class Route1 {
+    boolean convo = false;
     Input io = new Input();
     Scanner scanner = new Scanner(System.in);
     public Route1(){};
@@ -74,22 +75,12 @@ public class Route1 {
             if(answ.isEmpty()){
                 System.out.println("Oops, you didn't enter anything! Do you approach them? Y/N");
             }else if(answ.toLowerCase().equals("y")||answ.toLowerCase().equals("yes")){
-                System.out.println("You approach the sales clerk.");
-                scanner.nextLine();
-                System.out.println("CLERK: Why hello there!");
-                scanner.nextLine();
-                System.out.println("CLERK: I decided to take a walk on my break and I got lost in thought!");
-                scanner.nextLine();
-                System.out.println("CLERK: You look like a new TRAINER, you ever been to a POKEMART? They have useful items that can\nhelp you raise your POKEMON!");
-                scanner.nextLine();
-                System.out.println("CLERK: Here, I think I have a free sample on me...");
-                player.addItem("potion",1);
-//                Items potion = new Potion();
-//                player.addToMedicine(potion);
-                System.out.println("The CLERK handed you a POTION");
-                scanner.nextLine();
-                System.out.println("All right, I better be heading back to work, hope to see you soon!");
-                scanner.nextLine();
+                if(!convo) {
+                    convo = firstClerkConvo(player);
+                    scanner.nextLine();
+                }else{
+                    secondClerkConvo();
+                }
                 break;
             }else if(answ.toLowerCase().equals("n")||answ.toLowerCase().equals("no")){
                 System.out.println("They seem to be resting, let's not bother them.");
@@ -152,6 +143,28 @@ public class Route1 {
                 }
             }
         }
+    }
+
+    public boolean firstClerkConvo(Trainer player){
+        System.out.println("You approach the sales clerk.");
+        scanner.nextLine();
+        System.out.println("CLERK: Why hello there!");
+        scanner.nextLine();
+        System.out.println("CLERK: I decided to take a walk on my break and I got lost in thought!");
+        scanner.nextLine();
+        System.out.println("CLERK: You look like a new TRAINER, you ever been to a POKEMART? They have useful items that can\nhelp you raise your POKEMON!");
+        scanner.nextLine();
+        System.out.println("CLERK: Here, I think I have a free sample on me...");
+        player.addItem("potion",1);
+        System.out.println("The CLERK handed you a POTION");
+        scanner.nextLine();
+        System.out.println("All right, I better be heading back to work, hope to see you soon!");
+        scanner.nextLine();
+        return true;
+    }
+
+    public void secondClerkConvo(){
+        System.out.println("CLERK: See you at the store in VIRIDIAN!");
     }
 
     public void encounterMonster(Trainer player){
