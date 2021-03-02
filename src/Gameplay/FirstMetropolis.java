@@ -113,6 +113,115 @@ public class FirstMetropolis {
         }
     }
 
+    public void healthCenterVisit(Trainer player, Trainer rival, Computer computer){
+        System.out.println("You walk into the POKECENTER and look around");
+        scanner.nextLine();
+        System.out.println("On the WEST side of the room is a man sitting on a couch.");
+        scanner.nextLine();
+        System.out.println("On the NORTH side of the room is the clinic attendant healing a patient's POKEMON.");
+        scanner.nextLine();
+        System.out.println("On the EAST side of the building is the public PC");
+        scanner.nextLine();
+        System.out.println("The exit is on the SOUTH side of the building.");
+        boolean loop = true;
+        while(loop){
+            System.out.println("Which direction do you choose?");
+            scanner.nextLine();
+            System.out.println("--WEST--NORTH--EAST--SOUTH--");
+            String answ = io.getString();
+            if(answ.isEmpty()){
+                System.out.println("Oops, there was a typo!");
+            }else{
+                switch(answ.toUpperCase()){
+                    case "WEST":
+                        System.out.println("You walk up to the man sitting on the bench");
+                        scanner.nextLine();
+                        while(true){
+                            System.out.println("Would you like to speak to the man? Y/N");
+                            answ = io.getString();
+                            if(answ.isEmpty()){
+                                System.out.println("Oops, there was a typo!");
+                            }else if(answ.equalsIgnoreCase("y")||answ.equalsIgnoreCase("yes")){
+                                System.out.println("OLDER MAN: Oh hello there! I'm waiting for my granddaughter to heal her POKEMON!");
+                                scanner.nextLine();
+                                System.out.println("OLDER MAN: Did you know you can use the PCs here? They're free to the public!");
+                                scanner.nextLine();
+                                System.out.println("The man's phone starts ringing.");
+                                scanner.nextLine();
+                                System.out.println("OLDER MAN: Oh! Excuse me, I need to take this.");
+                                scanner.nextLine();
+                                System.out.println("He's talking to the person on the other end.");
+                                scanner.nextLine();
+                                System.out.println("It seems to be about the road closure leading out of the city.");
+                                scanner.nextLine();
+                                System.out.println("You should leave him be...");
+                                break;
+                            }else if(answ.equalsIgnoreCase("n")||answ.equalsIgnoreCase("no")){
+                                System.out.println("He appears busy, let's not bother him...");
+                                break;
+                            }else{
+                                System.out.println("Oops, there was a typo!");
+                            }
+                        }
+                        break;
+                    case "NORTH":
+                        System.out.println("You approach the clinic desk.");
+                        scanner.nextLine();
+                        System.out.println("The vet technician is finishing up with the young woman in front of you.");
+                        scanner.nextLine();
+                        while(true){
+                            System.out.println("Would you like to heal your POKEMON?");
+                            answ = io.getString();
+                            if(answ.isEmpty()){
+                                System.out.println("Oops, there was a typo!");
+                            }else if(answ.equalsIgnoreCase("y")||answ.equalsIgnoreCase("yes")){
+                                System.out.println("You approach the front desk");
+                                scanner.nextLine();
+                                System.out.println("The technician greets you....their hair matches the CHANSEY that is assisting them.");
+                                scanner.nextLine();
+                                System.out.println("TECH: Welcome to the POKECENTER! We can heal your POKEMON back to perfect health!");
+                                scanner.nextLine();
+                                System.out.println("You hand over your POKEMON to the technician.");
+                                scanner.nextLine();
+                                System.out.println("One moment please!");
+                                scanner.nextLine();
+                                player.retrieveTeamStarter().healPokemon();
+                                System.out.println("You hand the technician your POKEMON.");
+                                scanner.nextLine();
+                                System.out.println("They place them inside a large machine that comes down and bathes the POKEBALLS in a vibrant blue light for several minutes.");
+                                scanner.nextLine();
+                                System.out.println("TECH: OK! Your POKEMON are healed! We hope you have a pleasant day!");
+                                scanner.nextLine();
+                                System.out.println("You leave the front desk");
+                                break;
+                            }else if(answ.equalsIgnoreCase("n")||answ.equalsIgnoreCase("no")){
+                                System.out.println(player.retrieveTeamStarter().getName() + " is in good health, you can always come back later!");
+                                scanner.nextLine();
+                                break;
+                            }else{
+                                System.out.println("Oops, there was a typo!");
+                            }
+                        }
+                        break;
+                    case "EAST":
+                        System.out.println("You approach the Computer.");
+                        scanner.nextLine();
+                        System.out.println("Wow, the line looks really long!");
+                        scanner.nextLine();
+                        System.out.println("Let's try and come back and use it later!");
+                        scanner.nextLine();
+                        break;
+                    case "SOUTH":
+                        System.out.println("Are you ready to leave the POKECENTER?");
+                    default:
+                        System.out.println("Oops, there was a typo!");
+
+                }
+            }
+        }
+
+    }
+
     public void firstMetroRestCenterFirstVisit(Trainer player, Trainer rival, Computer computer){
         System.out.println("You walk inside the POKECENTER.");
     }
