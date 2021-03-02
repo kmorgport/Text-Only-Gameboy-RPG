@@ -44,22 +44,40 @@ public class FirstMetropolis {
                         choice = false;
                         break;
                     case "EAST":
-//                        tallFieldNavigation(player);
-                        System.out.println("You return to the path");
+                        amenitiesDistrict(player, rival, computer);
                         choice = false;
                         break;
                     case "WEST":
-//                        tallFieldNavigation(player);
-//                        System.out.println("You continue walking thru the tall grass...");
-//                        tallFieldNavigation(player);
-//                        middleRoute1Nexus(player, rival, computer);
-                        choice = false;
+                        System.out.println("You start walking towards the path leading to the mountain range...");
+                        scanner.nextLine();
+                        System.out.println("I dunno about this...didn't PROF LIVEOAK mention a delivery he was waiting for?");
+                        scanner.nextLine();
+                        System.out.println("Let's head back to town and look around where that package might be.");
                         break;
                     case "SOUTH":
-                        Route1 route1 = new Route1();
-                        route1.navigateRoute1FirstTime(player,rival,computer);
-                        choice = false;
-                        break;
+                        if(!oaksPackage) {
+                            Route1 route1 = new Route1();
+                            route1.navigateRoute1FirstTime(player, rival, computer);
+                            choice = false;
+                            break;
+                        }else{
+                            while(true){
+                                System.out.println("Would you like to take the shortcut back to PALLET TOWN to deliver PROF. LIVEOAK'S DELIVERY?");
+                                answ = io.getString();
+                                if(answ.isEmpty()){
+                                    System.out.println("Oops, there was a typo!");
+                                }else if(answ.equalsIgnoreCase("y")||answ.equalsIgnoreCase("yes")){
+                                    Hometown hometown = new Hometown();
+                                    choice = false;
+                                    break;
+                                }else if(answ.equalsIgnoreCase("n")||answ.equalsIgnoreCase("no")){
+                                    Route1 route1 = new Route1();
+                                    route1.navigateRoute1SecondTime(player,rival,computer);
+                                    choice = false;
+                                    break;
+                                }
+                            }
+                        }
                     default:
                         System.out.println("Oops, there was a typo!");
 
@@ -95,7 +113,7 @@ public class FirstMetropolis {
                         choice = false;
                         break;
                     case "CENTER":
-                        firstMetroRestCenterFirstVisit(player, rival, computer);
+                        healthCenterVisit(player, rival, computer);
                         System.out.println("You return to the path");
                         choice = false;
                         break;
@@ -213,6 +231,26 @@ public class FirstMetropolis {
                         break;
                     case "SOUTH":
                         System.out.println("Are you ready to leave the POKECENTER?");
+                        while(true){
+                            answ = io.getString();
+                            if(answ.isEmpty()){
+                                System.out.println("Oops, there was a typo!");
+                            }else if(answ.equalsIgnoreCase("y")||answ.equalsIgnoreCase("yes")){
+                                System.out.println("All right, let's head back to the south side center of VIRIDIAN CITY");
+                                scanner.nextLine();
+                                System.out.println("You leave the POKECENTER and arrive back at the southern side of town.");
+                                southFirstMetroCenter(player, rival, computer);
+                                scanner.nextLine();
+                                loop = false;
+                                break;
+                            }else if(answ.equalsIgnoreCase("n")||answ.equalsIgnoreCase("no")){
+                                System.out.println("Let's look around the POKECENTER some more.");
+                                scanner.nextLine();
+                                break;
+                            }else{
+                                System.out.println("Oops, there was a typo!");
+                            }
+                        }
                     default:
                         System.out.println("Oops, there was a typo!");
 
@@ -220,10 +258,6 @@ public class FirstMetropolis {
             }
         }
 
-    }
-
-    public void firstMetroRestCenterFirstVisit(Trainer player, Trainer rival, Computer computer){
-        System.out.println("You walk inside the POKECENTER.");
     }
 
     public boolean marketFirstVisit(){
