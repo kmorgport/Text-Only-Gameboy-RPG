@@ -72,7 +72,7 @@ public class FirstMetropolis {
                                     break;
                                 }else if(answ.equalsIgnoreCase("n")||answ.equalsIgnoreCase("no")){
                                     Route1 route1 = new Route1();
-                                    route1.navigateRoute1SecondTime(player,rival,computer);
+//                                    route1.navigateRoute1SecondTime(player,rival,computer);
                                     choice = false;
                                     break;
                                 }
