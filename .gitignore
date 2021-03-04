@@ -9,4 +9,4 @@
 *.class
 out/*
 
-src/congif.java
+src/config.java
