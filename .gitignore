@@ -9,4 +9,4 @@
 *.class
 out/*
 
-src/config.java
+.src/config.java
