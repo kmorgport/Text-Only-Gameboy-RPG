@@ -3,6 +3,7 @@ package pokemon;
 import moves.Moves;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 public class Bulbasaur extends Pokemon{
     protected int currentExpTotal;
@@ -46,6 +47,11 @@ public class Bulbasaur extends Pokemon{
 
     public ArrayList<Moves> pullMoveArrayList() {
         return BulbasaurMoves.findBulbasaurMovesArrayList();
+    }
+
+    @Override
+    public void learnNewMove(HashMap<Integer,Moves> moves) {
+
     }
 
 

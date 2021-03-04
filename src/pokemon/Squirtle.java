@@ -3,6 +3,7 @@ package pokemon;
 import moves.Moves;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 public class Squirtle extends Pokemon{
     protected int currentExpTotal;
@@ -40,5 +41,10 @@ public class Squirtle extends Pokemon{
 
     public ArrayList<Moves> pullMoveArrayList() {
         return SquirtleMoves.findSquirtleMovesArrayList();
+    }
+
+    @Override
+    public void learnNewMove(HashMap<Integer,Moves> moves) {
+
     }
 }

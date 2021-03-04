@@ -3,6 +3,7 @@ package pokemon;
 import moves.Moves;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 public class Rattata extends Pokemon {
 
@@ -29,6 +30,7 @@ public class Rattata extends Pokemon {
         baseExp = 51;
         experienceBaseLineForNewPokemon(level);
         setExpToNextLevel(expToNextLevel(level));
+        ArrayList<Moves> moves = RattataMoves.findRattataMovesArrayList();
     }
 
     @Override
@@ -39,5 +41,12 @@ public class Rattata extends Pokemon {
 
     public ArrayList<Moves> pullMoveArrayList() {
         return RattataMoves.findRattataMovesArrayList();
+    }
+
+    @Override
+    public void learnNewMove(HashMap<Integer,Moves> moves){
+        if(moves.containsKey(this.level)&&moves.size()<4){
+            this.moves.add(moves.get(this.level));
+        }
     }
 }

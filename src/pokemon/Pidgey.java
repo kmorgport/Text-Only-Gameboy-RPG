@@ -3,6 +3,7 @@ package pokemon;
 import moves.Moves;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 public class Pidgey extends Pokemon{
     public Pidgey(int level, int hpIV, int attackIV, int defenseIV, int specAttIV, int specDefIV, int speedIV) {
@@ -39,5 +40,10 @@ public class Pidgey extends Pokemon{
 
     public ArrayList<Moves> pullMoveArrayList() {
         return PidgeyMoves.findPidgeyMovesArrayList();
+    }
+
+    @Override
+    public void learnNewMove(HashMap<Integer,Moves> moves) {
+
     }
 }

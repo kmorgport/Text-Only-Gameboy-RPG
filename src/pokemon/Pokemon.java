@@ -3,6 +3,7 @@ package pokemon;
 import moves.Moves;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Scanner;
 
 public abstract class Pokemon {
@@ -55,6 +56,7 @@ public abstract class Pokemon {
     protected int baseExp;
     protected int buffDebuffStage;
     public ArrayList<String> types;
+    public ArrayList<Moves> moves;
 
 
     Pokemon(int level, int hpIV, int attackIV, int defenseIV, int specAttIV, int specDefIV, int speedIV){
@@ -375,5 +377,6 @@ public abstract class Pokemon {
 
     abstract public ArrayList<Moves> pullMoveArrayList();
 
+    abstract public void learnNewMove(HashMap<Integer,Moves> moves);
 
 }
