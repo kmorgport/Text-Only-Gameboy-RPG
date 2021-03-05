@@ -61,6 +61,11 @@ public class Battle {
 
     }
 
+    public void confusionDamage(Trainer victim){
+        short counter = 0;
+
+    }
+
     public void leechSeedDamage(Trainer player, Trainer npc){
         int damage;
         if(activeLeechSeed){
@@ -106,10 +111,14 @@ public class Battle {
         if(player.retrieveTeamStarter().getStatus().equalsIgnoreCase("Burn")){
             damage = (int) Math.floor(player.retrieveTeamStarter().getMaxHitPoints()*0.0625);
             player.retrieveTeamStarter().setHitPoints(player.retrieveTeamStarter().getHitPoints()-damage);
+            System.out.println(player.retrieveTeamStarter().getName() + "'s hurt by its burn!");
+            scanner.nextLine();
         }
         if(npc.retrieveTeamStarter().getStatus().equalsIgnoreCase("Burn")){
             damage = (int) Math.floor(npc.retrieveTeamStarter().getMaxHitPoints()*0.0625);
             npc.retrieveTeamStarter().setHitPoints(npc.retrieveTeamStarter().getHitPoints()-damage);
+            System.out.println(npc.retrieveTeamStarter().getName() + "'s hurt by its burn!");
+            scanner.nextLine();
         }
     }
 
