@@ -61,8 +61,30 @@ public class Battle {
 
     }
 
-    public void confusionDamage(Trainer victim){
-        short counter = 0;
+    public boolean confusionDamage(Trainer trainer){
+        Pokemon victim = trainer.retrieveTeamStarter();
+        boolean confusion = victim.getConfusion();
+        int breakConfusion = (int) Math.floor(Math.random()*4)+1;
+        if(breakConfusion==5){
+            System.out.println(victim.getName() + " snapped out of confusion!");
+            scanner.nextLine();
+            victim.setConfusion(false);
+            return false;
+        }
+        if(confusion){
+            int random = (int) Math.floor(Math.random()*1)+1;
+            if(random==1){
+                int damage = (int) Math.round(calculateDamage(victim.getLevel(),40,victim.getAttack(),victim.getDefense(),1)+1);
+                victim.setHitPoints(victim.getHitPoints()-damage);
+                victim.setConfusionCounter((short) 1);
+                if(victim.getConfusionCounter()>=5){
+                    victim.setConfusion(false);
+                    System.out.println(victim.getName() + " snapped out of confusion!");
+                    scanner.nextLine();
+                    return true;
+                }
+            }
+        }
 
     }
 

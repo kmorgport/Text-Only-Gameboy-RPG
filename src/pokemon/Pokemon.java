@@ -60,6 +60,7 @@ public abstract class Pokemon {
     protected String status = null;
     protected boolean confusion = false;
     protected boolean active = false;
+    protected short confusionCounter = 0;
 
 
     Pokemon(int level, int hpIV, int attackIV, int defenseIV, int specAttIV, int specDefIV, int speedIV){
@@ -291,8 +292,17 @@ public abstract class Pokemon {
         return this.confusion;
     }
 
+    public short getConfusionCounter(){
+        return this.getConfusionCounter();
+    }
+
+
     public void setConfusion(boolean confusion){
         this.confusion = confusion;
+    }
+
+    public void setConfusionCounter(short confusionCounter){
+        this.confusionCounter = confusionCounter;
     }
 
     public int[] getExpVal(){
