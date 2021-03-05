@@ -57,6 +57,9 @@ public abstract class Pokemon {
     protected int buffDebuffStage;
     public ArrayList<String> types;
     public ArrayList<Moves> moves;
+    protected String status = null;
+    protected boolean confusion = false;
+    protected boolean active = false;
 
 
     Pokemon(int level, int hpIV, int attackIV, int defenseIV, int specAttIV, int specDefIV, int speedIV){
@@ -276,6 +279,21 @@ public abstract class Pokemon {
 
     public int getBattleEvasion(){return this.battleEvasion;}
     public void setBattleEvasion(int battleEvasion){this.battleEvasion = battleEvasion;}
+
+    public String getStatus(){
+        return this.status;
+    }
+    public void setStatus(String status){
+        this.status = status;
+    }
+
+    public boolean getConfusion(){
+        return this.confusion;
+    }
+
+    public void setConfusion(boolean confusion){
+        this.confusion = confusion;
+    }
 
     public int[] getExpVal(){
         int [] evs = new int[6];
