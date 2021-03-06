@@ -57,7 +57,7 @@ public abstract class Pokemon {
     protected int buffDebuffStage;
     public ArrayList<String> types;
     public ArrayList<Moves> moves;
-    protected String status = null;
+    protected String status = "none";
     protected boolean confusion = false;
     protected boolean active = false;
     protected short confusionCounter = 0;
@@ -82,7 +82,6 @@ public abstract class Pokemon {
         accuracy = 100;
         evasionInteger = 0;
         accuracyInteger = 0;
-
 
     }
 

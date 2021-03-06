@@ -41,7 +41,8 @@ public class main {
         red.addPokemonToTeam(charmander);
         blue.addPokemonToTeam(bulbasaur);
         Battle battle = new Battle();
-        battle.revisedPokemonBattle(red,blue);
+        battle.resetBattleStatValue(bulbasaur);
+//        battle.revisedPokemonBattle(red,blue);
 //            Route1 test = new Route1();
 //            test.navigateRoute1FirstTime(red,blue, pc);
 

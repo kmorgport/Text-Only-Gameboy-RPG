@@ -61,7 +61,17 @@ public class Battle {
     public void statusDamage(Trainer player, Trainer npc){
         burnDamage(player,npc);
         poisonDamage(player, npc);
+    }
 
+    public void inflictConfusion(Pokemon monster){
+        if(monster.getConfusion()){
+            System.out.println(monster.getName() + " is already confused!");
+            scanner.nextLine();
+        }else if(!monster.getActiveLeech()) {
+            monster.setConfusion(true);
+            System.out.println(monster.getName() + " has been confused! It may hurt itself!");
+            scanner.nextLine();
+        }
     }
 
     public boolean confusionDamage(Trainer trainer){
@@ -86,9 +96,9 @@ public class Battle {
                 scanner.nextLine();
                 if(victim.getConfusionCounter()>=5){
                     victim.setConfusion(false);
+                    victim.resetConfusionCounter();
                     System.out.println(victim.getName() + " snapped out of confusion!");
                     scanner.nextLine();
-                    victim.resetConfusionCounter();
                 }
                 return true;
             }else{
@@ -97,33 +107,34 @@ public class Battle {
         }
     }
 
-    public void leechSeedDamage(Trainer attacker, Trainer defender){
+    public void leechSeedDamage(Trainer drainer, Trainer drainee){
         int damage;
-        if(attacker.retrieveTeamStarter().getActiveLeech()){
-            damage = (int) Math.floor(defender.retrieveTeamStarter().getMaxHitPoints()*0.0625);
+        if(drainee.retrieveTeamStarter().getActiveLeech()){
+            damage = (int) Math.floor(drainee.retrieveTeamStarter().getMaxHitPoints()*0.0625);
             //drains the opponent
-            defender.retrieveTeamStarter().setHitPoints(defender.retrieveTeamStarter().getHitPoints()-damage);
-            System.out.println(defender.getName() + "'s " + defender.retrieveTeamStarter().getName() + "'s health was sapped!");
+            drainee.retrieveTeamStarter().setHitPoints(drainee.retrieveTeamStarter().getHitPoints()-damage);
+            System.out.println(drainee.getName() + "'s " + drainee.retrieveTeamStarter().getName() + "'s health was sapped!");
             scanner.nextLine();
             //healsThePlayer
-            attacker.retrieveTeamStarter().setHitPoints(attacker.retrieveTeamStarter().getHitPoints()+damage);
-            System.out.println(attacker.retrieveTeamStarter().getName() + "'s health was healed!");
+            drainer.retrieveTeamStarter().setHitPoints(drainer.retrieveTeamStarter().getHitPoints()+damage);
+            System.out.println(drainer.retrieveTeamStarter().getName() + "'s health was healed!");
         }
-        if(attacker.retrieveTeamStarter().getPassiveLeech()){
-            damage = (int) Math.floor(defender.retrieveTeamStarter().getMaxHitPoints()*0.0625);
-            //drains the opponent
-            attacker.retrieveTeamStarter().setHitPoints(attacker.retrieveTeamStarter().getHitPoints()-damage);
-            System.out.println(attacker.retrieveTeamStarter().getName() + "'s health was sapped!");
+    }
+
+    public void inflictSeed(Pokemon monster){
+        if(monster.getActiveLeech()){
+            System.out.println(monster.getName() + " is already seeded!");
             scanner.nextLine();
-            //healsThePlayer
-            defender.retrieveTeamStarter().setHitPoints(defender.retrieveTeamStarter().getHitPoints()+damage);
-            System.out.println(defender.getName() + "'s " + defender.retrieveTeamStarter().getName() + "'s health was healed!");
+        }else if(!monster.getActiveLeech()) {
+            monster.setActiveLeech(true);
+            System.out.println(monster.getName() + " has been seeded!");
+            scanner.nextLine();
         }
     }
 
     public boolean paralysis(Trainer agent){
         if(agent.retrieveTeamStarter().getStatus()==null)return false;
-        if(agent.retrieveTeamStarter().getStatus().equalsIgnoreCase("Paralysis")){
+        if(agent.retrieveTeamStarter().getStatus().equalsIgnoreCase("Paralyzed")){
             int random = (int) Math.floor(Math.random()*3)+1;
             if(random == 1){
                 System.out.println(agent.retrieveTeamStarter().getName() + " is paralyzed! It can't move!");
@@ -135,6 +146,35 @@ public class Battle {
 
         }
         return false;
+    }
+
+    public void inflictParalysis(Pokemon monster){
+        if(monster.getStatus().equalsIgnoreCase("paralyzed")){
+            System.out.println(monster.getName() + " is already paralyzed!");
+            scanner.nextLine();
+        }else if(monster.getStatus().equalsIgnoreCase("none")){
+            monster.setStatus("Paralysis");
+            monster.setBattleSpeed(monster.getBattleSpeed()/2);
+            System.out.println(monster.getName() + " is paralyzed! It may not attack!");
+            scanner.nextLine();
+        }else{
+            System.out.println(monster.getName() + " is already afflicted!");
+            scanner.nextLine();
+        }
+    }
+
+    public void inflictPoison(Pokemon monster){
+        if(monster.getStatus().equalsIgnoreCase("poisoned")){
+            System.out.println(monster.getName() + " is already poisoned!");
+            scanner.nextLine();
+        }else if(monster.getStatus().equalsIgnoreCase("none")){
+            monster.setStatus("Poisoned");
+            System.out.println(monster.getName() + " is poisoned!");
+            scanner.nextLine();
+        }else{
+            System.out.println(monster.getName() + " is already afflicted!");
+            scanner.nextLine();
+        }
     }
 
     public void poisonDamage(Trainer player, Trainer npc){
@@ -169,6 +209,21 @@ public class Battle {
             damage = (int) Math.floor(npc.retrieveTeamStarter().getMaxHitPoints()*0.0625);
             npc.retrieveTeamStarter().setHitPoints(npc.retrieveTeamStarter().getHitPoints()-damage);
             System.out.println(npc.retrieveTeamStarter().getName() + "'s hurt by its burn!");
+            scanner.nextLine();
+        }
+    }
+
+    public void inflictBurn(Pokemon monster){
+        if(monster.getStatus().equalsIgnoreCase("burned")){
+            System.out.println(monster.getName() + " is already burned!");
+            scanner.nextLine();
+        }else if(monster.getStatus().equalsIgnoreCase("none")){
+            monster.setStatus("Paralysis");
+            monster.setBattleAttack(monster.getBattleAttack()/2);
+            System.out.println(monster.getName() + " is burned!");
+            scanner.nextLine();
+        }else{
+            System.out.println(monster.getName() + " is already afflicted!");
             scanner.nextLine();
         }
     }
