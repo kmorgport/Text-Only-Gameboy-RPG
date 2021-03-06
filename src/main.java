@@ -34,15 +34,16 @@ public class main {
         Charmander charmander = new Charmander(5,random,random,random,random,random,random);
 //        Squirtle squirtle = new Squirtle(5,random,random,random,random,random,random);
 //        Pidgey pidgey = new Pidgey(5,random,random,random,random,random,random);
-//        Battle battle = new Battle();
 //        System.out.println(bulbasaur.pullMoveArrayList());
 //        WildBattle test = new WildBattle();
         Trainer red = new Protagonist("Red");
         Trainer blue = new Rival("Green");
         red.addPokemonToTeam(charmander);
         blue.addPokemonToTeam(bulbasaur);
-            Route1 test = new Route1();
-            test.navigateRoute1FirstTime(red,blue, pc);
+        Battle battle = new Battle();
+        battle.revisedPokemonBattle(red,blue);
+//            Route1 test = new Route1();
+//            test.navigateRoute1FirstTime(red,blue, pc);
 
 
 

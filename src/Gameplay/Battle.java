@@ -21,6 +21,9 @@ public class Battle {
     public boolean revisedPokemonBattle(Trainer player, Trainer npc){
         Pokemon playerPokemon = player.retrieveTeamStarter();
         Pokemon npcPokemon = npc.retrieveTeamStarter();
+        System.out.println(npc.getName() + " sent out " + npc.retrieveTeamStarter().getName() + "!");
+        scanner.nextLine();
+        System.out.println("Go! " + player.retrieveTeamStarter().getName() + "!");
         commenceBattle(player,npc);
         while(true){
             revisedBattleCycle(player, npc);
@@ -58,6 +61,8 @@ public class Battle {
     }
 
     public void statusDamage(Trainer player, Trainer npc){
+        burnDamage(player,npc);
+        poisonDamage(player, npc);
 
     }
 
@@ -94,38 +99,40 @@ public class Battle {
         }
     }
 
-    public void leechSeedDamage(Trainer player, Trainer npc){
+    public void leechSeedDamage(Trainer attacker, Trainer defender){
         int damage;
-        if(activeLeechSeed){
-            damage = (int) Math.floor(npc.retrieveTeamStarter().getMaxHitPoints()*0.0625);
+        if(attacker.retrieveTeamStarter().getActiveLeech()){
+            damage = (int) Math.floor(defender.retrieveTeamStarter().getMaxHitPoints()*0.0625);
             //drains the opponent
-            npc.retrieveTeamStarter().setHitPoints(npc.retrieveTeamStarter().getHitPoints()-damage);
-            System.out.println(npc.getName() + "'s " + npc.retrieveTeamStarter().getName() + "'s health was sapped!");
+            defender.retrieveTeamStarter().setHitPoints(defender.retrieveTeamStarter().getHitPoints()-damage);
+            System.out.println(defender.getName() + "'s " + defender.retrieveTeamStarter().getName() + "'s health was sapped!");
             scanner.nextLine();
             //healsThePlayer
-            player.retrieveTeamStarter().setHitPoints(player.retrieveTeamStarter().getHitPoints()+damage);
-            System.out.println(player.retrieveTeamStarter().getName() + "'s health was healed!");
+            attacker.retrieveTeamStarter().setHitPoints(attacker.retrieveTeamStarter().getHitPoints()+damage);
+            System.out.println(attacker.retrieveTeamStarter().getName() + "'s health was healed!");
         }
-        if(passiveLeechSeed){
-            damage = (int) Math.floor(npc.retrieveTeamStarter().getMaxHitPoints()*0.0625);
+        if(attacker.retrieveTeamStarter().getPassiveLeech()){
+            damage = (int) Math.floor(defender.retrieveTeamStarter().getMaxHitPoints()*0.0625);
             //drains the opponent
-            player.retrieveTeamStarter().setHitPoints(npc.retrieveTeamStarter().getHitPoints()-damage);
-            System.out.println(player.retrieveTeamStarter().getName() + "'s health was sapped!");
+            attacker.retrieveTeamStarter().setHitPoints(attacker.retrieveTeamStarter().getHitPoints()-damage);
+            System.out.println(attacker.retrieveTeamStarter().getName() + "'s health was sapped!");
             scanner.nextLine();
             //healsThePlayer
-            npc.retrieveTeamStarter().setHitPoints(npc.retrieveTeamStarter().getHitPoints()+damage);
-            System.out.println(npc.getName() + "'s " + npc.retrieveTeamStarter().getName() + "'s health was healed!");
+            defender.retrieveTeamStarter().setHitPoints(defender.retrieveTeamStarter().getHitPoints()+damage);
+            System.out.println(defender.getName() + "'s " + defender.retrieveTeamStarter().getName() + "'s health was healed!");
         }
     }
 
     public void poisonDamage(Trainer player, Trainer npc){
         int damage;
+        if(player.retrieveTeamStarter().getStatus()==null)return;
         if(player.retrieveTeamStarter().getStatus().equalsIgnoreCase("Poison")){
             damage = (int) Math.floor(player.retrieveTeamStarter().getMaxHitPoints()*0.0625);
             player.retrieveTeamStarter().setHitPoints(player.retrieveTeamStarter().getHitPoints()-damage);
             System.out.println(player.retrieveTeamStarter().getName() + "'s hurt by poison!");
             scanner.nextLine();
         }
+        if(player.retrieveTeamStarter().getStatus()==null)return;
         if(npc.retrieveTeamStarter().getStatus().equalsIgnoreCase("Poison")){
             damage = (int) Math.floor(npc.retrieveTeamStarter().getMaxHitPoints()*0.0625);
             npc.retrieveTeamStarter().setHitPoints(npc.retrieveTeamStarter().getHitPoints()-damage);
@@ -136,12 +143,14 @@ public class Battle {
 
     public void burnDamage(Trainer player, Trainer npc){
         int damage;
+        if(player.retrieveTeamStarter().getStatus()==null)return;
         if(player.retrieveTeamStarter().getStatus().equalsIgnoreCase("Burn")){
             damage = (int) Math.floor(player.retrieveTeamStarter().getMaxHitPoints()*0.0625);
             player.retrieveTeamStarter().setHitPoints(player.retrieveTeamStarter().getHitPoints()-damage);
             System.out.println(player.retrieveTeamStarter().getName() + "'s hurt by its burn!");
             scanner.nextLine();
         }
+        if(player.retrieveTeamStarter().getStatus()==null)return;
         if(npc.retrieveTeamStarter().getStatus().equalsIgnoreCase("Burn")){
             damage = (int) Math.floor(npc.retrieveTeamStarter().getMaxHitPoints()*0.0625);
             npc.retrieveTeamStarter().setHitPoints(npc.retrieveTeamStarter().getHitPoints()-damage);
@@ -172,6 +181,9 @@ public class Battle {
                         if(!confusionDamage(npc)) {
                             revisedTurn(npc, npcMove, player);
                         }
+                        leechSeedDamage(player,npc);
+                        leechSeedDamage(npc,player);
+                        statusDamage(player, npc);
                         break label;
                     } else {
                         System.out.println("What will you do?");
@@ -202,6 +214,9 @@ public class Battle {
                         if(!confusionDamage(npc)) {
                             revisedTurn(npc, npcMove, player);
                         }
+                        leechSeedDamage(player,npc);
+                        leechSeedDamage(npc,player);
+                        statusDamage(player,npc);
                         System.out.println(" ");
                         break label;
                     } else if (npcMove.priority > playerMove.priority) {
@@ -214,6 +229,9 @@ public class Battle {
                         if(!confusionDamage(player)) {
                             revisedTurn(player, playerMove, npc);
                         }
+                        leechSeedDamage(player,npc);
+                        leechSeedDamage(npc,player);
+                        statusDamage(player,npc);
                         System.out.println(" ");
                         break label;
                     } else if (player.retrieveTeamStarter().getBattleSpeed() > npc.retrieveTeamStarter().getBattleSpeed()) {
@@ -226,6 +244,9 @@ public class Battle {
                         if(!confusionDamage(npc)) {
                             revisedTurn(npc, npcMove, player);
                         }
+                        leechSeedDamage(player,npc);
+                        leechSeedDamage(npc,player);
+                        statusDamage(player,npc);
                         break label;
                     } else if (npc.retrieveTeamStarter().getBattleSpeed() > player.retrieveTeamStarter().getBattleSpeed()) {
                         if(!confusionDamage(npc)) {
@@ -237,6 +258,9 @@ public class Battle {
                         if(!confusionDamage(player)) {
                             revisedTurn(player, playerMove, npc);
                         }
+                        leechSeedDamage(player,npc);
+                        leechSeedDamage(npc,player);
+                        statusDamage(player,npc);
                         break label;
                     }
 

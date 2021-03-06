@@ -61,6 +61,8 @@ public abstract class Pokemon {
     protected boolean confusion = false;
     protected boolean active = false;
     protected short confusionCounter = 0;
+    protected boolean activeLeech = false;
+    protected boolean passiveLeech = false;
 
 
     Pokemon(int level, int hpIV, int attackIV, int defenseIV, int specAttIV, int specDefIV, int speedIV){
@@ -293,7 +295,7 @@ public abstract class Pokemon {
     }
 
     public short getConfusionCounter(){
-        return this.getConfusionCounter();
+        return this.confusionCounter;
     }
 
     public void resetConfusionCounter(){this.confusionCounter=0;}
@@ -303,6 +305,20 @@ public abstract class Pokemon {
 
     public void setConfusionCounter(short confusionCounter){
         this.confusionCounter += confusionCounter;
+    }
+
+    public boolean getActiveLeech(){
+        return this.activeLeech;
+    }
+    public void setActiveLeech(boolean status){
+        this.activeLeech = status;
+    }
+    public boolean getPassiveLeech(){
+        return this.passiveLeech;
+    }
+
+    public void setPassiveLeech(boolean status){
+        this.passiveLeech = status;
     }
 
     public int[] getExpVal(){
