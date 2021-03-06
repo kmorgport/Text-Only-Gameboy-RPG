@@ -67,13 +67,13 @@ public class Battle {
         int breakConfusion = (int) Math.floor(Math.random()*4)+1;
         victim.setConfusionCounter((short) 1);
         if(!confusion)return false;
-        if(confusion && breakConfusion==5){
+        if(breakConfusion == 5){
             System.out.println(victim.getName() + " snapped out of confusion!");
             scanner.nextLine();
             victim.resetConfusionCounter();
             victim.setConfusion(false);
             return false;
-        }else if(confusion){
+        }else {
             int random = (int) Math.floor(Math.random()*1)+1;
             if(random==1){
                 int damage = (int) Math.round(calculateDamage(victim.getLevel(),40,victim.getAttack(),victim.getDefense(),1)+1);
@@ -92,7 +92,6 @@ public class Battle {
                 return false;
             }
         }
-        return false;
     }
 
     public void leechSeedDamage(Trainer player, Trainer npc){
@@ -194,34 +193,50 @@ public class Battle {
                     if (playerMove == null) {
                         System.out.println("What will you do?");
                     } else if (playerMove.priority > npcMove.priority) {
-                        revisedTurn(player, playerMove, npc);
+                        if(!confusionDamage(player)) {
+                            revisedTurn(player, playerMove, npc);
+                        }
                         if (playerPokemon.getHitPoints() <= 0 || npcPokemon.getHitPoints() <= 0) {
                             break label;
                         }
-                        revisedTurn(npc, npcMove, player);
+                        if(!confusionDamage(npc)) {
+                            revisedTurn(npc, npcMove, player);
+                        }
                         System.out.println(" ");
                         break label;
                     } else if (npcMove.priority > playerMove.priority) {
-                        revisedTurn(npc, npcMove, player);
+                        if(!confusionDamage(npc)) {
+                            revisedTurn(npc, npcMove, player);
+                        }
                         if (playerPokemon.getHitPoints() <= 0 || npcPokemon.getHitPoints() <= 0) {
                             break label;
                         }
-                        revisedTurn(player, playerMove, npc);
+                        if(!confusionDamage(player)) {
+                            revisedTurn(player, playerMove, npc);
+                        }
                         System.out.println(" ");
                         break label;
                     } else if (player.retrieveTeamStarter().getBattleSpeed() > npc.retrieveTeamStarter().getBattleSpeed()) {
-                        revisedTurn(player, playerMove, npc);
+                        if(!confusionDamage(player)) {
+                            revisedTurn(player, playerMove, npc);
+                        }
                         if (playerPokemon.getHitPoints() <= 0 || npcPokemon.getHitPoints() <= 0) {
                             break label;
                         }
-                        revisedTurn(npc, npcMove, player);
+                        if(!confusionDamage(npc)) {
+                            revisedTurn(npc, npcMove, player);
+                        }
                         break label;
                     } else if (npc.retrieveTeamStarter().getBattleSpeed() > player.retrieveTeamStarter().getBattleSpeed()) {
-                        revisedTurn(npc, npcMove, player);
+                        if(!confusionDamage(npc)) {
+                            revisedTurn(npc, npcMove, player);
+                        }
                         if (playerPokemon.getHitPoints() <= 0 || npcPokemon.getHitPoints() <= 0) {
                             break label;
                         }
-                        revisedTurn(player, playerMove, npc);
+                        if(!confusionDamage(player)) {
+                            revisedTurn(player, playerMove, npc);
+                        }
                         break label;
                     }
 
