@@ -54,8 +54,9 @@ public class WildBattle {
     public void revisedBattleCycle(Trainer player, Pokemon pokemon){
         Pokemon playerPokemon = player.retrieveTeamStarter();
         System.out.println("What will you do?");
-        label:
-        while(true){
+        int escape = 0;
+        boolean cycle = true;
+        while(cycle){
             System.out.println("--FIGHT--ITEM--PKMN--RUN--");
             String answ = consoleEntry.getString();
             if(answ.isEmpty()){
@@ -66,8 +67,15 @@ public class WildBattle {
                     boolean useItem = revisedRecoveryItem(player);
                     if (useItem) {
                         Moves npcMove = npcMoveSelection(pokemon);
-                        wildPokemonTurn(pokemon, npcMove, player);
-                        break label;
+                        if(!paralysis(pokemon)){
+                            if(!confusionDamage(pokemon)) {
+                                wildPokemonTurn(pokemon, npcMove, player);
+                            }
+                        }
+                        leechSeedDamage(player.retrieveTeamStarter(),pokemon);
+                        leechSeedDamage(pokemon,player.retrieveTeamStarter());
+                        statusDamage(player.retrieveTeamStarter(), pokemon);
+                        break;
                     } else {
                         System.out.println("What will you do?");
                     }
@@ -78,9 +86,21 @@ public class WildBattle {
                     System.out.println(" ");
                     break;
                 case "RUN":
-                    System.out.println("You can't run from TRAINER battles!");
-                    System.out.println("What will you do?");
-                    System.out.println(" ");
+                    ++escape;
+                    if(escapeBattle(player, pokemon,escape)){
+                        System.out.println("You got away safely!");
+                        cycle = false;
+                        break;
+                    }else{
+                        System.out.println("You couldn't get away!");
+                        scanner.nextLine();
+                        Moves npcMove = npcMoveSelection(pokemon);
+                        if(!paralysis(pokemon)){
+                            if(!confusionDamage(pokemon)) {
+                                wildPokemonTurn(pokemon, npcMove, player);
+                            }
+                        }
+                    }
                     break;
                 case "FIGHT":
                     Moves playerMove = playerMoveSelection(player);
@@ -88,35 +108,82 @@ public class WildBattle {
                     if (playerMove == null) {
                         System.out.println("What will you do?");
                     } else if (playerMove.priority > npcMove.priority) {
-                        revisedTurn(player, playerMove, pokemon);
-                        if (playerPokemon.getHitPoints() <= 0 || pokemon.getHitPoints() <= 0) {
-                            break label;
+                        if(!paralysis(player.retrieveTeamStarter())){
+                            if(!confusionDamage(player.retrieveTeamStarter())) {
+                                revisedTurn(player, playerMove, pokemon);
+                            }
                         }
-                        wildPokemonTurn(pokemon, npcMove, player);
+                        if (playerPokemon.getHitPoints() <= 0 || pokemon.getHitPoints() <= 0) {
+                            cycle = false;
+                            break;
+                        }
+                        if(!paralysis(pokemon)) {
+                            if (!confusionDamage(pokemon)) {
+                                wildPokemonTurn(pokemon, npcMove, player);
+                            }
+                        }
+                        leechSeedDamage(player.retrieveTeamStarter(),pokemon);
+                        leechSeedDamage(pokemon,player.retrieveTeamStarter());
+                        statusDamage(player.retrieveTeamStarter(),pokemon);
                         System.out.println(" ");
-                        break label;
+                        break;
                     } else if (npcMove.priority > playerMove.priority) {
-                        wildPokemonTurn(pokemon, npcMove, player);
-                        if (playerPokemon.getHitPoints() <= 0 || pokemon.getHitPoints() <= 0) {
-                            break label;
+                        if(!paralysis(pokemon)) {
+                            if (!confusionDamage(pokemon)) {
+                                wildPokemonTurn(pokemon, npcMove, player);
+                            }
                         }
-                        revisedTurn(player, playerMove, pokemon);
+                        if (playerPokemon.getHitPoints() <= 0 || pokemon.getHitPoints() <= 0) {
+                            cycle = false;
+                            break;
+                        }
+                        if(!paralysis(player.retrieveTeamStarter())) {
+                            if (!confusionDamage(player.retrieveTeamStarter())) {
+                                revisedTurn(player, playerMove, pokemon);
+                            }
+                        }
+                        leechSeedDamage(player.retrieveTeamStarter(),pokemon);
+                        leechSeedDamage(pokemon,player.retrieveTeamStarter());
+                        statusDamage(player.retrieveTeamStarter(),pokemon);
                         System.out.println(" ");
-                        break label;
+                        break;
                     } else if (player.retrieveTeamStarter().getBattleSpeed() > pokemon.getBattleSpeed()) {
-                        revisedTurn(player, playerMove, pokemon);
-                        if (playerPokemon.getHitPoints() <= 0 || pokemon.getHitPoints() <= 0) {
-                            break label;
+                        if(!paralysis(player.retrieveTeamStarter())) {
+                            if (!confusionDamage(player.retrieveTeamStarter())) {
+                                revisedTurn(player, playerMove, pokemon);
+                            }
                         }
-                       wildPokemonTurn(pokemon, npcMove, player);
-                        break label;
+                        if (playerPokemon.getHitPoints() <= 0 || pokemon.getHitPoints() <= 0) {
+                            break;
+                        }
+                        if(!paralysis(pokemon)) {
+                            if (!confusionDamage(pokemon)) {
+                                wildPokemonTurn(pokemon, npcMove, player);
+                            }
+                        }
+                        leechSeedDamage(player.retrieveTeamStarter(),pokemon);
+                        leechSeedDamage(pokemon,player.retrieveTeamStarter());
+                        statusDamage(player.retrieveTeamStarter(),pokemon);
+                        break;
                     } else if (pokemon.getBattleSpeed() > player.retrieveTeamStarter().getBattleSpeed()) {
-                        wildPokemonTurn(pokemon, npcMove, player);
-                        if (playerPokemon.getHitPoints() <= 0 || pokemon.getHitPoints() <= 0) {
-                            break label;
+                        if(!paralysis(pokemon)) {
+                            if (!confusionDamage(pokemon)) {
+                                wildPokemonTurn(pokemon, npcMove, player);
+                            }
                         }
-                        revisedTurn(player, playerMove, pokemon);
-                        break label;
+                        if (playerPokemon.getHitPoints() <= 0 || pokemon.getHitPoints() <= 0) {
+                            cycle = false;
+                            break;
+                        }
+                        if(!paralysis(player.retrieveTeamStarter())) {
+                            if (!confusionDamage(player.retrieveTeamStarter())) {
+                                revisedTurn(player, playerMove, pokemon);
+                            }
+                        }
+                        leechSeedDamage(player.retrieveTeamStarter(),pokemon);
+                        leechSeedDamage(pokemon,player.retrieveTeamStarter());
+                        statusDamage(player.retrieveTeamStarter(),pokemon);
+                        break;
                     }
 
 
@@ -226,6 +293,11 @@ public class WildBattle {
                 }
             }
         }
+    }
+
+    public boolean escapeBattle(Trainer player, Pokemon npc, int times){
+        int flee = (((player.retrieveTeamStarter().getBattleSpeed()*32)/((npc.getBattleSpeed()/4)%256))+30)*times;
+        return flee > 255;
     }
 
     public boolean revisedRecoveryItem(Trainer player){
@@ -565,6 +637,121 @@ public class WildBattle {
         }
         return modifier;
     }
+
+    public void statusDamage(Pokemon player, Pokemon npc){
+        burnDamage(player,npc);
+        poisonDamage(player, npc);
+
+    }
+
+    public boolean confusionDamage(Pokemon monster){
+        boolean confusion = monster.getConfusion();
+        int breakConfusion = (int) Math.floor(Math.random()*4)+1;
+        monster.setConfusionCounter((short) 1);
+        if(!confusion)return false;
+        if(breakConfusion == 5){
+            System.out.println(monster.getName() + " snapped out of confusion!");
+            scanner.nextLine();
+            monster.resetConfusionCounter();
+            monster.setConfusion(false);
+            return false;
+        }else {
+            int random = (int) Math.floor(Math.random()*1)+1;
+            if(random==1){
+                int damage = (int) Math.round(calculateDamage(monster.getLevel(),40,monster.getAttack(),monster.getDefense(),1)+1);
+                monster.setHitPoints(monster.getHitPoints()-damage);
+                monster.setConfusionCounter((short) 1);
+                System.out.println(monster.getName() + " hurt itself in confusion!");
+                scanner.nextLine();
+                if(monster.getConfusionCounter()>=5){
+                    monster.setConfusion(false);
+                    System.out.println(monster.getName() + " snapped out of confusion!");
+                    scanner.nextLine();
+                    monster.resetConfusionCounter();
+                }
+                return true;
+            }else{
+                return false;
+            }
+        }
+    }
+
+    public void leechSeedDamage(Pokemon attacker, Pokemon defender){
+        int damage;
+        if(attacker.getActiveLeech()){
+            damage = (int) Math.floor(defender.getMaxHitPoints()*0.0625);
+            //drains the opponent
+            defender.setHitPoints(defender.getHitPoints()-damage);
+            System.out.println(defender.getName() + "'s " + defender.getName() + "'s health was sapped!");
+            scanner.nextLine();
+            //healsThePlayer
+            attacker.setHitPoints(attacker.getHitPoints()+damage);
+            System.out.println(attacker.getName() + "'s health was healed!");
+        }
+        if(attacker.getPassiveLeech()){
+            damage = (int) Math.floor(defender.getMaxHitPoints()*0.0625);
+            //drains the opponent
+            attacker.setHitPoints(attacker.getHitPoints()-damage);
+            System.out.println(attacker.getName() + "'s health was sapped!");
+            scanner.nextLine();
+            //healsThePlayer
+            defender.setHitPoints(defender.getHitPoints()+damage);
+            System.out.println(defender.getName() + "'s " + defender.getName() + "'s health was healed!");
+        }
+    }
+
+    public boolean paralysis(Pokemon agent){
+        if(agent.getStatus()==null)return false;
+        if(agent.getStatus().equalsIgnoreCase("Paralysis")){
+            int random = (int) Math.floor(Math.random()*3)+1;
+            if(random == 1){
+                System.out.println(agent.getName() + " is paralyzed! It can't move!");
+                scanner.nextLine();
+                return true;
+            }else{
+                return false;
+            }
+
+        }
+        return false;
+    }
+
+    public void poisonDamage(Pokemon player, Pokemon npc){
+        int damage;
+        if(player.getStatus()==null)return;
+        if(player.getStatus().equalsIgnoreCase("Poison")){
+            damage = (int) Math.floor(player.getMaxHitPoints()*0.0625);
+            player.setHitPoints(player.getHitPoints()-damage);
+            System.out.println(player.getName() + "'s hurt by poison!");
+            scanner.nextLine();
+        }
+        if(player.getStatus()==null)return;
+        if(npc.getStatus().equalsIgnoreCase("Poison")){
+            damage = (int) Math.floor(npc.getMaxHitPoints()*0.0625);
+            npc.setHitPoints(npc.getHitPoints()-damage);
+            System.out.println(npc.getName() + "'s hurt by poison!");
+            scanner.nextLine();
+        }
+    }
+
+    public void burnDamage(Pokemon player, Pokemon npc){
+        int damage;
+        if(player.getStatus()==null)return;
+        if(player.getStatus().equalsIgnoreCase("Burn")){
+            damage = (int) Math.floor(player.getMaxHitPoints()*0.0625);
+            player.setHitPoints(player.getHitPoints()-damage);
+            System.out.println(player.getName() + "'s hurt by its burn!");
+            scanner.nextLine();
+        }
+        if(player.getStatus()==null)return;
+        if(npc.getStatus().equalsIgnoreCase("Burn")){
+            damage = (int) Math.floor(npc.getMaxHitPoints()*0.0625);
+            npc.setHitPoints(npc.getHitPoints()-damage);
+            System.out.println(npc.getName() + "'s hurt by its burn!");
+            scanner.nextLine();
+        }
+    }
+
 
     public double moveTypeDeterminer(String moveType, Pokemon npc){
         double type = 0.0;

@@ -10,8 +10,6 @@ import java.lang.reflect.Field;
 import java.util.*;
 
 public class Battle {
-    boolean activeLeechSeed = false;
-    boolean passiveLeechSeed = false;
     protected Input consoleEntry = new Input();
     protected Scanner scanner = new Scanner(System.in);
     public Battle(){
@@ -123,6 +121,22 @@ public class Battle {
         }
     }
 
+    public boolean paralysis(Trainer agent){
+        if(agent.retrieveTeamStarter().getStatus()==null)return false;
+        if(agent.retrieveTeamStarter().getStatus().equalsIgnoreCase("Paralysis")){
+            int random = (int) Math.floor(Math.random()*3)+1;
+            if(random == 1){
+                System.out.println(agent.retrieveTeamStarter().getName() + " is paralyzed! It can't move!");
+                scanner.nextLine();
+                return true;
+            }else{
+                return false;
+            }
+
+        }
+        return false;
+    }
+
     public void poisonDamage(Trainer player, Trainer npc){
         int damage;
         if(player.retrieveTeamStarter().getStatus()==null)return;
@@ -178,8 +192,10 @@ public class Battle {
                     boolean useItem = revisedRecoveryItem(player);
                     if (useItem) {
                         Moves npcMove = npcMoveSelection(npc);
-                        if(!confusionDamage(npc)) {
-                            revisedTurn(npc, npcMove, player);
+                        if(!paralysis(npc)){
+                            if(!confusionDamage(npc)) {
+                                revisedTurn(npc, npcMove, player);
+                            }
                         }
                         leechSeedDamage(player,npc);
                         leechSeedDamage(npc,player);
@@ -205,14 +221,18 @@ public class Battle {
                     if (playerMove == null) {
                         System.out.println("What will you do?");
                     } else if (playerMove.priority > npcMove.priority) {
-                        if(!confusionDamage(player)) {
-                            revisedTurn(player, playerMove, npc);
+                        if(!paralysis(player)){
+                            if(!confusionDamage(player)) {
+                                revisedTurn(player, playerMove, npc);
+                            }
                         }
                         if (playerPokemon.getHitPoints() <= 0 || npcPokemon.getHitPoints() <= 0) {
                             break label;
                         }
-                        if(!confusionDamage(npc)) {
-                            revisedTurn(npc, npcMove, player);
+                        if(!paralysis(npc)) {
+                            if (!confusionDamage(npc)) {
+                                revisedTurn(npc, npcMove, player);
+                            }
                         }
                         leechSeedDamage(player,npc);
                         leechSeedDamage(npc,player);
@@ -220,14 +240,18 @@ public class Battle {
                         System.out.println(" ");
                         break label;
                     } else if (npcMove.priority > playerMove.priority) {
-                        if(!confusionDamage(npc)) {
-                            revisedTurn(npc, npcMove, player);
+                        if(!paralysis(npc)) {
+                            if (!confusionDamage(npc)) {
+                                revisedTurn(npc, npcMove, player);
+                            }
                         }
                         if (playerPokemon.getHitPoints() <= 0 || npcPokemon.getHitPoints() <= 0) {
                             break label;
                         }
-                        if(!confusionDamage(player)) {
-                            revisedTurn(player, playerMove, npc);
+                        if(!paralysis(player)) {
+                            if (!confusionDamage(player)) {
+                                revisedTurn(player, playerMove, npc);
+                            }
                         }
                         leechSeedDamage(player,npc);
                         leechSeedDamage(npc,player);
@@ -235,28 +259,36 @@ public class Battle {
                         System.out.println(" ");
                         break label;
                     } else if (player.retrieveTeamStarter().getBattleSpeed() > npc.retrieveTeamStarter().getBattleSpeed()) {
-                        if(!confusionDamage(player)) {
-                            revisedTurn(player, playerMove, npc);
+                        if(!paralysis(player)) {
+                            if (!confusionDamage(player)) {
+                                revisedTurn(player, playerMove, npc);
+                            }
                         }
                         if (playerPokemon.getHitPoints() <= 0 || npcPokemon.getHitPoints() <= 0) {
                             break label;
                         }
-                        if(!confusionDamage(npc)) {
-                            revisedTurn(npc, npcMove, player);
+                        if(!paralysis(npc)) {
+                            if (!confusionDamage(npc)) {
+                                revisedTurn(npc, npcMove, player);
+                            }
                         }
                         leechSeedDamage(player,npc);
                         leechSeedDamage(npc,player);
                         statusDamage(player,npc);
                         break label;
                     } else if (npc.retrieveTeamStarter().getBattleSpeed() > player.retrieveTeamStarter().getBattleSpeed()) {
-                        if(!confusionDamage(npc)) {
-                            revisedTurn(npc, npcMove, player);
+                        if(!paralysis(npc)) {
+                            if (!confusionDamage(npc)) {
+                                revisedTurn(npc, npcMove, player);
+                            }
                         }
                         if (playerPokemon.getHitPoints() <= 0 || npcPokemon.getHitPoints() <= 0) {
                             break label;
                         }
-                        if(!confusionDamage(player)) {
-                            revisedTurn(player, playerMove, npc);
+                        if(!paralysis(player)) {
+                            if (!confusionDamage(player)) {
+                                revisedTurn(player, playerMove, npc);
+                            }
                         }
                         leechSeedDamage(player,npc);
                         leechSeedDamage(npc,player);
