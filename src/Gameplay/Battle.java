@@ -65,27 +65,34 @@ public class Battle {
         Pokemon victim = trainer.retrieveTeamStarter();
         boolean confusion = victim.getConfusion();
         int breakConfusion = (int) Math.floor(Math.random()*4)+1;
-        if(breakConfusion==5){
+        victim.setConfusionCounter((short) 1);
+        if(!confusion)return false;
+        if(confusion && breakConfusion==5){
             System.out.println(victim.getName() + " snapped out of confusion!");
             scanner.nextLine();
+            victim.resetConfusionCounter();
             victim.setConfusion(false);
             return false;
-        }
-        if(confusion){
+        }else if(confusion){
             int random = (int) Math.floor(Math.random()*1)+1;
             if(random==1){
                 int damage = (int) Math.round(calculateDamage(victim.getLevel(),40,victim.getAttack(),victim.getDefense(),1)+1);
                 victim.setHitPoints(victim.getHitPoints()-damage);
                 victim.setConfusionCounter((short) 1);
+                System.out.println(victim.getName() + " hurt itself in confusion!");
+                scanner.nextLine();
                 if(victim.getConfusionCounter()>=5){
                     victim.setConfusion(false);
                     System.out.println(victim.getName() + " snapped out of confusion!");
                     scanner.nextLine();
-                    return true;
+                    victim.resetConfusionCounter();
                 }
+                return true;
+            }else{
+                return false;
             }
         }
-
+        return false;
     }
 
     public void leechSeedDamage(Trainer player, Trainer npc){
@@ -163,7 +170,9 @@ public class Battle {
                     boolean useItem = revisedRecoveryItem(player);
                     if (useItem) {
                         Moves npcMove = npcMoveSelection(npc);
-                        revisedTurn(npc, npcMove, player);
+                        if(!confusionDamage(npc)) {
+                            revisedTurn(npc, npcMove, player);
+                        }
                         break label;
                     } else {
                         System.out.println("What will you do?");

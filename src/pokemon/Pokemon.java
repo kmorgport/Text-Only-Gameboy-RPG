@@ -296,13 +296,13 @@ public abstract class Pokemon {
         return this.getConfusionCounter();
     }
 
-
+    public void resetConfusionCounter(){this.confusionCounter=0;}
     public void setConfusion(boolean confusion){
         this.confusion = confusion;
     }
 
     public void setConfusionCounter(short confusionCounter){
-        this.confusionCounter = confusionCounter;
+        this.confusionCounter += confusionCounter;
     }
 
     public int[] getExpVal(){
