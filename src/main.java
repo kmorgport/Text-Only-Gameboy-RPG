@@ -40,9 +40,9 @@ public class main {
         Trainer blue = new Rival("Green");
         red.addPokemonToTeam(charmander);
         blue.addPokemonToTeam(bulbasaur);
+        charmander.setStatus("Paralyzed");
         Battle battle = new Battle();
-        battle.resetBattleStatValue(bulbasaur);
-//        battle.revisedPokemonBattle(red,blue);
+        battle.revisedPokemonBattle(red,blue);
 //            Route1 test = new Route1();
 //            test.navigateRoute1FirstTime(red,blue, pc);
 

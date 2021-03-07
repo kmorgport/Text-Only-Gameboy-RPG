@@ -192,6 +192,7 @@ public class Battle {
         Pokemon attackingPokemon = attacker.retrieveTeamStarter();
         Pokemon defendingPokemon = defender.retrieveTeamStarter();
         int accuracyRandom = (int) Math.floor(Math.random()*125);
+        int extraEffect = (int) Math.floor(Math.random()*99)+1;
         switch (playerMove.category) {
             case "Physical":
                 if (accuracyRandom <= calculateAccuracy(attackingPokemon, playerMove, defendingPokemon)) {
@@ -205,6 +206,21 @@ public class Battle {
             case "Special":
                 if (accuracyRandom <= calculateAccuracy(attackingPokemon, playerMove, defendingPokemon)) {
                     playerSpecialAttack(attackingPokemon, playerMove, defendingPokemon);
+                } else {
+                    System.out.println(attackingPokemon.getName() + " used " + playerMove.name + "!");
+                    System.out.println("The attack missed!");
+                    scanner.nextLine();
+                }
+                break;
+            case "AttackDeBuffPhys":
+                break;
+            case "AttackDeBuffSpec":
+                if (accuracyRandom <= calculateAccuracy(attackingPokemon, playerMove, defendingPokemon)) {
+                    playerSpecialAttack(attackingPokemon, playerMove, defendingPokemon);
+                    if(extraEffect<=playerMove.buffDebuffChance){
+                        buffDeBuff(attackingPokemon, playerMove, defendingPokemon);
+                    }
+
                 } else {
                     System.out.println(attackingPokemon.getName() + " used " + playerMove.name + "!");
                     System.out.println("The attack missed!");
@@ -601,18 +617,18 @@ public class Battle {
     public boolean confusionDamage(Trainer trainer){
         Pokemon victim = trainer.retrieveTeamStarter();
         boolean confusion = victim.getConfusion();
-        int breakConfusion = (int) Math.floor(Math.random()*4)+1;
+        int breakConfusion = (int) Math.floor(Math.random()*100)+1;
         victim.setConfusionCounter((short) 1);
         if(!confusion)return false;
-        if(breakConfusion == 5){
+        if(breakConfusion >= 80){
             System.out.println(victim.getName() + " snapped out of confusion!");
             scanner.nextLine();
             victim.resetConfusionCounter();
             victim.setConfusion(false);
             return false;
         }else {
-            int random = (int) Math.floor(Math.random()*1)+1;
-            if(random==1){
+            int random = (int) Math.floor(Math.random()*100)+1;
+            if(random<=50){
                 int damage = (int) Math.round(calculateDamage(victim.getLevel(),40,victim.getAttack(),victim.getDefense(),1)+1);
                 victim.setHitPoints(victim.getHitPoints()-damage);
                 victim.setConfusionCounter((short) 1);
@@ -708,6 +724,10 @@ public class Battle {
             damage = (int) Math.floor(player.retrieveTeamStarter().getMaxHitPoints()*0.0625);
             player.retrieveTeamStarter().setHitPoints(player.retrieveTeamStarter().getHitPoints()-damage);
             System.out.println(player.retrieveTeamStarter().getName() + "'s hurt by poison!");
+            scanner.nextLine();
+            System.out.println(player.retrieveTeamStarter().getName() + " loses " + damage + " HP!");
+            scanner.nextLine();
+            System.out.println(player.retrieveTeamStarter().getName() + " has " + player.retrieveTeamStarter().getHitPoints() + " remaining!");
             scanner.nextLine();
         }
         if(player.retrieveTeamStarter().getStatus()==null)return;
