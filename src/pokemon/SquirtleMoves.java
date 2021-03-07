@@ -14,7 +14,8 @@ public class SquirtleMoves {
         return new ArrayList<>(Arrays.asList(
                 new Attack("Tackle","Normal","Physical",35,95,0,35),
                 new BuffDeBuff("Tail Whip","Normal","Debuff",30,100,0,-1,"Defense",100),
-                new Attack("Water Gun","Water","Special",25,100,0,40)));
+//                new Attack("Water Gun","Water","Special",25,100,0,40)));
+                new AttackAndBuff("Bubble","Water","AttackDeBuffSpec",30,100,0,20,-1,"Speed",30)));
     }
 
     public static HashMap<Integer,Moves> levelUpNewMoves(){

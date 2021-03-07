@@ -192,7 +192,8 @@ public class Battle {
         Pokemon attackingPokemon = attacker.retrieveTeamStarter();
         Pokemon defendingPokemon = defender.retrieveTeamStarter();
         int accuracyRandom = (int) Math.floor(Math.random()*125);
-        int extraEffect = (int) Math.floor(Math.random()*99)+1;
+//        int extraEffect = (int) Math.floor(Math.random()*99)+1;
+        int extraEffect = 25;
         switch (playerMove.category) {
             case "Physical":
                 if (accuracyRandom <= calculateAccuracy(attackingPokemon, playerMove, defendingPokemon)) {
@@ -217,7 +218,7 @@ public class Battle {
             case "AttackDeBuffSpec":
                 if (accuracyRandom <= calculateAccuracy(attackingPokemon, playerMove, defendingPokemon)) {
                     playerSpecialAttack(attackingPokemon, playerMove, defendingPokemon);
-                    if(extraEffect<=playerMove.buffDebuffChance){
+                    if(extraEffect<=playerMove.getBuffDebuffChance()){
                         buffDeBuff(attackingPokemon, playerMove, defendingPokemon);
                     }
 
@@ -523,74 +524,74 @@ public class Battle {
     public void buffDeBuff(Pokemon agent, Moves move, Pokemon patient){
         double modifier = 1;
         System.out.println(agent.getName() + " used " + move.getName());
-        switch(move.buffDebuffType){
+        switch(move.getBuffDebuffType()){
             case "Attack":
                 if(patient.getAttackInteger()==-6){
-                    System.out.println(patient.getName() + "'s " + move.buffDebuffType + " can't be lowered any further!"); }
+                    System.out.println(patient.getName() + "'s " + move.getBuffDebuffType() + " can't be lowered any further!"); }
                 if(patient.getAttackInteger()==6){
-                    System.out.println(patient.getName() + "'s " + move.buffDebuffType + " can't be raised any further!"); }
-                patient.setAttackInteger(patient.getAttackInteger()+move.buffDebuffInteger);
-                System.out.println(patient.getName() + "'s attack" + buffDebuffMessage(move.buffDebuffInteger));
+                    System.out.println(patient.getName() + "'s " + move.getBuffDebuffType() + " can't be raised any further!"); }
+                patient.setAttackInteger(patient.getAttackInteger()+move.getBuffDebuffInteger());
+                System.out.println(patient.getName() + "'s attack" + buffDebuffMessage(move.getBuffDebuffInteger()));
                 modifier = integerConverter(patient.getAttackInteger());
                 patient.setBattleAttack((int) (patient.getAttack()*modifier));
                 break;
             case "Defense":
                 if(patient.getDefenseInteger()==-6){
-                    System.out.println(patient.getName() + "'s " + move.buffDebuffType + " can't be lowered any further!"); }
+                    System.out.println(patient.getName() + "'s " + move.getBuffDebuffType() + " can't be lowered any further!"); }
                 if(patient.getDefenseInteger()==6){
-                    System.out.println(patient.getName() + "'s " + move.buffDebuffType + " can't be raised any further!"); }
-                patient.setDefenseInteger(patient.getDefenseInteger()+move.buffDebuffInteger);
-                System.out.println(patient.getName() + "'s defense" + buffDebuffMessage(move.buffDebuffInteger));
+                    System.out.println(patient.getName() + "'s " + move.getBuffDebuffType() + " can't be raised any further!"); }
+                patient.setDefenseInteger(patient.getDefenseInteger()+move.getBuffDebuffInteger());
+                System.out.println(patient.getName() + "'s defense" + buffDebuffMessage(move.getBuffDebuffInteger()));
                 modifier = integerConverter(patient.getDefenseInteger());
                 patient.setBattleDefense((int) (patient.getDefense()*modifier));
                 break;
             case "SpecAttack":
                 if(patient.getSpecialAttackInteger()==-6){
-                    System.out.println(patient.getName() + "'s " + move.buffDebuffType + " can't be lowered any further!"); }
+                    System.out.println(patient.getName() + "'s " + move.getBuffDebuffType() + " can't be lowered any further!"); }
                 if(patient.getSpecialAttackInteger()==6){
-                    System.out.println(patient.getName() + "'s " + move.buffDebuffType + " can't be raised any further!"); }
-                patient.setSpecialAttackInteger(patient.getSpecialAttackInteger()+move.buffDebuffInteger);
-                System.out.println(patient.getName() + "'s special attack" + buffDebuffMessage(move.buffDebuffInteger));
+                    System.out.println(patient.getName() + "'s " + move.getBuffDebuffType() + " can't be raised any further!"); }
+                patient.setSpecialAttackInteger(patient.getSpecialAttackInteger()+move.getBuffDebuffInteger());
+                System.out.println(patient.getName() + "'s special attack" + buffDebuffMessage(move.getBuffDebuffInteger()));
                 modifier = integerConverter(patient.getSpecialAttackInteger());
                 patient.setBattleSpecialAttack((int) (patient.getSpecialAttack()*modifier));
                 break;
             case "SpecDefense":
                 if(patient.getSpecialDefenseInteger()==-6){
-                    System.out.println(patient.getName() + "'s " + move.buffDebuffType + " can't be lowered any further!"); }
+                    System.out.println(patient.getName() + "'s " + move.getBuffDebuffType() + " can't be lowered any further!"); }
                 if(patient.getSpecialDefenseInteger()==6){
-                    System.out.println(patient.getName() + "'s " + move.buffDebuffType + " can't be raised any further!"); }
-                patient.setSpecialDefenseInteger(patient.getSpecialDefenseInteger()+move.buffDebuffInteger);
-                System.out.println(patient.getName() + "'s special defense" + buffDebuffMessage(move.buffDebuffInteger));
+                    System.out.println(patient.getName() + "'s " + move.getBuffDebuffType() + " can't be raised any further!"); }
+                patient.setSpecialDefenseInteger(patient.getSpecialDefenseInteger()+move.getBuffDebuffInteger());
+                System.out.println(patient.getName() + "'s special defense" + buffDebuffMessage(move.getBuffDebuffInteger()));
                 modifier = integerConverter(patient.getSpecialAttackInteger());
                 patient.setBattleSpecialDefense((int) (patient.getSpecialDefense()*modifier));
                 break;
             case "Speed":
                 if(patient.getSpeedInteger()==-6){
-                    System.out.println(patient.getName() + "'s " + move.buffDebuffType + " can't be lowered any further!"); }
+                    System.out.println(patient.getName() + "'s " + move.getBuffDebuffType() + " can't be lowered any further!"); }
                 if(patient.getSpeedInteger()==6){
-                    System.out.println(patient.getName() + "'s " + move.buffDebuffType + " can't be raised any further!"); }
-                patient.setSpeedInteger((patient.getSpeedInteger()+move.buffDebuffInteger));
-                System.out.println(patient.getName() + "'s speed" + buffDebuffMessage(move.buffDebuffInteger));
+                    System.out.println(patient.getName() + "'s " + move.getBuffDebuffType() + " can't be raised any further!"); }
+                patient.setSpeedInteger((patient.getSpeedInteger()+move.getBuffDebuffInteger()));
+                System.out.println(patient.getName() + "'s speed" + buffDebuffMessage(move.getBuffDebuffInteger()));
                 modifier = integerConverter(patient.getSpeedInteger());
                 patient.setBattleSpeed((int) (patient.getSpeed()*modifier));
                 break;
             case "Evasion":
                 if(patient.getEvasionInteger()==-6){
-                    System.out.println(patient.getName() + "'s " + move.buffDebuffType + " can't be lowered any further!"); }
+                    System.out.println(patient.getName() + "'s " + move.getBuffDebuffType() + " can't be lowered any further!"); }
                 if(patient.getEvasionInteger()==6){
-                    System.out.println(patient.getName() + "'s " + move.buffDebuffType + " can't be raised any further!"); }
-                patient.setSpeedInteger((patient.getEvasionInteger()+move.buffDebuffInteger));
-                System.out.println(patient.getName() + "'s evasion" + buffDebuffMessage(move.buffDebuffInteger));
+                    System.out.println(patient.getName() + "'s " + move.getBuffDebuffType() + " can't be raised any further!"); }
+                patient.setSpeedInteger((patient.getEvasionInteger()+move.getBuffDebuffInteger()));
+                System.out.println(patient.getName() + "'s evasion" + buffDebuffMessage(move.getBuffDebuffInteger()));
                 modifier = evasionConverter(patient.getEvasionInteger());
                 patient.setBattleEvasion((int) (patient.getEvasion()*modifier));
                 break;
             case "Accuracy":
                 if(patient.getAccuracyInteger()==-6){
-                    System.out.println(patient.getName() + "'s " + move.buffDebuffType + " can't be lowered any further!"); }
+                    System.out.println(patient.getName() + "'s " + move.getBuffDebuffType() + " can't be lowered any further!"); }
                 if(patient.getAccuracyInteger()==6){
-                    System.out.println(patient.getName() + "'s " + move.buffDebuffType + " can't be raised any further!"); }
-                patient.setAccuracyInteger((patient.getAccuracyInteger()+move.buffDebuffInteger));
-                System.out.println(patient.getName() + "'s accuracy" + buffDebuffMessage(move.buffDebuffInteger));
+                    System.out.println(patient.getName() + "'s " + move.getBuffDebuffType() + " can't be raised any further!"); }
+                patient.setAccuracyInteger((patient.getAccuracyInteger()+move.getBuffDebuffInteger()));
+                System.out.println(patient.getName() + "'s accuracy" + buffDebuffMessage(move.getBuffDebuffInteger()));
                 modifier = accuracyConverter(patient.getAccuracyInteger());
                 patient.setBattleAccuracy((int) (patient.getAccuracy()*modifier));
                 break;

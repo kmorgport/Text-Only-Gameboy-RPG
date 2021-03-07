@@ -42,4 +42,16 @@ abstract public class Moves {
     }
 
     abstract public int getPower();
+
+    public int getBuffDebuffInteger(){
+        return this.buffDebuffInteger;
+    }
+
+    public String getBuffDebuffType(){
+        return this.buffDebuffType;
+    }
+
+    public int getBuffDebuffChance(){
+        return this.buffDebuffChance;
+    }
 }
