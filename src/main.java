@@ -38,8 +38,8 @@ public class main {
 //        WildBattle test = new WildBattle();
         Trainer red = new Protagonist("Red");
         Trainer blue = new Rival("Green");
-        red.addPokemonToTeam(squirtle);
-        blue.addPokemonToTeam(charmander);
+        red.addPokemonToTeam(bulbasaur);
+        blue.addPokemonToTeam(squirtle);
         Battle battle = new Battle();
         battle.revisedPokemonBattle(red,blue);
 //            Route1 test = new Route1();

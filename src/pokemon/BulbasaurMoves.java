@@ -19,6 +19,7 @@ public class BulbasaurMoves {
         HashMap<Integer, Moves> moveList = new HashMap<>();
 //        moveList.put(1, new Attack("Tackle","Normal","Physical",35,95,0,35));
 //        moveList.put(2,new BuffDeBuff("Tail Whip","Normal","Debuff",30,100,0,-1,"Defense",100));
+//        new BuffDeBuff("Growl","Normal","Debuff",40,100,0,-1,"Attack",100),
         moveList.put(7, new StatusEffect("Poison Powder","Grass","Status",35,75,0,"Poison",100));
         moveList.put(14,new Attack("Hyper Fang","Normal","Physical",15,90,0,80));
 

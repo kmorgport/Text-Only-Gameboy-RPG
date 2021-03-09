@@ -141,7 +141,7 @@ public class Battle {
                         statusDamage(player,npc);
                         System.out.println(" ");
                         break label;
-                    } else if (player.retrieveTeamStarter().getBattleSpeed() > npc.retrieveTeamStarter().getBattleSpeed()) {
+                    } else if (player.retrieveTeamStarter().getBattleSpeed() >= npc.retrieveTeamStarter().getBattleSpeed()) {
                         if(!paralysis(player)) {
                             if (!confusionDamage(player)) {
                                 revisedTurn(player, playerMove, npc);
@@ -741,7 +741,7 @@ public class Battle {
             System.out.println(monster.getName() + " is already poisoned!");
             scanner.nextLine();
         }else if(monster.getStatus().equalsIgnoreCase("none")){
-            monster.setStatus("Poisoned");
+            monster.setStatus("Poison");
             System.out.println(monster.getName() + " is poisoned!");
             scanner.nextLine();
         }else{
