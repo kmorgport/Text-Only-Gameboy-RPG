@@ -12,7 +12,7 @@ import java.util.HashMap;
 public class BulbasaurMoves {
 
     public static ArrayList<Moves> findBulbasaurMovesArrayList(){
-        return new ArrayList<>(Arrays.asList(new Attack("Tackle","Normal","Physical",35,95,0,35),new BuffDeBuff("Growl","Normal","Debuff",40,100,0,-1,"Attack",100),new Attack("Vine Whip","Grass","Physical",25,100,0,45),new StatusEffect("Stun Spore","Grass","Status",35,75,0,"Paralysis",100)));
+        return new ArrayList<>(Arrays.asList(new Attack("Tackle","Normal","Physical",35,95,0,35),new BuffDeBuff("Growl","Normal","Debuff",40,100,0,-1,"Attack",100),new Attack("Vine Whip","Grass","Physical",25,100,0,45),new StatusEffect("Leech Seed","Grass","Status",35,75,0,"Leech",100)));
     }
 
     public static HashMap<Integer,Moves> levelUpNewMoves(){

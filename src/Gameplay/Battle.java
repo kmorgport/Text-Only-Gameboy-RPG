@@ -784,12 +784,20 @@ public class Battle {
             player.retrieveTeamStarter().setHitPoints(player.retrieveTeamStarter().getHitPoints()-damage);
             System.out.println(player.retrieveTeamStarter().getName() + "'s hurt by its burn!");
             scanner.nextLine();
+            System.out.println(player.retrieveTeamStarter().getName() + " loses " + damage + " HP!");
+            scanner.nextLine();
+            System.out.println(player.retrieveTeamStarter().getName() + " has " + player.retrieveTeamStarter().getHitPoints() + " remaining!");
+            scanner.nextLine();
         }
         if(player.retrieveTeamStarter().getStatus()==null)return;
         if(npc.retrieveTeamStarter().getStatus().equalsIgnoreCase("Burn")){
             damage = (int) Math.floor(npc.retrieveTeamStarter().getMaxHitPoints()*0.0625);
             npc.retrieveTeamStarter().setHitPoints(npc.retrieveTeamStarter().getHitPoints()-damage);
             System.out.println(npc.retrieveTeamStarter().getName() + "'s hurt by its burn!");
+            scanner.nextLine();
+            System.out.println(npc.retrieveTeamStarter().getName() + " loses " + damage + " HP!");
+            scanner.nextLine();
+            System.out.println(npc.retrieveTeamStarter().getName() + " has " + npc.retrieveTeamStarter().getHitPoints() + " remaining!");
             scanner.nextLine();
         }
     }
@@ -799,7 +807,7 @@ public class Battle {
             System.out.println(monster.getName() + " is already burned!");
             scanner.nextLine();
         }else if(monster.getStatus().equalsIgnoreCase("none")){
-            monster.setStatus("Paralysis");
+            monster.setStatus("Burn");
             monster.setBattleAttack(monster.getBattleAttack()/2);
             System.out.println(monster.getName() + " is burned!");
             scanner.nextLine();
