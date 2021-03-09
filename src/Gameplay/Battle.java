@@ -769,6 +769,10 @@ public class Battle {
             npc.retrieveTeamStarter().setHitPoints(npc.retrieveTeamStarter().getHitPoints()-damage);
             System.out.println(npc.retrieveTeamStarter().getName() + "'s hurt by poison!");
             scanner.nextLine();
+            System.out.println(npc.retrieveTeamStarter().getName() + " loses " + damage + " HP!");
+            scanner.nextLine();
+            System.out.println(npc.retrieveTeamStarter().getName() + " has " + npc.retrieveTeamStarter().getHitPoints() + " remaining!");
+            scanner.nextLine();
         }
     }
 
