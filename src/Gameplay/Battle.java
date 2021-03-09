@@ -315,7 +315,9 @@ public class Battle {
     }
 
     public void statusMoves(Pokemon agent,Moves agentMove, Pokemon patient){
-        System.out.println(agent.getName() + " used " + agentMove.getName() + "!");
+        if(agentMove.getCategory().equalsIgnoreCase("Status")) {
+            System.out.println(agent.getName() + " used " + agentMove.getName() + "!");
+        }
         scanner.nextLine();
         switch(agentMove.getStatus()){
             case "Poison":
@@ -592,7 +594,9 @@ public class Battle {
 //agent and patient are similar to ergative grammatical concepts so that this method can be used in both stat buffing and stat debuffing Scenarios. For buffing, agent and patient are identical, for debuffing agent and patient are the attacker and defender respectively.
     public void buffDeBuff(Pokemon agent, Moves move, Pokemon patient){
         double modifier = 1;
-        System.out.println(agent.getName() + " used " + move.getName());
+        if(move.getCategory().equalsIgnoreCase("buff")||move.getCategory().equalsIgnoreCase("debuff")) {
+            System.out.println(agent.getName() + " used " + move.getName());
+        }
         switch(move.getBuffDebuffType()){
             case "Attack":
                 if(patient.getAttackInteger()==-6){
