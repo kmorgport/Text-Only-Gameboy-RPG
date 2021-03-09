@@ -39,7 +39,7 @@ public class main {
         Trainer red = new Protagonist("Red");
         Trainer blue = new Rival("Green");
         red.addPokemonToTeam(bulbasaur);
-        blue.addPokemonToTeam(squirtle);
+        blue.addPokemonToTeam(charmander);
         Battle battle = new Battle();
         battle.revisedPokemonBattle(red,blue);
 //            Route1 test = new Route1();

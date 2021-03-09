@@ -707,9 +707,9 @@ public class Battle {
 
     public boolean paralysis(Trainer agent){
         if(agent.retrieveTeamStarter().getStatus()==null)return false;
-        if(agent.retrieveTeamStarter().getStatus().equalsIgnoreCase("Paralyzed")){
-            int random = (int) Math.floor(Math.random()*3)+1;
-            if(random == 1){
+        if(agent.retrieveTeamStarter().getStatus().equalsIgnoreCase("Paralysis")){
+            int random = (int) Math.floor(Math.random()*100)+1;
+            if(random >= 66){
                 System.out.println(agent.retrieveTeamStarter().getName() + " is paralyzed! It can't move!");
                 scanner.nextLine();
                 return true;
@@ -722,7 +722,7 @@ public class Battle {
     }
 
     public void inflictParalysis(Pokemon monster){
-        if(monster.getStatus().equalsIgnoreCase("paralyzed")){
+        if(monster.getStatus().equalsIgnoreCase("paralysis")){
             System.out.println(monster.getName() + " is already paralyzed!");
             scanner.nextLine();
         }else if(monster.getStatus().equalsIgnoreCase("none")){
