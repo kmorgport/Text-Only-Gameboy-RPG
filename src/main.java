@@ -33,13 +33,14 @@ public class main {
         Bulbasaur bulbasaur = new Bulbasaur(5,random,random,random,random,random,random);
         Charmander charmander = new Charmander(5,random,random,random,random,random,random);
         Squirtle squirtle = new Squirtle(5,random,random,random,random,random,random);
+        Weedle weedle = new Weedle(5,random,random,random,random,random,random);
 //        Pidgey pidgey = new Pidgey(5,random,random,random,random,random,random);
 //        System.out.println(bulbasaur.pullMoveArrayList());
 //        WildBattle test = new WildBattle();
         Trainer red = new Protagonist("Red");
         Trainer blue = new Rival("Green");
-        red.addPokemonToTeam(charmander);
-        blue.addPokemonToTeam(bulbasaur);
+        red.addPokemonToTeam(weedle);
+        blue.addPokemonToTeam(squirtle);
         Battle battle = new Battle();
         battle.revisedPokemonBattle(red,blue);
 //            Route1 test = new Route1();

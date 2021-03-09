@@ -193,7 +193,7 @@ public class Battle {
         Pokemon defendingPokemon = defender.retrieveTeamStarter();
         int accuracyRandom = (int) Math.floor(Math.random()*125);
 //        int extraEffect = (int) Math.floor(Math.random()*99)+1;
-        int extraEffect = 25;
+        int extraEffect = 20;
         switch (playerMove.category) {
             case "Physical":
                 if (accuracyRandom <= calculateAccuracy(attackingPokemon, playerMove, defendingPokemon)) {
@@ -214,12 +214,49 @@ public class Battle {
                 }
                 break;
             case "AttackDeBuffPhys":
+                if (accuracyRandom <= calculateAccuracy(attackingPokemon, playerMove, defendingPokemon)) {
+                    playerAttack(attackingPokemon, playerMove, defendingPokemon);
+                    if(extraEffect<=playerMove.getBuffDebuffChance()){
+                        buffDeBuff(attackingPokemon, playerMove, defendingPokemon);
+                    }
+
+                } else {
+                    System.out.println(attackingPokemon.getName() + " used " + playerMove.name + "!");
+                    System.out.println("The attack missed!");
+                    scanner.nextLine();
+                }
                 break;
             case "AttackDeBuffSpec":
                 if (accuracyRandom <= calculateAccuracy(attackingPokemon, playerMove, defendingPokemon)) {
                     playerSpecialAttack(attackingPokemon, playerMove, defendingPokemon);
                     if(extraEffect<=playerMove.getBuffDebuffChance()){
                         buffDeBuff(attackingPokemon, playerMove, defendingPokemon);
+                    }
+
+                } else {
+                    System.out.println(attackingPokemon.getName() + " used " + playerMove.name + "!");
+                    System.out.println("The attack missed!");
+                    scanner.nextLine();
+                }
+                break;
+            case "AttackStatusPhys":
+                if (accuracyRandom <= calculateAccuracy(attackingPokemon, playerMove, defendingPokemon)) {
+                    playerAttack(attackingPokemon, playerMove, defendingPokemon);
+                    if(extraEffect<=playerMove.getStatusChance()){
+                        statusMoves(attackingPokemon, playerMove, defendingPokemon);
+                    }
+
+                } else {
+                    System.out.println(attackingPokemon.getName() + " used " + playerMove.name + "!");
+                    System.out.println("The attack missed!");
+                    scanner.nextLine();
+                }
+                break;
+            case "AttackStatusSpec":
+                if (accuracyRandom <= calculateAccuracy(attackingPokemon, playerMove, defendingPokemon)) {
+                    playerSpecialAttack(attackingPokemon, playerMove, defendingPokemon);
+                    if(extraEffect<=playerMove.getStatusChance()){
+                        statusMoves(attackingPokemon, playerMove, defendingPokemon);
                     }
 
                 } else {
