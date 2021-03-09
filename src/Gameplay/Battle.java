@@ -234,6 +234,9 @@ public class Battle {
             case "Buff":
                 buffDeBuff(attackingPokemon, playerMove, attackingPokemon);
                 break;
+            case "Status":
+                statusMoves(attackingPokemon,playerMove,defendingPokemon);
+                break;
         }
     }
 
@@ -272,6 +275,35 @@ public class Battle {
                 }
             }
         }
+    }
+
+    public void statusMoves(Pokemon agent,Moves agentMove, Pokemon patient){
+        System.out.println(agent.getName() + " used " + agentMove.getName() + "!");
+        scanner.nextLine();
+        switch(agentMove.getStatus()){
+            case "Poison":
+                inflictPoison(patient);
+                break;
+            case "Paralysis":
+                inflictParalysis(patient);
+                break;
+            case "Sleep":
+                break;
+            case "Burn":
+                inflictBurn(patient);
+                break;
+            case "Frozen":
+                break;
+            case "Leech":
+                inflictSeed(patient);
+                break;
+            case "Wrap":
+                break;
+            case "Confusion":
+                inflictConfusion(patient);
+
+        }
+
     }
     public boolean revisedRecoveryItem(Trainer player){
         player.mapIterator(player.getMedicine());

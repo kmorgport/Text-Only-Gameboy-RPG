@@ -11,6 +11,8 @@ abstract public class Moves {
     public int buffDebuffInteger;
     public String buffDebuffType;
     public int buffDebuffChance;
+    protected String status;
+    protected int statusChance;
 
     public Moves(String name, String type, String category, int powerPoints, int accuracy, int priority){
         this.name = name;
@@ -42,6 +44,14 @@ abstract public class Moves {
     }
 
     abstract public int getPower();
+
+    public String getStatus(){
+        return this.status;
+    }
+
+    public int getStatusChance(){
+        return this.statusChance;
+    }
 
     public int getBuffDebuffInteger(){
         return this.buffDebuffInteger;
