@@ -27,12 +27,16 @@ public class Battle {
             revisedBattleCycle(player, npc);
             if(playerPokemon.getHitPoints()<=0){
                 System.out.println(playerPokemon.getName() + " fainted!");
+                playerPokemon.setConfusion(false);
+                playerPokemon.resetConfusionCounter();
                 return false;
             }else if(npcPokemon.getHitPoints()<=0){
                 playerPokemon.earnEVS(npcPokemon.getExpVal());
                 System.out.println(npcPokemon.getName() + " fainted!");
                 System.out.println(playerPokemon.getName() + " earned 140 experience points!");
                 playerPokemon.levelUp(140);
+                playerPokemon.setConfusion(false);
+                playerPokemon.resetConfusionCounter();
                 return true;
             }
         }
@@ -192,8 +196,7 @@ public class Battle {
         Pokemon attackingPokemon = attacker.retrieveTeamStarter();
         Pokemon defendingPokemon = defender.retrieveTeamStarter();
         int accuracyRandom = (int) Math.floor(Math.random()*125);
-//        int extraEffect = (int) Math.floor(Math.random()*99)+1;
-        int extraEffect = 20;
+        int extraEffect = (int) Math.floor(Math.random()*99)+1;
         switch (playerMove.category) {
             case "Physical":
                 if (accuracyRandom <= calculateAccuracy(attackingPokemon, playerMove, defendingPokemon)) {
@@ -934,6 +937,8 @@ public class Battle {
             case "flying":
                 type += flyingTypeMultiplier(npc.types.get(0));
                 break;
+//            case "poison":
+//                type += flyingTypeMultiplier(npc.types.get(0));
             default:
                 type += 1;
 
@@ -967,6 +972,23 @@ public class Battle {
             multiplier += 0;
         }else if(type2.equals("Poison")){
             multiplier -=.25;
+        }
+        return multiplier;
+    }
+
+    public double poisonTypeMultiplier(String type, String type2){
+        double multiplier = 0;
+        switch(type){
+            case "Poison":
+            case "Ground":
+            case "Rock":
+            case "Ghost":
+                multiplier += .5;
+                break;
+            case "Grass":
+            case "Fairy":
+                multiplier +=2.0;
+                break;
         }
         return multiplier;
     }
